@@ -1,11 +1,19 @@
-import { Header, Sidebar, Workspace } from "./index";
+import { Header, Sidebar, Workspace } from "../components";
 import React, {useEffect, useState} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import FormatTextdirectionLToRIcon from "@material-ui/icons/FormatTextdirectionLToR";
+import FormatTextdirectionRToLIcon from "@material-ui/icons/FormatTextdirectionRToL";
+import Hidden from "@material-ui/core/Hidden";
 import { MobileBreakpoint } from "../styleVariables";
+import SettingsIcon from "@material-ui/icons/Settings";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
+import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import routes from "../routes";
-import { useAppState } from "./AppProvider";
+import { useAppState } from "../components/AppProvider";
 
 const useMountEffect = fun => useEffect(fun, []);
 
@@ -38,103 +46,165 @@ const useStyles = makeStyles(theme => ({
     right: theme.spacing(1) * 3
   }
 }));
+const classes = useStyles();
+const [state, dispatch] = useAppState();
+const [opened, setOpened] = useState(true);
+const [notificationsOpen, setNotificationsOpen] = useState(false);
+const [openSpeedDial, setOpenSpeedDial] = useState(false);
 
-const App = ({ history }) => {
-  const classes = useStyles();
-  const [opened, setOpened] = useState(true);
+const mediaMatcher = matchMedia(`(max-width: ${MobileBreakpoint}px)`);
 
-  const mediaMatcher = matchMedia(`(max-width: ${MobileBreakpoint}px)`);
+const resizeDispatch = () => {
+  if (typeof Event === "function") {
+    window.dispatchEvent(new Event("resize"));
+  } else {
+    const evt = window.document.createEvent("UIEvents");
+    evt.initUIEvent("resize", true, false, window, 0);
+    window.dispatchEvent(evt);
+  }
+};
 
-  const resizeDispatch = () => {
-    if (typeof Event === "function") {
-      window.dispatchEvent(new Event("resize"));
-    } else {
-      const evt = window.document.createEvent("UIEvents");
-      evt.initUIEvent("resize", true, false, window, 0);
-      window.dispatchEvent(evt);
-    }
-  };
+const handleDrawerToggle = () => {
+  setOpened(!opened);
+  resizeDispatch();
+};
 
-  const handleDrawerToggle = () => {
-    setOpened(!opened);
-    resizeDispatch();
-  };
+const handleNotificationToggle = () =>
+    setNotificationsOpen(!notificationsOpen);
 
-  const getRoutes = (
+const handleFullscreenToggle = () => {
+  const element = document.querySelector("#root");
+  const isFullscreen =
+      document.webkitIsFullScreen || document.mozFullScreen || false;
+
+  element.requestFullScreen =
+      element.requestFullScreen ||
+      element.webkitRequestFullScreen ||
+      element.mozRequestFullScreen ||
+      function() {
+        return false;
+      };
+  document.cancelFullScreen =
+      document.cancelFullScreen ||
+      document.webkitCancelFullScreen ||
+      document.mozCancelFullScreen ||
+      function() {
+        return false;
+      };
+  isFullscreen ? document.cancelFullScreen() : element.requestFullScreen();
+};
+
+const handleSpeedDialOpen = () => setOpenSpeedDial(true);
+
+const handleSpeedDialClose = () => setOpenSpeedDial(false);
+
+const getRoutes = (
     <Switch>
       {routes.items.map((item, index) =>
-        item.type === "external" ? (
-          <Route
-            exact
-            path={item.path}
-            component={item.component}
-            name={item.name}
-            key={index}
-          />
-        ) : item.type === "submenu" ? (
-          item.children.map(subItem => (
-            <Route
-              exact
-              path={`${item.path}${subItem.path}`}
-              component={subItem.component}
-              name={subItem.name}
-            />
-          ))
-        ) : (
-          <Route
-            exact
-            path={item.path}
-            component={item.component}
-            name={item.name}
-            key={index}
-          />
-        )
+          item.type === "external" ? (
+              <Route
+                  exact
+                  path={item.path}
+                  component={item.component}
+                  name={item.name}
+                  key={index}
+              />
+          ) : item.type === "submenu" ? (
+              item.children.map(subItem => (
+                  <Route
+                      exact
+                      path={`${item.path}${subItem.path}`}
+                      component={subItem.component}
+                      name={subItem.name}
+                  />
+              ))
+          ) : (
+              <Route
+                  exact
+                  path={item.path}
+                  component={item.component}
+                  name={item.name}
+                  key={index}
+              />
+          )
       )}
       <Redirect to="/404" />
     </Switch>
-  );
+);
 
-  useMountEffect(() => {
-    if (mediaMatcher.matches) setOpened(false);
-    mediaMatcher.addListener(match => {
+useMountEffect(() => {
+  if (mediaMatcher.matches) setOpened(false);
+  mediaMatcher.addListener(match => {
+    setTimeout(() => {
+      if (match.matches) setOpened(false);
+      else setOpened(true);
+    }, 300);
+  });
+
+  return () => {
+    mediaMatcher.removeListener(match => {
       setTimeout(() => {
         if (match.matches) setOpened(false);
         else setOpened(true);
       }, 300);
     });
+  };
+});
+class App extends React.Component {
+  render () {
 
-    const unlisten = history.listen(() => {
-      if (mediaMatcher.matches) setOpened(false);
-      document.querySelector("#root > div > main").scrollTop = 0;
-    });
-
-    return () => {
-      unlisten();
-      mediaMatcher.removeListener(match => {
-        setTimeout(() => {
-          if (match.matches) setOpened(false);
-          else setOpened(true);
-        }, 300);
-      });
-    };
-  });
-
-  return (
-    <>
-      <Header
-        logo={`${process.env.PUBLIC_URL}/static/images/logo.png`}
-        toggleDrawer={handleDrawerToggle}
-      />
-      <div className={classNames(classes.panel, "theme-dark")}>
-        <Sidebar
+    return (
+        <>
+        <Header
+            logoAltText="Primer Admin Template"
+            logo={`${process.env.PUBLIC_URL}/static/images/logo.svg`}
+            toggleDrawer={handleDrawerToggle}
+            toogleNotifications={handleNotificationToggle}
+            toggleFullscreen={handleFullscreenToggle}
+        />
+    <div className={classNames(classes.panel, "theme-dark")}>
+      <Sidebar
           routes={routes.items}
           opened={opened}
           toggleDrawer={handleDrawerToggle}
+      />
+      <Workspace opened={opened}>{getRoutes}</Workspace>
+    </div>
+
+    <Hidden xsDown>
+      <SpeedDial
+          ariaLabel="Settings"
+          className={classes.speedDial}
+          icon={<SpeedDialIcon icon={<SettingsIcon/>}/>}
+          onBlur={handleSpeedDialClose}
+          onClose={handleSpeedDialClose}
+          onFocus={handleSpeedDialOpen}
+          onMouseEnter={handleSpeedDialOpen}
+          onMouseLeave={handleSpeedDialClose}
+          open={openSpeedDial}
+      >
+        <SpeedDialAction
+            icon={<WbSunnyIcon/>}
+            tooltipTitle="Toggle light/dark theme"
+            onClick={() => dispatch({type: "type"})}
         />
-        <Workspace opened={opened}>{getRoutes}</Workspace>
-      </div>
-    </>
-  );
+        <SpeedDialAction
+            icon={
+              state.direction === "rtl" ? (
+                  <FormatTextdirectionLToRIcon/>
+              ) : (
+                  <FormatTextdirectionRToLIcon/>
+              )
+            }
+            tooltipTitle="Toggle LTR/RTL direction"
+            onClick={() => dispatch({type: "direction"})}
+        />
+      </SpeedDial>
+    </Hidden>
+  </>
+  )
+    ;
+  }
 };
 
 export default App;
