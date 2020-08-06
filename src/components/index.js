@@ -1,13 +1,14 @@
-import ActivityStream from './ActivityStream/ActivityStream';
-import AppProvider from './AppProvider/AppProvider';
+import ActivityStream from './ActivityStream';
+import AppProvider from './AppProvider';
 import Header from './Header';
-import Sidebar from './Sidebar/Sidebar';
-import Workspace from './Workspace/Workspace';
-
+import Sidebar from './Sidebar';
+import Workspace from './Workspace';
+import WorldMap from "./WorldMap";
 export {
   AppProvider,
   Workspace,
   Header,
   Sidebar,
   ActivityStream,
+  WorldMap,
 };

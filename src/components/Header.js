@@ -158,17 +158,7 @@ const Header = ({
           </IconButton>
         </Hidden>
 
-        <Hidden xsDown>
-          <IconButton color="inherit" onClick={toggleFullscreen}>
-            <FullscreenIcon />
-          </IconButton>
-        </Hidden>
 
-        <IconButton color="inherit" onClick={handleNotificationToggle}>
-          <Badge badgeContent={5} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
 
         <IconButton
           aria-label="User Settings"

@@ -1,21 +1,13 @@
-import { Header, NotificationCenter, Sidebar, Workspace } from "./index";
-import React, { useState } from "react";
+import { Header, Sidebar, Workspace } from "./index";
+import React, {useEffect, useState} from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-
-import FormatTextdirectionLToRIcon from "@material-ui/icons/FormatTextdirectionLToR";
-import FormatTextdirectionRToLIcon from "@material-ui/icons/FormatTextdirectionRToL";
-import Hidden from "@material-ui/core/Hidden";
 import { MobileBreakpoint } from "../styleVariables";
-import SettingsIcon from "@material-ui/icons/Settings";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import routes from "../routes";
-import { useAppState } from "./AppProvider/AppProvider";
-import useMountEffect from "../mountEffect";
+import { useAppState } from "./AppProvider";
+
+const useMountEffect = fun => useEffect(fun, []);
 
 const useStyles = makeStyles(theme => ({
   panel: {
@@ -49,10 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const App = ({ history }) => {
   const classes = useStyles();
-  const [state, dispatch] = useAppState();
   const [opened, setOpened] = useState(true);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [openSpeedDial, setOpenSpeedDial] = useState(false);
 
   const mediaMatcher = matchMedia(`(max-width: ${MobileBreakpoint}px)`);
 

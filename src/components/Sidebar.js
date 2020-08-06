@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import PropTypes from 'prop-types';
 import SidebarItem from './SidebarItem';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { drawerWidth } from '../../styleVariables';
+import { drawerWidth } from '../styleVariables';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import withWidth from '@material-ui/core/withWidth';

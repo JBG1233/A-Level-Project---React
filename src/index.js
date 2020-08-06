@@ -1,9 +1,7 @@
-import {
 
-} from "./pages";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppProvider from "./components/AppProvider/AppProvider";
+import AppProvider from "./components/AppProvider";
 import App from "./components/App";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";

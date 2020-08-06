@@ -1,6 +1,4 @@
-import {
-  WorldMap,
-} from './pages';
+import {WorldMap} from './components';
 
 import ExploreIcon from '@material-ui/icons/Explore';
 

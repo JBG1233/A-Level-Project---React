@@ -6,12 +6,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
-import { capitalize } from '../../helpers';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import useMountEffect from '../../mountEffect';
+
+const useMountEffect = fun => useEffect(fun, []);
 
 const useStyles = makeStyles(theme => ({
   badge: {
@@ -118,7 +118,7 @@ const SidebarItem = ({
             <route.icon className={classes.menuIcon} />
           </ListItemIcon>
           <Typography variant="body1" className="flexSpacer">
-            {capitalize(route.name)}
+            {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
           </Typography>
           {badge(route.badge)}
         </ListItem>
@@ -143,7 +143,7 @@ const SidebarItem = ({
             <route.icon className={classes.menuIcon} />
           </ListItemIcon>
           <Typography variant="body1" className="flexSpacer">
-            {capitalize(route.name)}
+            {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
           </Typography>
           {badge(route.badge)}
           <ListItemIcon className={classes.caret}>
@@ -172,7 +172,7 @@ const SidebarItem = ({
               >
                 <ListItem className={classes.menuSubItem} button>
                   <Typography variant="body1" className="flexSpacer">
-                    {capitalize(subitem.name)}
+                    {route.name.charAt(0).toUpperCase() + route.name.slice(1)})
                   </Typography>
                   {badge(subitem.badge)}
                 </ListItem>
@@ -201,7 +201,7 @@ const SidebarItem = ({
           <route.icon className={classes.menuIcon} />
         </ListItemIcon>
         <Typography variant="body1" className="flexSpacer">
-          {capitalize(route.name)}
+          {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
         </Typography>
         {badge(route.badge)}
       </ListItem>
