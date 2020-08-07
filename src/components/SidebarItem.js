@@ -76,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SidebarItem = ({
-  route,
+  item,
   index,
   activeRoute,
   toggleMenu,
@@ -85,7 +85,7 @@ const SidebarItem = ({
   const classes = useStyles();
 
   useMountEffect(() => {
-    if (!currentPath || activeRoute === index || route.path === '/') return;
+    if (!currentPath || activeRoute === index || item.path === '/') return;
     toggleMenu(index);
   });
 
@@ -104,89 +104,9 @@ const SidebarItem = ({
     );
   };
 
-  if (route.type === 'external') {
-    return (
-      <a
-        href={route.path}
-        target="_blank"
-        rel="noopener noreferrer"
-        key={index}
-        className={classes.menuLink}
-      >
-        <ListItem className={classes.menuItem} button>
-          <ListItemIcon>
-            <route.icon className={classes.menuIcon} />
-          </ListItemIcon>
-          <Typography variant="body1" className="flexSpacer">
-            {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
-          </Typography>
-          {badge(route.badge)}
-        </ListItem>
-      </a>
-    );
-  }
-
-  if (route.type === 'submenu') {
-    return (
-      <div
-        className={
-          activeRoute === index ? classes.menuCollapsed : classes.menuClosed
-        }
-      >
-        <ListItem
-          className={classes.menuItem}
-          button
-          key={index}
-          onClick={() => toggleMenu(index)}
-        >
-          <ListItemIcon>
-            <route.icon className={classes.menuIcon} />
-          </ListItemIcon>
-          <Typography variant="body1" className="flexSpacer">
-            {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
-          </Typography>
-          {badge(route.badge)}
-          <ListItemIcon className={classes.caret}>
-            {activeRoute === index ? (
-              <ArrowDropUpIcon />
-            ) : (
-              <ArrowDropDownIcon />
-            )}
-          </ListItemIcon>
-        </ListItem>
-        <Collapse
-          in={activeRoute === index ? true : false}
-          timeout="auto"
-          unmountOnExit
-        >
-          <List disablePadding>
-            {route.children.map((subitem, index) => (
-              <NavLink
-                to={`${route.path ? route.path : ''}${
-                  subitem.path ? subitem.path : ''
-                }`}
-                exact
-                className={classes.menuLink}
-                activeClassName={classes.menuActive}
-                key={index}
-              >
-                <ListItem className={classes.menuSubItem} button>
-                  <Typography variant="body1" className="flexSpacer">
-                    {route.name.charAt(0).toUpperCase() + route.name.slice(1)})
-                  </Typography>
-                  {badge(subitem.badge)}
-                </ListItem>
-              </NavLink>
-            ))}
-          </List>
-        </Collapse>
-      </div>
-    );
-  }
-
   return (
     <NavLink
-      to={route.path}
+      to={item.path}
       exact
       className={classes.menuLink}
       activeClassName={classes.menuActive}
@@ -198,12 +118,12 @@ const SidebarItem = ({
         onClick={() => toggleMenu(index)}
       >
         <ListItemIcon>
-          <route.icon className={classes.menuIcon} />
+          <item.icon className={classes.menuIcon} />
         </ListItemIcon>
         <Typography variant="body1" className="flexSpacer">
-          {route.name.charAt(0).toUpperCase() + route.name.slice(1)}
+          {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
         </Typography>
-        {badge(route.badge)}
+        {badge(item.badge)}
       </ListItem>
     </NavLink>
   );

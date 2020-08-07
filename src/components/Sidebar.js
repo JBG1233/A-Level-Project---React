@@ -10,6 +10,14 @@ import { drawerWidth } from '../styleVariables';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import withWidth from '@material-ui/core/withWidth';
+import ExploreIcon from "@material-ui/icons/Explore";
+import WorldMap from "../pages/WorldMap";
+import PeopleIcon from "@material-ui/icons/People";
+import InfoIcon from "@material-ui/icons/Info";
+
+import Leaderboard from "../pages/Leaderboard";
+import UKQuiz from "../pages/UKQuiz";
+import About from "../pages/About";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -40,22 +48,52 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Sidebar = ({ opened, toggleDrawer, routes, location }) => {
+
+
+const Sidebar = ({ opened, toggleDrawer, location }) => {
   const classes = useStyles();
   const [activeRoute, setActiveRoute] = useState(undefined);
   const toggleMenu = index =>
     setActiveRoute(activeRoute === index ? undefined : index);
 
-  const menu = (
+function items() {
+  items = [
+    {
+      path: '/Map',
+      name: 'Map',
+      type: 'link',
+      icon: ExploreIcon,
+      component: WorldMap
+    },
+    {
+      path: '/Leaderboard',
+      name: 'Leaderboard',
+      type: 'link',
+      icon: PeopleIcon,
+      component: Leaderboard
+    },
+    {
+      path: '/About',
+      name: 'About',
+      type: 'link',
+      icon: InfoIcon,
+      component: About
+    },
+  ]
+  return items
+}
+
+const menu = (
+
     <List component="div">
-      {routes.map((route, index) => {
+      {items().map((item, index) => {
         const isCurrentPath =
-          location.pathname.indexOf(route.path) > -1 ? true : false;
+          location.pathname.indexOf(item.path) > -1 ? true : false;
         return (
           <SidebarItem
             key={index}
             index={index}
-            route={route}
+            item={item}
             activeRoute={activeRoute}
             toggleMenu={toggleMenu}
             currentPath={isCurrentPath}

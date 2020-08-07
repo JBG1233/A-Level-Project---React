@@ -1,7 +1,7 @@
-import WorldMap from './WorldMap';
 import Leaderboard from './Leaderboard';
+import WorldMap from "./WorldMap";
 
 export {
-    WorldMap,
-    Leaderboard
+    Leaderboard,
+    WorldMap
 };

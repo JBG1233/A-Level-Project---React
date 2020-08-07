@@ -1,26 +1,29 @@
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-import AppProvider from "./components/AppProvider";
+import {createStore, compose, applyMiddleware } from 'redux';
+import allReducers from './components/reducers'
+import {Provider} from 'react-redux';
+import thunk from "redux-thunk";
 import App from "./components/App";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
 import { render } from "react-dom";
 
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+    allReducers,
+    composeEnhancer(applyMiddleware(thunk)),
+);
+
 render(
-  <AppProvider>
+  <Provider store={store}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
-        {/*<Route exact path="/404" component={NotFound} />
-        <Route exact path="/500" component={BackendError} />
-        <Route exact path="/Lockscreen" component={Lockscreen} />
-        <Route exact pth="/forgot" component={PasswordReset} />
-        <Route exact path="/signin" component={Signin} />
-        <Route exact path="/signup" component={Signup} />*/}
         <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>
-  </AppProvider>,
+  </Provider>,
   document.getElementById("root")
 );
 
