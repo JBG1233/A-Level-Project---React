@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 class UKQuiz extends React.Component {
     render () {
         return (
-            <div>
+            <div className="questions">
                 <Typography variant="body1" className="questionTitles">
                     {"Test Question 1"}
                 </Typography>
@@ -19,16 +19,21 @@ class UKQuiz extends React.Component {
                         multiline
                         label="Question 1 Answer"
                         variant="outlined" />
-                    <Button
-                        className="submitButtons"
-                        variant="contained"
-                        color="primary"
-                        padding="25 25px">
-                        Submit
-                    </Button>
                 </form>
-
+            <br/>
+                <Typography variant="body1" className="questionTitles">
+                    {"Test Question 2 (This is going to be iterable)"}
+                </Typography>
+                <form className="questionFields">
+                    <TextField
+                        fullWidth={1000}
+                        rows={6}
+                        multiline
+                        label="Question 2 Answer"
+                        variant="outlined" />
+                </form>
             </div>
+
 
 
     )

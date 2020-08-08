@@ -1,14 +1,19 @@
-.questionTitles {
-    margin-left: 25px;
-    margin-top: 25px;
-}
-.questionFields {
+.questions {
+    margin-top: 20px;
     margin-left: 25px;
     margin-right: 450px;
-    margin-top: 150px;
+    font-size: 25px;
 }
 
-.submitButtons {
-    margin-left: 25px;
-    margin-top: 175px;
+.questionTitles {
+    margin-top: 20px;
 }
+
+.questionFields {
+    margin-top: 20px;
+}
+
+.submitButton {
+    margin-top: 100px;
+}
+

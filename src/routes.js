@@ -10,14 +10,14 @@ import About from "./pages/About";
 export default {
   items: [
     {
-      path: '/Map',
+      path: '/',
       name: 'Map',
       type: 'link',
       icon: ExploreIcon,
       component: WorldMap
     },
     {
-      path: '/Map/UKQuiz',
+      path: '/UKQuiz',
       name: 'UKQuiz',
       type: 'link',
       component: UKQuiz

@@ -2,21 +2,22 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import React from 'react';
 import {UKQuizTrue} from "../components/actions";
 import {connect} from "react-redux";
-import {Redirect} from "react-router";
+import UKQuiz from "./UKQuiz";
 
 class WorldMap extends React.Component {
 constructor(props) {
     super(props);
     this.state = {
-        redirect: false,
+        UKQuiz: false,
     }
 }
     handleOnClick = () => {
-        this.setState({redirect: true});
+        this.setState({UKQuiz: true});
+        this.props.UKQuizTrue()
     }
     render () {
-        if (this.state.redirect) {
-            return <Redirect push to="/Map/UKQuiz" />;
+        if (this.state.UKQuiz) {
+            return <UKQuiz/>
         }        return (
                 <Map center={[40, 100]} zoom={2}>
                     <TileLayer

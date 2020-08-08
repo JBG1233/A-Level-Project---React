@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
@@ -59,7 +58,7 @@ const Sidebar = ({ opened, toggleDrawer, location }) => {
 function items() {
   items = [
     {
-      path: '/Map',
+      path: '/',
       name: 'Map',
       type: 'link',
       icon: ExploreIcon,

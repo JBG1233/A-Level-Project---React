@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
 import Collapse from '@material-ui/core/Collapse';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -14,7 +11,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import PropTypes from 'prop-types';
 import SearchIcon from '@material-ui/icons/Search';
