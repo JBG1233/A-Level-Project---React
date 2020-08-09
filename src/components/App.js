@@ -87,7 +87,6 @@ const App = ({ history }) => {
           />
         )
       )}
-      <Redirect to="/404" />
     </Switch>
   );
 

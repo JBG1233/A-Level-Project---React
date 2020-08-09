@@ -58,7 +58,7 @@ const Sidebar = ({ opened, toggleDrawer, location }) => {
 function items() {
   items = [
     {
-      path: '/',
+      path: '/Map',
       name: 'Map',
       type: 'link',
       icon: ExploreIcon,

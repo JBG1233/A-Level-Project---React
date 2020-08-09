@@ -2,23 +2,14 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import React from 'react';
 import {UKQuizTrue} from "../components/actions";
 import {connect} from "react-redux";
-import UKQuiz from "./UKQuiz";
 
 class WorldMap extends React.Component {
-constructor(props) {
-    super(props);
-    this.state = {
-        UKQuiz: false,
-    }
-}
+
     handleOnClick = () => {
-        this.setState({UKQuiz: true});
-        this.props.UKQuizTrue()
+        this.props.history.push('/UKQuiz')
     }
     render () {
-        if (this.state.UKQuiz) {
-            return <UKQuiz/>
-        }        return (
+        return (
                 <Map center={[40, 100]} zoom={2}>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

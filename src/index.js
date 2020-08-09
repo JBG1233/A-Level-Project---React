@@ -8,6 +8,7 @@ import App from "./components/App";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
 import { render } from "react-dom";
+import UKQuiz from "./pages/UKQuiz";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -20,7 +21,7 @@ render(
   <Provider store={store}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route path="/" component={App} />
+          <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>,

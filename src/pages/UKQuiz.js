@@ -2,10 +2,16 @@ import React from "react";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import './Quiz.css';
-import Button from '@material-ui/core/Button';
+import {loadUKQuestions} from "../components/Fetch";
+import {connect} from "react-redux";
 
 
 class UKQuiz extends React.Component {
+
+    componentDidMount() {
+        this.props.loadUKQuestions()
+    }
+
     render () {
         return (
             <div className="questions">
@@ -39,5 +45,9 @@ class UKQuiz extends React.Component {
     )
     }
 }
+const mapStateToProps = (state) => ({})
 
-export default UKQuiz;
+const mapDispatchToProps = {loadUKQuestions}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UKQuiz);

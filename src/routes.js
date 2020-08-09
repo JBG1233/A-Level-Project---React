@@ -10,7 +10,7 @@ import About from "./pages/About";
 export default {
   items: [
     {
-      path: '/',
+      path: '/Map',
       name: 'Map',
       type: 'link',
       icon: ExploreIcon,
