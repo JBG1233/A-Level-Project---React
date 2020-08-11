@@ -2,12 +2,19 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import React from 'react';
 import {UKQuizTrue} from "../components/actions";
 import {connect} from "react-redux";
+import {loadUKQuestions} from "../components/Fetch";
 
 class WorldMap extends React.Component {
 
     handleOnClick = () => {
         this.props.history.push('/UKQuiz')
     }
+
+    componentDidMount() {
+        this.props.loadUKQuestions()
+
+    }
+
     render () {
         return (
                 <Map center={[40, 100]} zoom={2}>
@@ -28,6 +35,6 @@ class WorldMap extends React.Component {
 
 const mapStateToProps = (state) => ({})
 
-const mapDispatchToProps = {UKQuizTrue}
+const mapDispatchToProps = {UKQuizTrue, loadUKQuestions}
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorldMap);

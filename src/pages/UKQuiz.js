@@ -8,15 +8,12 @@ import {connect} from "react-redux";
 
 class UKQuiz extends React.Component {
 
-    componentDidMount() {
-        this.props.loadUKQuestions()
-    }
-
     render () {
+        console.log(this.props.questions)
         return (
             <div className="questions">
                 <Typography variant="body1" className="questionTitles">
-                    {"Test Question 1"}
+                    {this.props.questions}
                 </Typography>
                 <form className="questionFields">
                     <TextField
@@ -45,7 +42,11 @@ class UKQuiz extends React.Component {
     )
     }
 }
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => {
+    return {
+        questions: state.UKQuestions.UKQuestions
+    }
+}
 
 const mapDispatchToProps = {loadUKQuestions}
 

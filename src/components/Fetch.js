@@ -2,15 +2,14 @@ import axios from "axios";
 
 
 function getApiHost() {
-        return 'localhost:8080';
+        return 'http://localhost:8080';
 }
 
 export const loadUKQuestions = () => {
     return function(dispatch) {
         axios.get(getApiHost() + '/rest/questions/UK').then(response => {
-            console.log(response.data)
-            //const UKQuestions = response.data
-            //dispatch(getUKQuestions(UKQuestions))
+            const UKQuestions = response.data[0].questionText
+            dispatch(getUKQuestions(UKQuestions))
         });
     }
 }
