@@ -8,7 +8,7 @@ function getApiHost() {
 export const loadUKQuestions = () => {
     return function(dispatch) {
         axios.get(getApiHost() + '/rest/questions/UK').then(response => {
-            const UKQuestions = response.data[0].questionText
+            const UKQuestions = response.data
             dispatch(getUKQuestions(UKQuestions))
         });
     }
