@@ -1,6 +1,5 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import './Quiz.css';
 import {loadUKQuestions} from "../components/Fetch";
 import {connect} from "react-redux";
@@ -8,31 +7,43 @@ import {connect} from "react-redux";
 
 
 class UKQuiz extends React.Component {
-    showQuestions = (UKQuestions, index) => {
-        return (
-            <div className="questions">
-        <form className="questionFields">
-            <TextField
-                fullWidth={1000}
-                rows={6}
-                multiline
-                label= {UKQuestions.questionText}
-                variant="outlined"
-            />
-        </form>
-            </div>
-        )
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            questions: 0,
+        }
     }
 
+    showQuestions = (UKQuestions) => {
+            return (
+                <div className="questions">
+                    <form className="questionFields">
+                        <TextField
+                            fullWidth={1000}
+                            rows={6}
+                            multiline
+                            label= {UKQuestions.questionText}
+                            variant="outlined"
+                        />
+                    </form>
+                </div>
+            )
+        }
+
+
     render () {
+
+
         return (
             <div>
                 {
-                    this.props.questions.map((UKQuestions, index) => {
-                        return this.showQuestions(UKQuestions, index);
+                    this.props.questions.map((UKQuestions) => {
+                        return this.showQuestions(UKQuestions);
                     })
                 }
             </div>
+
         )
     }
 }

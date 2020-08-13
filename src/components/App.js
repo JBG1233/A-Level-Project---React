@@ -118,13 +118,11 @@ const App = ({ history }) => {
   return (
     <>
       <Header
-        logoAltText="Primer Admin Template"
         logo={`${process.env.PUBLIC_URL}/static/images/logo.png`}
         toggleDrawer={handleDrawerToggle}
       />
       <div className={classNames(classes.panel, "theme-dark")}>
         <Sidebar
-          routes={routes.items}
           opened={opened}
           toggleDrawer={handleDrawerToggle}
         />
