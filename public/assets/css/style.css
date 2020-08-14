@@ -1,0 +1,794 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,800,700,700i'); /* Global */
+
+@font-face{
+	font-family: 'Lucida Grande'; 
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/LucidaGrande.ttf') format('truetype');
+}
+
+@font-face{
+	font-family: 'Lucida Grande Bold'; 
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/LucidaGrandeBold.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Karbon Medium';
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Medium.eot');
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Medium.eot?#iefix') format('embedded-opentype'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Medium.woff2') format('woff2'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Medium.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Karbon Regular';
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Regular.eot');
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Regular.eot?#iefix') format('embedded-opentype'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Regular.woff2') format('woff2'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Regular.woff2') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Karbon Semibold';
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Semibold.eot');
+	src: url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Semibold.eot?#iefix') format('embedded-opentype'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Semibold.woff2') format('woff2'),
+	url('../../../../../Savvy Repos/WebstormProjects/ui-customer-portal-v2/public/assets/fonts/karbon/KarbonWeb-Semibold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+::-moz-selection {
+	color: #FFF;
+	background: #000;
+}
+
+::selection {
+	color: #FFF;
+	background: #000;
+}
+
+body {
+	font-family: 'Karbon Regular';
+	background: #FFF;
+	color: #4A4A4A;
+}
+
+h2, h3, p {
+	margin: 0;
+}
+
+button {
+	outline: 0;
+	border: 0;
+	cursor: pointer;
+}
+
+button:focus {
+	outline: none;
+}
+
+ul, ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+
+.form-error {
+	display: none;
+	margin: 30px 0 0 0;
+	font-size: 18px;
+	color: crimson;
+}
+
+
+
+/* Site header */
+
+.site-header {
+	padding: 25px 0;
+	margin-left: 17%;
+	background: #96D9DD;
+}
+
+.site-header .logo {
+	max-width: 189px;
+}
+
+.site-header .hamburger {
+	margin-right: 60px;
+	background: transparent;
+}
+
+.site-header .hamburger .line {
+	display: block;
+	margin-bottom: 10px;
+	width: 40px;
+	height: 2px;
+	border-radius: 2px;
+	background: #FFF;
+}
+
+
+/* Page banner */
+
+.page-banner {
+	padding: 20px 0;
+	margin-left: 17%;
+	background: #F5F5F5;
+}
+
+.page-banner .heading {
+	margin: 0;
+	font-size: 22px;
+}
+
+
+/* Contract */
+
+.contract {
+	padding: 30px 0 150px;
+	background: #FFF;
+}
+
+.contract h4 {
+	margin-bottom: 20px;
+	font-size: 22px;
+	line-height: 31px;
+	font-weight: bold;
+}
+
+.contract article {
+	min-height: 200px;
+	max-height: 290px;
+	margin-bottom: 70px;
+	overflow: auto;
+	padding: 25px;
+	background: #F5F5F5;
+}
+
+.contract article h2, .contract article h3, .contract article h4, .contract article h5, .contract article h6 {
+	margin-bottom: 15px;
+}
+
+.contract p, .contract ul, .contract ol {
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.contract ul, .contract ol {
+	padding-left: 20px;
+}
+
+.contract ul li, .contract ol li {
+	margin-bottom: 5px;
+}
+
+.contract button {
+	margin-right: 20px;
+	padding: 10px 40px;
+	font-size: 22px;
+	line-height: 31px;
+	color: #FFF;
+	border-radius: 36px;
+	background: #3C3C3C;
+}
+
+@media (min-width: 768px) {
+	.contract header .date {
+		text-align: right;
+	}
+}
+
+@media (min-width: 992px) {
+	.contract {
+		padding: 30px 0 150px;
+		margin-left: 17%;
+	}
+}
+
+/* Login */
+
+.login {
+	padding: 100px 0 130px 0;
+	text-align: center;
+}
+
+.login .logo {
+	margin-bottom: 50px;
+	width: 100%;
+	max-width: 240px;
+}
+
+.login p {
+	margin-bottom: 20px;
+	font-size: 25px;
+	line-height: 31px;
+}
+
+.login form {
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.login form .form-group {
+	margin-bottom: 20px;
+}
+
+.login form .form-group .text {
+	width: 100%;
+	margin: 0 auto;
+	padding: 10px 20px;
+	font-size: 25px;
+	border: 0;
+	border-radius: 8px;
+	background: #F5F5F5;
+}
+
+.login form .form-group .checkbox {
+	margin-right: 10px;
+}
+
+.login form .form-group label {
+	font-size: 21px;
+	line-height: 31px;
+}
+
+.login form .form-group .login-btn, .login form .form-group .register-btn {
+	width: 100%;
+	padding: 20px;
+	font-family: 'Karbon Medium';
+	font-size: 24px;
+	line-height: 29px;
+	color: #FFF;
+	border-radius: 36px;
+}
+
+.login form .form-group .login-btn {
+	background: #96D9DD;
+}
+
+.login form .form-group .register-btn {
+	background: #333;
+}
+
+.login form .form-group .forgot-pwd {
+	font-family: 'Lucida Grande';
+	font-size: 18px;
+	line-height: 31px;
+	color: #4A4A4A;
+}
+
+.login form hr {
+	margin: 20px auto;
+	max-width: 460px;
+	border-top: 1px solid #979797;
+}
+
+
+/* Footer */
+
+.site-footer {
+	margin-left: 17%;
+	padding: 80px 0 140px 0;
+	text-align: center;
+}
+
+.site-footer.grey {
+	background: #F5F5F5;
+}
+
+.site-footer .logo {
+	max-width: 174px;
+	margin-bottom: 20px;
+}
+
+.site-footer .social-links {
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.site-footer .social-links li {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.site-footer .social-links li:last-child {
+	margin-right: 0;
+}
+
+.site-footer .social-links li a {
+	padding: 10px;
+	font-size: 24px;
+	color: #282a2c;
+}
+
+.site-footer .agreements {
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.site-footer .agreements li a {
+	font-family: 'Karbon Semibold';
+	font-size: 20px;
+	letter-spacing: -.5px;
+	line-height: 28px;
+	color: #4A4A4A;
+}
+
+.site-footer .copyright {
+	text-align: center;
+}
+
+.site-footer .copyright {
+	color: #000;
+	font-size: 16px;
+	font-weight: 500;
+	letter-spacing: -.4px;
+	line-height: 19px;
+}
+
+@media(min-width: 1200px) {
+	.site-footer {
+		margin-left: 17%;
+		text-align: left;
+	}
+}
+
+/* Invoice page */
+
+.invoice-header{
+	padding: 30px 0 20px;
+	background: #86c2bc;
+}
+
+.header-wrapper {
+	width: 100%;
+	max-width: 1430px;
+	padding: 0 25px;
+	margin: 0 auto;
+}
+
+.site-logo {
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+}
+
+.site-logo a{
+	display: block;
+	width: 150px;
+}
+
+.site-logo a img{
+	max-width: 100%;
+}
+
+.invoice-sub-header{
+	height: 70px;
+	background: #f5f5f5;
+}
+
+.invoice-sub-header h3 {
+	color: #4A4A4A;
+	font-size: 23px;
+	font-weight: 500;
+	line-height: 35px;
+	margin: 0 0 0 0px;
+	font-family: 'Karbon Medium';
+}
+
+@media(min-width: 768px) {
+	.invoice-sub-header h3 {
+		margin: 0 0 0 0;
+	}	
+}
+
+@media(min-width: 992px) {
+	.invoice-header{
+		padding: 20px 0 15px;
+	}
+	.site-logo a{
+		width: inherit;
+	}	
+	.bruger-icon{
+		margin: 0 60px 0 0;	
+	}
+	.invoice-sub-header h3 {
+		margin: 0 0 0 0;
+	}	
+}
+
+@media(min-width: 1280px) {
+	.header-wrapper{
+		max-width: 100%;
+	}
+}
+
+@media(min-width: 1560px) {
+	.header-wrapper{
+		max-width: 1530px;
+	}
+}
+
+.main{
+	padding: 70px 0 0;
+}
+
+.center-wrap{
+	width: 100%;
+	max-width: 1430px;
+	margin: 0 auto;
+	padding: 0 25px 0 25px;
+}
+
+.invoice-info {
+	margin-top: 0px;
+}
+
+.address-box h3,
+.invoice-info h4{
+	margin: 0 0 20px;
+	padding: 0;
+	font-family: 'Karbon Medium';
+}
+
+.address-box h3 {
+	color: #4A4A4A;
+	font-size: 24px;
+	font-family: 'Karbon Regular';
+	line-height: 31px;
+	font-weight: 400;
+}
+
+.address-box h3 strong {
+	font-family: 'Karbon Medium';
+}
+
+.address-box p ,.invoice-info p{
+	color: #4A4A4A;
+	font-size: 18px;
+	line-height: 30px;
+}
+.invoice-info  h4{
+	color: #4A4A4A;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 31px;
+}
+
+.invoice-info ul li {
+	color: #4A4A4A;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 30px;
+}
+
+.invoice-section-header {
+	padding: 30px 0 0;
+	margin-left: 17%;
+}
+
+@media(min-width: 768px) {
+	.invoice-section-header{
+		display: -ms-flexbox ;
+		display: flex ;
+	}
+
+	.invoice-info{
+		margin-left: auto;
+	}
+
+	.invoice-info{
+		text-align: right;
+		margin-top: 0px;
+	}
+}
+@media(min-width: 992px) {
+	.address-box h3,
+	.invoice-info  h4{
+		font-size: 29px;
+		line-height: 36px;
+	}
+
+	.address-box p,
+	.invoice-info ul li,
+	.invoice-info p	{
+		font-size: 25px;
+		line-height: 34px;
+	}	
+
+	.invoice-section-header {
+		padding: 70px 0 0;
+		margin-left: 17%;
+
+	}
+}
+@media(min-width: 1280px) {
+	.center-wrap{
+		max-width: 85%;
+	}
+}
+@media(min-width: 1560px) {
+	.center-wrap{
+		max-width: 1320px;
+	}
+}
+
+.invoice-details{
+	margin-top: 60px;
+	margin-left: 17%;
+}
+
+.invoice-details-data{
+	background: #f5f5f5;
+	padding: 0;
+	overflow: auto;
+}
+
+.invoice-details-data h3{
+	color: #4A4A4A;
+	font-size: 29px;
+	font-weight: 500;
+	line-height: 31px;
+	margin: 35px 0 15px;
+	font-family: 'Karbon Medium';
+}
+
+.invoice-details-data table{
+	width: 100%;
+}
+
+.invoice-details-data table tr td{
+	padding: 10px 35px 10px;
+	color: #4A4A4A;
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.invoice-details-data table tr:last-child td{
+	border: 0;
+}
+
+.invoice-details-data table tr.row-border td{
+	border-bottom: solid 1px #000;
+	position: relative;
+}
+
+.invoice-details-data table tr.row-border td:first-child:before{
+	content: '';
+	width: 35px;
+	height: 105%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #f5f5f5;
+}
+
+.invoice-details-data table tr.row-border td:last-child:after{
+	content: '';
+	width: 35px;
+	height: 105%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: #f5f5f5;
+}
+
+.invoice-details-data table tr.row-title td{
+	border: 0;
+	padding: 0 35px;
+}
+
+.invoice-details-data table tr.no-border td{
+	border: 0;
+}
+
+.invoice-details-data table tr.bottom-gap td{
+	height: 70px;
+}
+
+.invoice-details-data table tr.bg-gray td{
+	background: #e6e6e6;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	font-family: 'Karbon Medium';
+}
+
+.invoice-details-data table tr.bg-gray.ptb-10 td{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.invoice-details-data table tr.t-foot td{
+	background : #4a4a4a;
+	color: #FFFFFF;
+	font-size: 20px;
+	line-height: 24px;
+	font-family: 'Karbon Medium';
+}
+
+@media(min-width: 992px) {
+	.invoice-details-data table tr td{
+		font-size: 25px;
+		line-height: 31px;
+	}
+
+	.invoice-details-data table tr.bg-gray td{
+		font-size: 29px;
+		line-height: 31px;
+	}
+
+	.invoice-details-data table tr.t-foot td{
+		font-size: 29px;
+		line-height: 31px;
+	}
+}
+
+.section-footer{
+	margin: 40px 0;
+	text-align: center;
+}
+
+.footer-buttons {
+	margin-left: auto;
+}
+
+.section-footer p {
+	color: #4A4A4A;
+	font-size: 25px;
+	font-weight: 500;
+	line-height: 31px;
+	margin: 0;
+	font-family: 'Karbon Medium';
+}
+
+.btn-grey {
+	padding: 15px 35px;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	color: #FFF;
+	background: #3C3C3C;
+	border: 2px solid #3C3C3C;
+	border-radius: 30px;
+	text-decoration:none;
+	display: inline-block;
+	text-align: center;
+	margin: 10px 10px;
+	transition: all 0.5s;
+}
+
+.btn-grey:hover, .btn-grey:focus {
+	background: transparent;
+	color: #3C3C3C;
+	text-decoration: none;
+}
+
+@media(min-width: 992px) {
+	.section-footer{
+		display: -ms-flexbox ;
+		display: flex ;
+		-ms-flex-align: center;
+		align-items: center;
+		text-align: left;
+	}
+}
+@media(max-width: 767.68px) {
+	.hidden-sm{
+		display: none;
+	}
+
+	.invoice-details-data table tr td,
+	.invoice-details-data table tr.bg-gray td{
+		width: 100%;
+		display: block;
+		text-align: center;
+		padding: 5px 15px 5px;
+	}
+
+	.invoice-details-data table tr td.empty-cells{
+		padding: 0 ;
+	}
+}
+
+.text-description{
+	color: #4A4A4A;
+	font-size: 25px;
+	line-height: 31px;
+	padding: 0 25px 25px;
+	background: #f5f5f5;
+	max-height: 200px;
+	overflow: auto;
+	margin-top: 30px;
+	font-weight: 400;
+}
+
+.text-description p{
+	margin: 0 0 30px;
+	font-weight: 400;
+}
+
+.text-description ul{
+	list-style-type: disc;
+	margin-left: 25px;
+	margin-bottom: 30px;
+}
+
+.signature-box{
+	margin-top: 50px;
+}
+
+.textarea textarea{
+	width: 100%;
+	resize: none;
+	height: 100px;
+	background: #f5f5f5;
+	border: 0;
+	margin: 20px 0 0;
+	padding: 25px;	
+	overflow: hidden;
+}
+
+.signature-box .btn-bg-orange{
+	margin: 10px 0;
+}
+.signature-box .btn-bg-orange:last-child{
+	margin: 10px 10px;
+}
+
+.text-btn-center{
+	text-align: center;
+}
+
+.text-btn-center button{
+	min-width: 186px;
+}
+
+@media (min-width: 768px) {
+	.text-btn-center{
+		text-align: left;
+	}
+}
+
+@media (min-width: 992px) {
+	.text-description{
+		max-height: 450px;
+	}
+	.textarea textarea{
+		height: 250px;
+	}
+}
+
+.trans-0-4 {
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	transition: all 0.4s;
+}
+
+
+
+.pay-btn {
+	min-width: 80px;
+	padding: 15px;
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	color: #FFF;
+	background: #E78F9E;
+	border-radius: 30px;
+}

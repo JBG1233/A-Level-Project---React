@@ -81,13 +81,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Header = ({
-  logo,
-  logoAltText,
-  toggleFullscreen,
-  toggleDrawer,
-  toogleNotifications
-}) => {
+const Header = ({logo, logoAltText, toggleDrawer, toogleNotifications}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchExpanded, setSearchExpanded] = useState(false);

@@ -1,10 +1,10 @@
-import PeopleIcon from '@material-ui/icons/People';
-import ExploreIcon from '@material-ui/icons/Explore';
-import InfoIcon from "@material-ui/icons/Info";
 import Leaderboard from './pages/Leaderboard';
 import WorldMap from "./pages/WorldMap";
 import UKQuiz from "./pages/UKQuiz";
 import About from "./pages/About";
+import RegisterPage from "./components/RegisterPage";
+import LoginPage from "./components/LoginPage";
+import ForgotPasswordPage from "./components/ForgotPasswordPage";
 
 
 export default {
@@ -13,7 +13,6 @@ export default {
       path: '/Map',
       name: 'Map',
       type: 'link',
-      icon: ExploreIcon,
       component: WorldMap
     },
     {
@@ -26,15 +25,31 @@ export default {
       path: '/Leaderboard',
       name: 'Leaderboard',
       type: 'link',
-      icon: PeopleIcon,
       component: Leaderboard
     },
     {
       path: '/About',
       name: 'About',
       type: 'link',
-      icon: InfoIcon,
       component: About
+    },
+    {
+      path: '/Register',
+      name: 'Register',
+      type: 'link',
+      component: RegisterPage
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      type: 'link',
+      component: LoginPage
+    },
+    {
+      path: '/Forgot',
+      name: 'Forgot',
+      type: 'link',
+      component: ForgotPasswordPage
     },
   ]
 };
