@@ -1,24 +1,37 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
 import './Quiz.css';
-import {loadUKQuestions} from "../components/Fetch";
-import {connect} from "react-redux";
-
-
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import axios from "axios";
 
 class UKQuiz extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            questions: 0,
+            UKQuestion: null,
         }
+    }
+
+    componentDidMount() {
+        this.loadQuestions()
+    }
+
+    loadQuestions() {
+        axios({
+            method: 'GET',
+            url: 'http://localhost:8080' + '/rest/questions/UK',
+        })
+            .then(response => {
+                this.setState ({
+                    UKQuestions: response.data
+                })
+            })
     }
 
     showQuestions = (UKQuestions) => {
             return (
-                <div className="questions">
-                    <form className="questionFields">
+                    <div className="questionFields">
                         <TextField
                             fullWidth={1000}
                             rows={6}
@@ -26,34 +39,42 @@ class UKQuiz extends React.Component {
                             label= {UKQuestions.questionText}
                             variant="outlined"
                         />
-                    </form>
-                </div>
+                    </div>
+
             )
         }
 
-
     render () {
-
-
+        console.log(this.state.UKQuestions)
         return (
-            <div>
-                {
-                    this.props.questions.map((UKQuestions) => {
-                        return this.showQuestions(UKQuestions);
-                    })
+            <div className="questions">
+
+                {this.state.UKQuestions !== undefined ? <div>
+                        {
+                            this.state.UKQuestions.map(UKQuestions => {
+                                return this.showQuestions(UKQuestions);
+                            })
+                        }
+                    <Grid item xs={12} sm={12} md={4} lg={4}
+                          style={{
+                              marginTop: '20px',
+
+                          }}>
+                        <Button variant="contained" color="primary">
+                            Submit Quiz
+                        </Button>
+                    </Grid>
+                    <div className="score">
+                    You Scored:   /7
+                    </div>
+                </div>
+                    : null
                 }
             </div>
+
 
         )
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        questions: state.UKQuestions.UKQuestions
-    }
-}
 
-const mapDispatchToProps = {loadUKQuestions}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UKQuiz);
+export default UKQuiz;

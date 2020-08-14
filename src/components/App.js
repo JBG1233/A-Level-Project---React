@@ -87,6 +87,7 @@ const App = ({ history }) => {
           />
         )
       )}
+      <Redirect to="/Map" />
     </Switch>
   );
 

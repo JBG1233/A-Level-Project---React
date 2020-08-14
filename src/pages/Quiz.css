@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
 .questions {
-    margin-top: 20px;
     margin-left: 25px;
-    margin-right: 450px;
-    font-size: 25px;
+    margin-right: 25px;
+    column-count: 2;
+    column-span: all;
+    column-gap: 25px;
+
 }
 
 .questionFields {
-    margin-top: 20px;
+    padding-top: 20px;
 }
 
-.submitButton {
-    margin-top: 100px;
+.score {
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: 'Alata', sans-serif;
 }
 
