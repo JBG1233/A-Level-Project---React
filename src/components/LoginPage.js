@@ -1,14 +1,15 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -50,7 +51,66 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginPage = () => {
+
     const classes = useStyles();
+
+    const history = useHistory()
+
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+    const [open, setOpen] = React.useState(false);
+
+    const [severity, setSeverity] = React.useState(undefined);
+
+    const [messageInfo, setMessageInfo, ] = React.useState(undefined);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    function loggedIn () {
+        history.push('/Map')
+    }
+
+    function login(username, password) {
+        const details = {
+            'username': username,
+            'password': password,
+        }
+        axios({
+            method: 'POST',
+            url: 'http://localhost:8080' + '/rest/Login',
+            data: details,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+        }) .then(response => {
+            if (response.status === 200) {
+                loggedIn()
+            }
+        })
+            .catch(function (error) {
+                if (error.response) {
+                    if (error.response.status === 400) {
+                        setOpen(true);
+                        setMessageInfo('Wrong username or password!')
+                        setSeverity('error')
+                    }
+                }
+            })
+    }
+
+    function setValues () {
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        login(username, password)
+    }
+
     return (
         <div className={classNames(classes.session, classes.background)}>
             <div className={classes.content}>
@@ -59,8 +119,7 @@ const LoginPage = () => {
                         <CardContent>
                             <form>
                                 <div
-                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}
-                                >
+                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}>
                                     <img
                                         src={'/static/images/logo-dark.png'}
                                         className="block"
@@ -74,37 +133,35 @@ const LoginPage = () => {
                                     label="Username"
                                     className={classes.textField}
                                     fullWidth
-                                    margin="normal"
-                                />
+                                    margin="normal"/>
                                 <TextField
                                     id="password"
                                     label="Password"
                                     className={classes.textField}
                                     type="password"
                                     fullWidth
-                                    margin="normal"
-                                />
-                                <FormControlLabel
-                                    control={<Checkbox value="checkedA" />}
-                                    label="Stayed logged in"
-                                    className={classes.fullWidth}
-                                />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    type="submit"
-                                >
-                                    Login
-                                </Button>
+                                    margin="normal"/>
+                                        <Button
+                                            onClick={ () => setValues() }
+                                            variant="contained"
+                                            color="primary"
+                                            fullWidth
+                                        >
+                                            Login
+                                        </Button>
                                 <div className="pt-1 text-md-center">
                                     <Link to="/Forgot">
                                         <Button>Forgot password?</Button>
                                     </Link>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <Link to="/Register">
-                                        <Button>Create new account.</Button>
+                                        <Button>Create new account</Button>
                                     </Link>
+                                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical:'top', horizontal:'center' }}>
+                                        <Alert onClose={handleClose} severity={severity}>
+                                            {messageInfo}
+                                        </Alert>
+                                    </Snackbar>
                                 </div>
                             </form>
                         </CardContent>
@@ -116,3 +173,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

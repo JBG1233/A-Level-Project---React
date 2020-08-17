@@ -33,23 +33,5 @@ export default {
       type: 'link',
       component: About
     },
-    {
-      path: '/Register',
-      name: 'Register',
-      type: 'link',
-      component: RegisterPage
-    },
-    {
-      path: '/Login',
-      name: 'Login',
-      type: 'link',
-      component: LoginPage
-    },
-    {
-      path: '/Forgot',
-      name: 'Forgot',
-      type: 'link',
-      component: ForgotPasswordPage
-    },
   ]
 };

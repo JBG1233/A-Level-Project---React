@@ -60,8 +60,8 @@ const ForgotPasswordPage = () => {
                                     className={classNames(classes.logo, `text-xs-center pb-xs`)}
                                 >
                                     <img
-                                        src={`${process.env.PUBLIC_URL}/static/images/logo-dark.svg`}
-                                        alt=""
+                                        src={'/static/images/logo-dark.png'}
+                                        className="block"
                                     />
                                     <Typography variant="caption">
                                         Enter your email and we'll send you instructions on how to
@@ -86,11 +86,11 @@ const ForgotPasswordPage = () => {
                                 </Button>
                                 <div className="pt-1 text-xs-center">
                                     <Link to="/Login">
-                                        <Button>Sign</Button>
+                                        <Button>Login</Button>
                                     </Link>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <Link to="/Register">
-                                        <Button>Create new account.</Button>
+                                        <Button>Create new account</Button>
                                     </Link>
                                 </div>
                             </form>

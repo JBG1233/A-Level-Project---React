@@ -18,6 +18,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -81,7 +82,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Header = ({logo, logoAltText, toggleDrawer, toogleNotifications}) => {
+const Header = ({logo, logoAltText, toggleDrawer}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchExpanded, setSearchExpanded] = useState(false);
@@ -94,11 +95,6 @@ const Header = ({logo, logoAltText, toggleDrawer, toogleNotifications}) => {
 
   const handleDrawerToggle = () => {
     toggleDrawer();
-    if (searchExpanded) handleSearchExpandToggle();
-  };
-
-  const handleNotificationToggle = () => {
-    toogleNotifications();
     if (searchExpanded) handleSearchExpandToggle();
   };
 
@@ -172,24 +168,14 @@ const Header = ({logo, logoAltText, toggleDrawer, toogleNotifications}) => {
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </MenuItem>
+          <Link to="./Login">
           <MenuItem onClick={handleCloseMenu}>
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </MenuItem>
-          <MenuItem onClick={handleCloseMenu}>
-            <ListItemIcon>
-              <NotificationsOffIcon />
-            </ListItemIcon>
-            <ListItemText primary="Disable notifications" />
-          </MenuItem>
-          <MenuItem onClick={handleCloseMenu}>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sign out" />
-          </MenuItem>
+                <ListItemIcon>
+                    <ExitToAppIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Login"/>
+            </MenuItem>
+          </Link>
         </Menu>
       </Toolbar>
       <Hidden smUp>

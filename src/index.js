@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import {createStore, compose, applyMiddleware } from 'redux';
 import allReducers from './components/reducers'
@@ -8,7 +7,6 @@ import App from "./components/App";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
 import { render } from "react-dom";
-import UKQuiz from "./pages/UKQuiz";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";

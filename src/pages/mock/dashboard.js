@@ -12,8 +12,8 @@ import {
 export default [
   {
     type: 'bar',
-    title: 'Revenue',
-    subtitle: '+458,90',
+    title: 'Questions Answered Right Leaderboard',
+    subtitle: '(Questions Answered here)',
     data: data,
     height: height,
     options: {
@@ -24,8 +24,8 @@ export default [
   },
   {
     type: 'bar',
-    title: 'Yearly Sales',
-    subtitle: '-46,68',
+    title: 'Quizzes scored 100%',
+    subtitle: '(number here)',
     data: dataMixed,
     height: height,
     options: {
@@ -36,8 +36,8 @@ export default [
   },
   {
     type: 'bubble',
-    title: 'Sales Report',
-    subtitle: '+2,50%',
+    title: 'Quizzes taken',
+    subtitle: '(number here)',
     data: dataBubble,
     height: height,
     options: {
