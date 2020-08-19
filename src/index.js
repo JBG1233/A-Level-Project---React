@@ -1,12 +1,12 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import {createStore, compose, applyMiddleware } from 'redux';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {applyMiddleware, compose, createStore} from 'redux';
 import allReducers from './components/reducers'
 import {Provider} from 'react-redux';
 import thunk from "redux-thunk";
 import App from "./components/App";
 import React from "react";
 import registerServiceWorker from "./registerServiceWorker";
-import { render } from "react-dom";
+import {render} from "react-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
@@ -33,3 +33,5 @@ render(
 );
 
 registerServiceWorker();
+
+export default store;

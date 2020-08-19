@@ -84,19 +84,18 @@ const RegisterPage = () => {
         }
         axios({
             method: 'POST',
-            url: 'http://localhost:8080' + '/rest/Register',
+            url: 'http://localhost:8080/rest/Register',
             data: details,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             },
-        }) .then(response => {
+        }).then(response => {
             setOpen(true);
             setMessageInfo('Registration Successful!')
             setSeverity('success')
 
             })
             .catch(function (error) {
-                let alert;
                 if (error.response) {
                     if (error.response.status === 409) {
                         setOpen(true);
@@ -123,11 +122,11 @@ const RegisterPage = () => {
                         <CardContent>
                             <form>
                                 <div
-                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}
-                                >
+                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}>
                                     <img
                                         src={'/static/images/logo-dark.png'}
                                         className="block"
+                                        alt=""
                                     />
                                     <Typography variant="caption">
                                         Create an app id to continue

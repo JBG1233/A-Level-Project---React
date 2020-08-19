@@ -6,10 +6,12 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
+import {makeStyles} from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import {connect} from "react-redux";
+import store from './../index'
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -73,37 +75,37 @@ const LoginPage = () => {
         setOpen(false);
     };
 
-    function loggedIn () {
-        history.push('/Map')
-    }
-
-    function login(username, password) {
-        const details = {
-            'username': username,
-            'password': password,
-        }
-        axios({
-            method: 'POST',
-            url: 'http://localhost:8080' + '/rest/Login',
-            data: details,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-        }) .then(response => {
-            if (response.status === 200) {
-                loggedIn()
+    function login (username, password) {
+        console.log(store.getState())
+            const details = {
+                'username': username,
+                'password': password,
             }
-        })
-            .catch(function (error) {
-                if (error.response) {
-                    if (error.response.status === 400) {
-                        setOpen(true);
-                        setMessageInfo('Wrong username or password!')
-                        setSeverity('error')
+            axios({
+                method: 'POST',
+                url: 'http://localhost:8080' + '/rest/Login',
+                data: details,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+            }).then(res => {
+                    if (res.status === 200) {
+                        const userDtos = res.data;
+                        store.dispatch(loggingIn(userDtos))
+                        history.push('/Map')
+                        localStorage.setItem('loggedIn', "true")
                     }
-                }
-            })
-    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        if (error.response.status === 400) {
+                            setOpen(true);
+                            setMessageInfo('Wrong username or password!')
+                            setSeverity('error')
+                        }
+                    }
+                });
+        }
 
     function setValues () {
         const username = document.getElementById('username').value
@@ -172,5 +174,16 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export function loggingIn(userDtos) {
+    return {
+        type: 'loggedIn',
+        userDtos: userDtos,
+    }
+}
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
 

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import React, {useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Collapse from '@material-ui/core/Collapse';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -11,14 +10,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import NotificationsOffIcon from '@material-ui/icons/NotificationsOff';
 import PropTypes from 'prop-types';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from "react-router-dom";
+import {makeStyles} from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
+import store from './../index'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -83,13 +82,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({logo, logoAltText, toggleDrawer}) => {
+
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = useState(null);
+
   const [searchExpanded, setSearchExpanded] = useState(false);
 
   const handleSettingsToggle = event => setAnchorEl(event.currentTarget);
 
   const handleCloseMenu = () => setAnchorEl(null);
+
+  const handleLogin = () => setAnchorEl(null);
+
+  const handleLogout = () => setAnchorEl(null);
 
   const handleSearchExpandToggle = () => setSearchExpanded(!searchExpanded);
 
@@ -168,14 +174,24 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </MenuItem>
-          <Link to="./Login">
-          <MenuItem onClick={handleCloseMenu}>
-                <ListItemIcon>
+            {localStorage.loggedIn === undefined ?
+                <Link to="./Login">
+                <MenuItem onClick={handleLogin}>
+                  <ListItemIcon>
                     <ExitToAppIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Login"/>
-            </MenuItem>
-          </Link>
+                  </ListItemIcon>
+                  <ListItemText primary="Login"/>
+                </MenuItem>
+                </Link> :
+                <Link to="./Map">
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <ExitToAppIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Logout"/>
+                </MenuItem>
+                </Link>
+            }
         </Menu>
       </Toolbar>
       <Hidden smUp>

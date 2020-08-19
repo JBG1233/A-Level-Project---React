@@ -61,10 +61,7 @@ const App = ({ history }) => {
     resizeDispatch();
   };
 
-
-  const handleSpeedDialOpen = () => setOpenSpeedDial(true);
-
-  const handleSpeedDialClose = () => setOpenSpeedDial(false);
+  localStorage.clear()
 
   const getRoutes = (
     <Switch>
