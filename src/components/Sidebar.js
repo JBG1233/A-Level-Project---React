@@ -15,7 +15,6 @@ import PeopleIcon from "@material-ui/icons/People";
 import InfoIcon from "@material-ui/icons/Info";
 
 import Leaderboard from "../pages/Leaderboard";
-import UKQuiz from "../pages/UKQuiz";
 import About from "../pages/About";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);

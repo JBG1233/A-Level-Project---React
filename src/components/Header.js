@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import store from './../index'
+import {loggingIn} from "./LoginPage";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -95,7 +96,11 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
 
   const handleLogin = () => setAnchorEl(null);
 
-  const handleLogout = () => setAnchorEl(null);
+  function handleLogout() {
+    setAnchorEl(null);
+    store.dispatch(loggingOut())
+  }
+
 
   const handleSearchExpandToggle = () => setSearchExpanded(!searchExpanded);
 
@@ -216,6 +221,12 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
     </AppBar>
   );
 };
+
+export function loggingOut() {
+  return {
+    type: 'loggedOut',
+  }
+}
 
 Header.prototypes = {
   logo: PropTypes.string,

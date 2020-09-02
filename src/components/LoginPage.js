@@ -76,7 +76,6 @@ const LoginPage = () => {
     };
 
     function login (username, password) {
-        console.log(store.getState())
             const details = {
                 'username': username,
                 'password': password,

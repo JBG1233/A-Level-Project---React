@@ -2,9 +2,10 @@ import Leaderboard from './pages/Leaderboard';
 import WorldMap from "./pages/WorldMap";
 import UKQuiz from "./pages/UKQuiz";
 import About from "./pages/About";
-import RegisterPage from "./components/RegisterPage";
-import LoginPage from "./components/LoginPage";
-import ForgotPasswordPage from "./components/ForgotPasswordPage";
+import CanadaQuiz from "./pages/CanadaQuiz";
+import AustraliaQuiz from "./pages/AustraliaQuiz";
+import BrazilQuiz from "./pages/BrazilQuiz";
+import ChinaQuiz from "./pages/ChinaQuiz";
 
 
 export default {
@@ -21,6 +22,30 @@ export default {
       type: 'link',
       component: UKQuiz
     },
+    {
+      path: '/CanadaQuiz',
+      name: 'CanadaQuiz',
+      type: 'link',
+      component: CanadaQuiz
+    },    {
+      path: '/AustraliaQuiz',
+      name: 'AustraliaQuiz',
+      type: 'link',
+      component: AustraliaQuiz
+    },    {
+      path: '/BrazilQuiz',
+      name: 'BrazilQuiz',
+      type: 'link',
+      component: BrazilQuiz
+    },    {
+      path: '/ChinaQuiz',
+      name: 'ChinaQuiz',
+      type: 'link',
+      component: ChinaQuiz
+    },
+
+
+
     {
       path: '/Leaderboard',
       name: 'Leaderboard',
