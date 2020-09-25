@@ -77,12 +77,6 @@ const datasets = [{
   borderWidth: 0,
   data: [6, 5, 8, 8, 5, 5, 4]
 },
-{
-  label: 'My Second dataset',
-  ...colors[1],
-  borderWidth: 0,
-  data: [5, 4, 4, 2, 6, 2, 5]
-}
 ];
 
 const data = {
@@ -98,12 +92,6 @@ const lineData = {
     borderWidth: 1,
     data: [6, 5, 8, 8, 5, 5, 4]
   },
-  {
-    label: 'My Second dataset',
-    ...colors[1],
-    borderWidth: 1,
-    data: [5, 4, 4, 2, 6, 2, 5]
-  }
   ]
 };
 
@@ -117,14 +105,6 @@ const dataStepped = {
     borderWidth: 1,
     data: [6, 5, 8, 8, 5, 5, 4]
   },
-  {
-    steppedLine: true,
-    fill: false,
-    label: 'My Second dataset',
-    ...colors[1],
-    borderWidth: 1,
-    data: [5, 4, 4, 2, 6, 2, 5]
-  }
   ]
 };
 
@@ -140,38 +120,22 @@ const dataPoints = {
     borderWidth: 1,
     data: [6, 5, 8, 8, 5, 5, 4]
   },
-  {
-    fill: false,
-    pointRadius: 10,
-    pointHoverRadius: 15,
-    showLine: false,
-    label: 'My Second dataset',
-    ...colors[1],
-    borderWidth: 1,
-    data: [5, 4, 4, 2, 6, 2, 5]
-  }
   ]
 };
 
 const dataMixed = {
-  labels,
-  datasets: [{
-    label: 'Sales',
-    type: 'line',
-    data: [6, 5, 8, 8, 5, 5, 4],
-    borderWidth: 1,
-    fill: false,
-    ...colors[0],
-    yAxisID: 'y-axis-2'
-  }, {
-    type: 'bar',
-    label: 'Visitor',
-    data: [5, 4, 4, 2, 6, 2, 5],
-    borderWidth: 1,
-    ...colors[1],
-    yAxisID: 'y-axis-1'
-  }]
-};
+    labels,
+    datasets: [{
+        label: 'Sales',
+        type: 'line',
+        data: [6, 5, 8, 8, 5, 5, 4],
+        borderWidth: 1,
+        fill: false,
+        ...colors[0],
+        yAxisID: 'y-axis-2'
+    }]
+}
+
 
 const options = {
   responsive: true,
@@ -298,11 +262,6 @@ const dataRadar = {
     ...colors[0],
     data: [65, 59, 90, 81, 56, 55, 40]
   },
-  {
-    label: 'My Second dataset',
-    ...colors[1],
-    data: [28, 48, 40, 19, 96, 27, 100]
-  }
   ]
 };
 

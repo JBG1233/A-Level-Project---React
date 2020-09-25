@@ -5,38 +5,38 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 
-class Canada extends React.Component {
+class Australia extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            CanadaQuestions: null,
+            AustraliaQuestions: null,
         }
     }
 
     componentDidMount() {
-        this.loadQuestions()
+        this.loadAustraliaQuestions()
     }
 
-    loadQuestions() {
+    loadAustraliaQuestions() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/questions/Canada',
+            url: 'http://localhost:8080' + '/rest/questions/Australia',
         })
             .then(response => {
                 this.setState ({
-                    UKQuestions: response.data
+                    AustraliaQuestions: response.data
                 })
             })
     }
 
-    showQuestions = (CanadaQuestions) => {
+    showAustraliaQuestions = (AustraliaQuestions) => {
         return (
             <div className="questionFields">
                 <TextField
                     fullWidth={1000}
                     rows={6}
                     multiline
-                    label= {Canada.questionText}
+                    label= {AustraliaQuestions.questionText}
                     variant="outlined"
                 />
             </div>
@@ -48,10 +48,10 @@ class Canada extends React.Component {
         return (
             <div className="questions">
 
-                {this.state.CanadaQuestions !== undefined ? <div>
+                {this.state.AustraliaQuestions !== null ? <div>
                         {
-                            this.state.CanadaQuestions.map(UKQuestions => {
-                                return this.showQuestions(UKQuestions);
+                            this.state.AustraliaQuestions.map(AustraliaQuestions => {
+                                return this.showAustraliaQuestions(AustraliaQuestions);
                             })
                         }
                         <Grid item xs={12} sm={12} md={4} lg={4}
@@ -76,4 +76,4 @@ class Canada extends React.Component {
     }
 }
 
-export default Canada;
+export default Australia;

@@ -1,11 +1,11 @@
 import Leaderboard from './pages/Leaderboard';
 import WorldMap from "./pages/WorldMap";
-import UKQuiz from "./pages/UKQuiz";
 import About from "./pages/About";
-import CanadaQuiz from "./pages/CanadaQuiz";
-import AustraliaQuiz from "./pages/AustraliaQuiz";
-import BrazilQuiz from "./pages/BrazilQuiz";
-import ChinaQuiz from "./pages/ChinaQuiz";
+import Canada from "./pages/Canada";
+import UK from "./pages/UK";
+import Australia from "./pages/Australia";
+import Brazil from "./pages/Brazil";
+import China from "./pages/China";
 
 
 export default {
@@ -17,35 +17,32 @@ export default {
       component: WorldMap
     },
     {
-      path: '/UKQuiz',
-      name: 'UKQuiz',
+      path: '/UK',
+      name: 'UK',
       type: 'link',
-      component: UKQuiz
+      component: UK
     },
     {
-      path: '/CanadaQuiz',
-      name: 'CanadaQuiz',
+      path: '/Canada',
+      name: 'Canada',
       type: 'link',
-      component: CanadaQuiz
+      component: Canada
     },    {
-      path: '/AustraliaQuiz',
-      name: 'AustraliaQuiz',
+      path: '/Australia',
+      name: 'Australia',
       type: 'link',
-      component: AustraliaQuiz
+      component: Australia
     },    {
-      path: '/BrazilQuiz',
-      name: 'BrazilQuiz',
+      path: '/Brazil',
+      name: 'Brazil',
       type: 'link',
-      component: BrazilQuiz
+      component: Brazil
     },    {
-      path: '/ChinaQuiz',
-      name: 'ChinaQuiz',
+      path: '/China',
+      name: 'China',
       type: 'link',
-      component: ChinaQuiz
+      component: China
     },
-
-
-
     {
       path: '/Leaderboard',
       name: 'Leaderboard',

@@ -73,8 +73,7 @@ const StatCard = ({ type, title, value, icon, color }) => {
               </Typography>
               <Typography
                 variant="caption"
-                className={type === 'fill' ? classes.lightText : null}
-              >
+                className={type === 'fill' ? classes.lightText : null}>
                 {title}
               </Typography>
             </div>

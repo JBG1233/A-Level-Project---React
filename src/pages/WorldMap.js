@@ -1,19 +1,17 @@
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import React from 'react';
-import {UKQuizTrue} from "../components/actions";
-import {connect} from "react-redux";
 
 class WorldMap extends React.Component {
 
-    UKClick = () => {this.props.history.push('/UKQuiz')}
+    UKClick = () => {this.props.history.push('/UK')}
 
-    CanadaClick = () => {this.props.history.push('/CanadaQuiz')}
+    CanadaClick = () => {this.props.history.push('/Canada')}
 
-    AustraliaClick = () => {this.props.history.push('/AustraliaQuiz')}
+    AustraliaClick = () => {this.props.history.push('/Australia')}
 
-    BrazilClick = () => {this.props.history.push('/BrazilQuiz')}
+    BrazilClick = () => {this.props.history.push('/Brazil')}
 
-    ChinaClick = () => {this.props.history.push('/ChinaQuiz')}
+    ChinaClick = () => {this.props.history.push('/China')}
 
 
 
@@ -38,8 +36,6 @@ class WorldMap extends React.Component {
     }
 }
 
-const mapStateToProps = () => ({})
 
-const mapDispatchToProps = {UKQuizTrue}
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorldMap);
+export default WorldMap;

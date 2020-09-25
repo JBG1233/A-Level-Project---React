@@ -5,38 +5,39 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 
-class Australia extends React.Component {
+class Canada extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            AustraliaQuestions: null,
+            CanadaQuestions: null,
         }
     }
 
     componentDidMount() {
-        this.loadQuestions()
+        console.log("hello")
+        this.loadCanadaQuestions()
     }
 
-    loadQuestions() {
+    loadCanadaQuestions() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/questions/Australia',
+            url: 'http://localhost:8080' + '/rest/questions/Canada',
         })
             .then(response => {
-                this.setState ({
-                    UKQuestions: response.data
+                    this.setState ({
+                    CanadaQuestions: response.data
                 })
             })
     }
 
-    showQuestions = (AustraliaQuestions) => {
+    showCanadaQuestions = (CanadaQuestions) => {
         return (
             <div className="questionFields">
                 <TextField
                     fullWidth={1000}
                     rows={6}
                     multiline
-                    label= {Australia.questionText}
+                    label= {CanadaQuestions.questionText}
                     variant="outlined"
                 />
             </div>
@@ -45,13 +46,14 @@ class Australia extends React.Component {
     }
 
     render () {
+        console.log(this.state.CanadaQuestions)
         return (
             <div className="questions">
 
-                {this.state.AustraliaQuestions !== undefined ? <div>
+                {this.state.CanadaQuestions !== null ? <div>
                         {
-                            this.state.AustraliaQuestions.map(UKQuestions => {
-                                return this.showQuestions(UKQuestions);
+                            this.state.CanadaQuestions.map(CanadaQuestions => {
+                                return this.showCanadaQuestions(CanadaQuestions);
                             })
                         }
                         <Grid item xs={12} sm={12} md={4} lg={4}
@@ -70,10 +72,8 @@ class Australia extends React.Component {
                     : null
                 }
             </div>
-
-
         )
     }
 }
 
-export default Australia;
+export default Canada;
