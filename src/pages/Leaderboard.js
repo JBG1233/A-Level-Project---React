@@ -24,7 +24,7 @@ const Leaderboard = () => {
                         type="fill"
                         title="Quiz's Taken"
                         value={103}
-                        icon={<CreateIcon />}
+                        icon={<CreateIcon/>}
                         color="#3f51b5"
                     />
                 </Grid>
@@ -33,7 +33,7 @@ const Leaderboard = () => {
                         type="fill"
                         title="Questions Answered"
                         value={230}
-                        icon={<QuestionAnswerIcon />}
+                        icon={<QuestionAnswerIcon/>}
                         color="#9c27b0"
                     />
                 </Grid>
@@ -42,7 +42,7 @@ const Leaderboard = () => {
                         type="fill"
                         title="Questions Answered Right"
                         value={323}
-                        icon={<CheckIcon />}
+                        icon={<CheckIcon/>}
                         color="#f44336"
                     />
                 </Grid>
@@ -51,7 +51,7 @@ const Leaderboard = () => {
                         type="fill"
                         title="Questions Answered Wrong"
                         value={870}
-                        icon={<ClearIcon />}
+                        icon={<ClearIcon/>}
                         color="#e5593f"
                     />
                 </Grid>

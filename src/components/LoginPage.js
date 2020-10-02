@@ -12,6 +12,8 @@ import MuiAlert from "@material-ui/lab/Alert";
 import {connect} from "react-redux";
 import store from './../index'
 import axios from "axios";
+import { bindActionCreators } from 'redux'
+import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -89,10 +91,8 @@ const LoginPage = () => {
                 },
             }).then(res => {
                     if (res.status === 200) {
-                        const userDtos = res.data;
-                        store.dispatch(loggingIn(userDtos))
+                        store.dispatch(loggingIn(res.data))
                         history.push('/Map')
-                        localStorage.setItem('loggedIn', "true")
                     }
                 })
                 .catch(function (error) {
@@ -182,7 +182,7 @@ export function loggingIn(userDtos) {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+
+export default connect(mapStateToProps)(LoginPage);
 

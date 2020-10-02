@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import store from './../index'
-import {loggingIn} from "./LoginPage";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -101,7 +101,6 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
     store.dispatch(loggingOut())
   }
 
-
   const handleSearchExpandToggle = () => setSearchExpanded(!searchExpanded);
 
   const handleDrawerToggle = () => {
@@ -109,117 +108,117 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
     if (searchExpanded) handleSearchExpandToggle();
   };
 
-  return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar className={classes.toolBar}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerToggle}
-        >
-          <MenuIcon />
-        </IconButton>
-
-        <div className={classes.branding}>
-          <img src={logo} alt={logoAltText} className={classes.logo} />
-        </div>
-
-        <Hidden xsDown>
-          <div className={classes.searchWrapper}>
-            <form className={classes.searchForm}>
-              <IconButton aria-label="Search" className={classes.searchIcon}>
-                <SearchIcon />
-              </IconButton>
-              <input
-                className={classes.searchInput}
-                type="text"
-                placeholder="Search"
-                autoFocus={true}
-              />
-            </form>
-          </div>
-        </Hidden>
-
-        <Hidden smUp>
-          <span className="flexSpacer" />
-        </Hidden>
-
-        <Hidden smUp>
+  const testFunction = (loggedIn) => (
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar className={classes.toolBar}>
           <IconButton
-            color="inherit"
-            onClick={handleSearchExpandToggle}
-            aria-expanded={searchExpanded}
-            aria-label="Show searchbar"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerToggle}
           >
-            <SearchIcon />
+            <MenuIcon/>
           </IconButton>
-        </Hidden>
 
+          <div className={classes.branding}>
+            <img src={logo} alt={logoAltText} className={classes.logo}/>
+          </div>
 
-
-        <IconButton
-          aria-label="User Settings"
-          aria-owns={anchorEl ? 'user-menu' : null}
-          aria-haspopup="true"
-          color="inherit"
-          onClick={handleSettingsToggle}
-        >
-          <MoreVertIcon />
-        </IconButton>
-
-        <Menu
-          id="user-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMenu}
-        >
-          <MenuItem onClick={handleCloseMenu}>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </MenuItem>
-            {localStorage.loggedIn === undefined ?
-                <Link to="./Login">
-                <MenuItem onClick={handleLogin}>
-                  <ListItemIcon>
-                    <ExitToAppIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary="Login"/>
-                </MenuItem>
-                </Link> :
-                <Link to="./Map">
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    <ExitToAppIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary="Logout"/>
-                </MenuItem>
-                </Link>
-            }
-        </Menu>
-      </Toolbar>
-      <Hidden smUp>
-        <Collapse in={searchExpanded} timeout="auto" unmountOnExit>
-          <Toolbar className={classes.toolBar}>
+          <Hidden xsDown>
             <div className={classes.searchWrapper}>
-              <form className={classNames(classes.searchForm, 'mr-0')}>
+              <form className={classes.searchForm}>
                 <IconButton aria-label="Search" className={classes.searchIcon}>
-                  <SearchIcon />
+                  <SearchIcon/>
                 </IconButton>
                 <input
-                  className={classes.searchInput}
-                  type="text"
-                  placeholder="Search"
-                  autoFocus="true"
+                    className={classes.searchInput}
+                    type="text"
+                    placeholder="Search"
+                    autoFocus={true}
                 />
               </form>
             </div>
-          </Toolbar>
-        </Collapse>
-      </Hidden>
-    </AppBar>
+          </Hidden>
+
+          <Hidden smUp>
+            <span className="flexSpacer"/>
+          </Hidden>
+
+          <Hidden smUp>
+            <IconButton
+                color="inherit"
+                onClick={handleSearchExpandToggle}
+                aria-expanded={searchExpanded}
+                aria-label="Show searchbar"
+            >
+              <SearchIcon/>
+            </IconButton>
+          </Hidden>
+
+
+          <IconButton
+              aria-label="User Settings"
+              aria-owns={anchorEl ? 'user-menu' : null}
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleSettingsToggle}
+          >
+            <MoreVertIcon/>
+          </IconButton>
+
+          <Menu
+              id="user-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleCloseMenu}
+          >
+            <MenuItem onClick={handleCloseMenu}>
+              <ListItemIcon>
+                <SettingsIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Settings"/>
+            </MenuItem>
+            {loggedIn === undefined ?
+                <Link to="./Login">
+                  <MenuItem onClick={handleLogin}>
+                    <ListItemIcon>
+                      <ExitToAppIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Login"/>
+                  </MenuItem>
+                </Link> :
+                <Link to="./Map">
+                  <MenuItem onClick={handleLogout}>
+                    <ListItemIcon>
+                      <ExitToAppIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Logout"/>
+                  </MenuItem>
+                </Link>
+            }
+          </Menu>
+        </Toolbar>
+        <Hidden smUp>
+          <Collapse in={searchExpanded} timeout="auto" unmountOnExit>
+            <Toolbar className={classes.toolBar}>
+              <div className={classes.searchWrapper}>
+                <form className={classNames(classes.searchForm, 'mr-0')}>
+                  <IconButton aria-label="Search" className={classes.searchIcon}>
+                    <SearchIcon/>
+                  </IconButton>
+                  <input
+                      className={classes.searchInput}
+                      type="text"
+                      placeholder="Search"
+                      autoFocus="true"
+                  />
+                </form>
+              </div>
+            </Toolbar>
+          </Collapse>
+        </Hidden>
+      </AppBar>
   );
+
 };
 
 export function loggingOut() {
@@ -233,4 +232,10 @@ Header.prototypes = {
   logoAltText: PropTypes.string
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.login.loggedIn
+  }
+}
+
+export default connect(mapStateToProps)(Header);
