@@ -18,7 +18,6 @@ import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import store from './../index'
-import {connect} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -98,7 +97,7 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
 
   function handleLogout() {
     setAnchorEl(null);
-    store.dispatch(loggingOut())
+    localStorage.clear()
   }
 
   const handleSearchExpandToggle = () => setSearchExpanded(!searchExpanded);
@@ -108,8 +107,8 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
     if (searchExpanded) handleSearchExpandToggle();
   };
 
-  const testFunction = (loggedIn) => (
-      <AppBar position="static" className={classes.appBar}>
+  return (
+    <AppBar position="static" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <IconButton
               color="inherit"
@@ -177,7 +176,7 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
               </ListItemIcon>
               <ListItemText primary="Settings"/>
             </MenuItem>
-            {loggedIn === undefined ?
+            {localStorage.loggedIn === undefined ?
                 <Link to="./Login">
                   <MenuItem onClick={handleLogin}>
                     <ListItemIcon>
@@ -218,24 +217,11 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
         </Hidden>
       </AppBar>
   );
-
 };
-
-export function loggingOut() {
-  return {
-    type: 'loggedOut',
-  }
-}
 
 Header.prototypes = {
   logo: PropTypes.string,
   logoAltText: PropTypes.string
 };
 
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: state.login.loggedIn
-  }
-}
-
-export default connect(mapStateToProps)(Header);
+export default Header;

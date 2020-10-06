@@ -21,12 +21,12 @@ const store = createStore(
 render(
   <Provider store={store}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Switch>
-          <Route exact path="/Login" component={LoginPage} />
-          <Route exact path="/Register" component={RegisterPage} />
-          <Route exact path="/Forgot" component={ForgotPasswordPage} />
-          <Route path="/" component={App} />
-      </Switch>
+            <Switch>
+                <Route exact path="/Login" component={LoginPage} />
+                <Route exact path="/Register" component={RegisterPage} />
+                <Route exact path="/Forgot" component={ForgotPasswordPage} />
+                <Route path="/" component={App} />
+            </Switch>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

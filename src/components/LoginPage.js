@@ -91,8 +91,10 @@ const LoginPage = () => {
                 },
             }).then(res => {
                     if (res.status === 200) {
-                        store.dispatch(loggingIn(res.data))
                         history.push('/Map')
+                        localStorage.setItem('loggedIn', "true")
+                        localStorage.setItem('userDtos', JSON.stringify(res.data))
+
                     }
                 })
                 .catch(function (error) {
@@ -173,16 +175,8 @@ const LoginPage = () => {
     );
 };
 
-export function loggingIn(userDtos) {
-    return {
-        type: 'loggedIn',
-        userDtos: userDtos,
-    }
-}
-
-const mapStateToProps = () => ({});
 
 
 
-export default connect(mapStateToProps)(LoginPage);
+export default LoginPage;
 

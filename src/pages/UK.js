@@ -3,8 +3,8 @@ import './Quiz.css';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import {Field, reduxForm} from "redux-form";
 import TextField from "@material-ui/core/TextField";
+
 
 class UK extends React.Component {
     constructor(props) {
@@ -12,7 +12,16 @@ class UK extends React.Component {
         this.state = {
             UKQuestion: null,
             questionAnswers: [],
-            score: null
+            score: null,
+            setOpen: false,
+        }
+    }
+
+    wait(ms){
+        let start = new Date().getTime();
+        let end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
         }
     }
 
@@ -33,54 +42,60 @@ class UK extends React.Component {
     }
 
     submitUKQuestions() {
+        
+
         const details = [
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[0]).value,
-                "questionCode": this.state.UKQuestions[0].questionCode,
-                "questionNumber": this.state.UKQuestions[0].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[1]).value,
-                "questionCode": this.state.UKQuestions[1].questionCode,
-                "questionNumber": this.state.UKQuestions[1].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[2]).value,
-                "questionCode": this.state.UKQuestions[2].questionCode,
-                "questionNumber": this.state.UKQuestions[2].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[3]).value,
-                "questionCode": this.state.UKQuestions[3].questionCode,
-                "questionNumber": this.state.UKQuestions[3].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[4]).value,
-                "questionCode": this.state.UKQuestions[4].questionCode,
-                "questionNumber": this.state.UKQuestions[4].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[5]).value,
-                "questionCode": this.state.UKQuestions[5].questionCode,
-                "questionNumber": this.state.UKQuestions[5].questionNumber
-            },
-            {
-                "userQuestionAnswer": document.getElementById('abcdefg'[6]).value,
-                "questionCode": this.state.UKQuestions[6].questionCode,
-                "questionNumber": this.state.UKQuestions[6].questionNumber
-            }
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[0]).value,
+                    "questionCode": this.state.UKQuestions[0].questionCode,
+                    "questionNumber": this.state.UKQuestions[0].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[1]).value,
+                    "questionCode": this.state.UKQuestions[1].questionCode,
+                    "questionNumber": this.state.UKQuestions[1].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[2]).value,
+                    "questionCode": this.state.UKQuestions[2].questionCode,
+                    "questionNumber": this.state.UKQuestions[2].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[3]).value,
+                    "questionCode": this.state.UKQuestions[3].questionCode,
+                    "questionNumber": this.state.UKQuestions[3].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[4]).value,
+                    "questionCode": this.state.UKQuestions[4].questionCode,
+                    "questionNumber": this.state.UKQuestions[4].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[5]).value,
+                    "questionCode": this.state.UKQuestions[5].questionCode,
+                    "questionNumber": this.state.UKQuestions[5].questionNumber
+                },
+                {
+                    "userQuestionAnswer": document.getElementById('abcdefg'[6]).value,
+                    "questionCode": this.state.UKQuestions[6].questionCode,
+                    "questionNumber": this.state.UKQuestions[6].questionNumber
+                },
         ]
         axios({
             method: "POST",
-            url: 'http://localhost:8080' + '/rest/questions/Validation',
+            url: 'http://localhost:8080' + '/rest/Validation',
             data: details,
+            headers: {
+                'Authorization': JSON.parse(localStorage.getItem('userDtos')).accessToken
+            },
         })
             .then(response => {
                 if (response.status === 200) {
                     this.setState ({
                         score: response.data
                     })
-            } else {
+                    this.forceUpdate()
+                } else {
 
             }
             })
@@ -107,21 +122,32 @@ class UK extends React.Component {
     render () {
         return (
             <div className="questions">
-
+                {this.state.score != null ? <img className="scores" src={'/static/images/arrow.png'} alt="" onClick={() => this.props.history.push("/Map")}/>
+                    : null
+                }
+                {this.state.score != null ? <div className="score" onClick={() => this.props.history.push("/Map")}>Go back to world map view</div>
+                    : null
+                }
                 {this.state.UKQuestions !== undefined ? <div>
                         {
                             this.state.UKQuestions.map((UKQuestions, index) => {
                                 return this.showUKQuestions(UKQuestions, index)
                             })
                         }
-                    <Grid item xs={12} sm={12} md={4} lg={4}
+                    <Grid
                           style={{
                               marginTop: '20px',
 
                           }}>
-                        <Button variant="contained" color="primary" onClick = {() => this.submitUKQuestions()}>
-                            Submit Quiz
-                        </Button>
+                        {!localStorage.getItem("loggedIn") ?
+                            <div className="score">
+                                Please login to submit your score!
+                            </div>
+                                :
+                            <Button variant="contained" color="primary" onClick = {() => this.submitUKQuestions()}>
+                                Submit Quiz
+                            </Button>
+                        }
                     </Grid>
                     <div className="score">
                         {this.state.score != null ? <div>
@@ -129,7 +155,7 @@ class UK extends React.Component {
                             </div>
                             : null
                         }
-                </div>
+                    </div>
                     </div>
                     : null
                 }
@@ -139,12 +165,5 @@ class UK extends React.Component {
         )
     }
 }
-
-
-
-UK = reduxForm({
-    form: 'UkUserAnswers',
-    destroyOnUnmount: false
-})(UK)
 
 export default UK;

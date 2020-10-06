@@ -61,8 +61,6 @@ const App = ({ history }) => {
     resizeDispatch();
   };
 
-  localStorage.clear()
-
   const getRoutes = (
     <Switch>
       {routes.items.map((item, index) =>

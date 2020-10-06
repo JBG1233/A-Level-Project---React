@@ -13,8 +13,11 @@
 }
 
 .score {
-    margin-top: 10px;
-    font-size: 30px;
     font-family: 'Alata', sans-serif;
+    font-size: 25px;
+    color: red;
 }
 
+.scores {
+    padding-top: 25px;
+}
