@@ -32,7 +32,7 @@ class China extends React.Component {
     loadChinaQuestions() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/questions/China',
+            url: 'http://localhost:8080' + '/rest/questions/china',
         })
             .then(response => {
                 this.setState ({
@@ -83,10 +83,10 @@ class China extends React.Component {
         ]
         axios({
             method: "POST",
-            url: 'http://localhost:8080' + '/rest/Validation',
+            url: 'http://localhost:8080' + '/rest/validation',
             data: details,
             headers: {
-                'Authorization': JSON.parse(localStorage.getItem('userDtos')).accessToken
+                'Authorization': localStorage.getItem('userDtos')
             },
         })
             .then(response => {

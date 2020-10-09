@@ -32,7 +32,7 @@ class UK extends React.Component {
     loadUKQuestions() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/questions/UK',
+            url: 'http://localhost:8080' + '/rest/questions/uk',
         })
             .then(response => {
                 this.setState ({
@@ -83,10 +83,10 @@ class UK extends React.Component {
         ]
         axios({
             method: "POST",
-            url: 'http://localhost:8080' + '/rest/Validation',
+            url: 'http://localhost:8080' + '/rest/validation',
             data: details,
             headers: {
-                'Authorization': JSON.parse(localStorage.getItem('userDtos')).accessToken
+                'Authorization': localStorage.getItem('accessToken')
             },
         })
             .then(response => {
@@ -94,10 +94,9 @@ class UK extends React.Component {
                     this.setState ({
                         score: response.data
                     })
-                    this.forceUpdate()
-                } else {
+                }
 
-            }
+
             })
         this.setState({
             questionAnswers: [],

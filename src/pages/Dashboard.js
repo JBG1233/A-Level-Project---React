@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const sharedOptions = {
   maintainAspectRatio: true,
   responsive: true,
@@ -22,7 +24,7 @@ const gridOptions = {
       position: 'left',
       ticks: {
         beginAtZero: true,
-        suggestedMax: 9
+        suggestedMax: 7
       }
     }]
   }
@@ -46,7 +48,7 @@ const stackedGridOptions = {
       position: 'left',
       ticks: {
         beginAtZero: true,
-        suggestedMax: 9
+        suggestedMax: 7
       }
     }]
   }
@@ -71,28 +73,55 @@ const colors = [{
 
 const labels = ['1', '2', '3', '4', '5', '6', '7'];
 
-const datasets = [{
-  ...colors[0],
-  borderWidth: 0,
-  data: [6, 5, 8, 8, 5, 5, 4]
-},
-];
+function getLeaderboard() {
+  axios({
+    method: 'GET',
+    url: 'http://localhost:8080' + '/rest/leaderboard',
+    headers: {
+      'Authorization': localStorage.getItem('accessToken')
+    },
+    })
+.then(response => {
+  localStorage.setItem("qWrongLast7", JSON.stringify(response.data.qWrongLast7))
+  localStorage.setItem("qRightLast7", JSON.stringify(response.data.qRightLast7))
+  localStorage.setItem("percentageLast7", JSON.stringify(response.data.percentageLast7))
 
-const data = {
-  labels,
-  datasets
-};
+})
 
-const dataMixed = {
+}
+function dataOne () {
+  getLeaderboard()
+  const dataOne = {
+    labels,
+    datasets: [{
+      ...colors[0],
+      borderWidth: 0,
+      data: JSON.parse(localStorage.getItem('qWrongLast7'))
+    }]
+  };
+  return dataOne;
+}
+
+
+const dataTwo = {
   labels,
   datasets: [{
-    label: 'Sales',
+    data: JSON.parse(localStorage.getItem('qRightLast7')),
+    borderWidth: 0,
+    ...colors[0],
+  }]
+}
+
+const dataThree = {
+  labels,
+  datasets: [{
+    label: 'Percent',
     type: 'line',
-    data: [6, 5, 8, 8, 5, 5, 4],
+    data: JSON.parse(localStorage.getItem('percentageLast7')),
     borderWidth: 1,
     fill: false,
     ...colors[0],
-    yAxisID: 'y-axis-2'
+    yAxisID: 'y-axis-1'
   }]
 }
 
@@ -126,77 +155,17 @@ const options = {
         show: true
       }
     },
-      {
-        type: 'linear',
-        display: true,
-        position: 'right',
-        id: 'y-axis-2',
-        gridLines: {
-          display: false
-        },
-        labels: {
-          show: true
-        }
-      }
     ]
   }
 };
 
-const dataBubble = {
-  labels: ['January'],
-  datasets: [{
-    label: 'My First dataset',
-    fill: true,
-    lineTension: 0.1,
-    ...colors[0],
-    borderCapStyle: 'butt',
-    borderDash: [],
-    borderDashOffset: 0.0,
-    borderJoinStyle: 'miter',
-    pointBorderWidth: 1,
-    pointRadius: 1,
-    pointHitRadius: 10,
-    data: [{
-      x: 6,
-      y: 5,
-      r: 15,
-    }, {
-      x: 5,
-      y: 4,
-      r: 10,
-    }, {
-      x: 8,
-      y: 4,
-      r: 6,
-    }, {
-      x: 8,
-      y: 4,
-      r: 6,
-    }, {
-      x: 5,
-      y: 14,
-      r: 14,
-    }, {
-      x: 5,
-      y: 6,
-      r: 8,
-    }, {
-      x: 4,
-      y: 2,
-      r: 10,
-    }],
-    borderWidth: 0.5
-  }]
-};
-
 const height = 200;
-
 
 export default [
   {
     type: 'bar',
-    title: 'Questions Answered Right Leaderboard',
-    data: data,
+    title: 'Questions Answered Right',
+    data: dataOne(),
     height: height,
     options: {
       ...sharedOptions,
@@ -206,23 +175,24 @@ export default [
   },
   {
     type: 'bar',
-    title: 'Quizzes scored 100%',
-    data: dataMixed,
+    title: 'Questions Answered Wrong',
+    data: dataTwo,
+    height: height,
+    options: {
+      ...sharedOptions,
+      ...gridOptions,
+      ...stackedGridOptions
+    }
+  },
+  {
+    type: 'bar',
+    title: 'Percentage scored',
+    data: dataThree,
     height: height,
     options: {
       ...sharedOptions,
       ...gridOptions,
       ...options
-    }
-  },
-  {
-    type: 'bubble',
-    title: 'Quizzes taken',
-    subtitle: '(number here)',
-    data: dataBubble,
-    height: height,
-    options: {
-      ...sharedOptions
     }
   }
 ];

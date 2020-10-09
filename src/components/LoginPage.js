@@ -84,7 +84,7 @@ const LoginPage = () => {
             }
             axios({
                 method: 'POST',
-                url: 'http://localhost:8080' + '/rest/Login',
+                url: 'http://localhost:8080' + '/rest/login',
                 data: details,
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -93,7 +93,7 @@ const LoginPage = () => {
                     if (res.status === 200) {
                         history.push('/Map')
                         localStorage.setItem('loggedIn', "true")
-                        localStorage.setItem('userDtos', JSON.stringify(res.data))
+                        localStorage.setItem('accessToken', res.data)
 
                     }
                 })
@@ -102,6 +102,10 @@ const LoginPage = () => {
                         if (error.response.status === 400) {
                             setOpen(true);
                             setMessageInfo('Wrong username or password!')
+                            setSeverity('error')
+                        } else if (error.response.status === 500) {
+                            setOpen(true);
+                            setMessageInfo('Unable to log you in!')
                             setSeverity('error')
                         }
                     }

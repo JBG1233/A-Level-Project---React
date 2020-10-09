@@ -10,6 +10,7 @@ import {render} from "react-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
+import BackendError from "./components/BackendError";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -25,6 +26,7 @@ render(
                 <Route exact path="/Login" component={LoginPage} />
                 <Route exact path="/Register" component={RegisterPage} />
                 <Route exact path="/Forgot" component={ForgotPasswordPage} />
+                <Route exact path="/500" component={BackendError} />
                 <Route path="/" component={App} />
             </Switch>
     </BrowserRouter>

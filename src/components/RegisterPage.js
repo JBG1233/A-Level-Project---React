@@ -84,7 +84,7 @@ const RegisterPage = () => {
         }
         axios({
             method: 'POST',
-            url: 'http://localhost:8080/rest/Register',
+            url: 'http://localhost:8080/rest/register',
             data: details,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
