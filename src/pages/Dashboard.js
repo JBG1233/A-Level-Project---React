@@ -96,7 +96,7 @@ function dataOne () {
     datasets: [{
       ...colors[0],
       borderWidth: 0,
-      data: JSON.parse(localStorage.getItem('qWrongLast7'))
+      data: JSON.parse(localStorage.getItem('qRightLast7'))
     }]
   };
   return dataOne;
@@ -106,7 +106,7 @@ function dataOne () {
 const dataTwo = {
   labels,
   datasets: [{
-    data: JSON.parse(localStorage.getItem('qRightLast7')),
+    data: JSON.parse(localStorage.getItem('qWrongLast7')),
     borderWidth: 0,
     ...colors[0],
   }]
