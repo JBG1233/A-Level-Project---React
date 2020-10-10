@@ -73,25 +73,7 @@ const colors = [{
 
 const labels = ['1', '2', '3', '4', '5', '6', '7'];
 
-function getLeaderboard() {
-  axios({
-    method: 'GET',
-    url: 'http://localhost:8080' + '/rest/leaderboard',
-    headers: {
-      'Authorization': localStorage.getItem('accessToken')
-    },
-    })
-.then(response => {
-  localStorage.setItem("qWrongLast7", JSON.stringify(response.data.qWrongLast7))
-  localStorage.setItem("qRightLast7", JSON.stringify(response.data.qRightLast7))
-  localStorage.setItem("percentageLast7", JSON.stringify(response.data.percentageLast7))
-
-})
-
-}
-function dataOne () {
-  getLeaderboard()
-  const dataOne = {
+const dataOne = {
     labels,
     datasets: [{
       ...colors[0],
@@ -99,8 +81,6 @@ function dataOne () {
       data: JSON.parse(localStorage.getItem('qRightLast7'))
     }]
   };
-  return dataOne;
-}
 
 
 const dataTwo = {
@@ -165,7 +145,7 @@ export default [
   {
     type: 'bar',
     title: 'Questions Answered Right',
-    data: dataOne(),
+    data: dataOne,
     height: height,
     options: {
       ...sharedOptions,

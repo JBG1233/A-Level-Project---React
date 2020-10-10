@@ -110,7 +110,9 @@ const App = ({ history }) => {
       });
     };
   });
-
+  localStorage.setItem("qWrongLast7", JSON.stringify([0,0,0,0,0,0,0]))
+  localStorage.setItem("qRightLast7", JSON.stringify([0,0,0,0,0,0,0]))
+  localStorage.setItem("percentageLast7", JSON.stringify([0,0,0,0,0,0,0]))
   return (
     <>
       <Header

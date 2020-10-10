@@ -36,6 +36,9 @@ class Leaderboard extends React.Component {
             },
         })
             .then(response => {
+                localStorage.setItem("qWrongLast7", JSON.stringify(response.data.qWrongLast7))
+                localStorage.setItem("qRightLast7", JSON.stringify(response.data.qRightLast7))
+                localStorage.setItem("percentageLast7", JSON.stringify(response.data.percentageLast7))
                 this.setState ({
                     qRight: response.data.answeredRight,
                     qWrong: response.data.answeredWrong,
@@ -43,6 +46,12 @@ class Leaderboard extends React.Component {
                     answered: response.data.answered,
                 })
             })
+    }
+    componentWillUnmount() {
+        localStorage.removeItem("qWrongLast7")
+        localStorage.removeItem("qRightLast7")
+        localStorage.removeItem("percentageLast7")
+
     }
 
     componentDidMount() {
