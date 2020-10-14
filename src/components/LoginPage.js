@@ -86,17 +86,15 @@ const LoginPage = () => {
                 method: 'POST',
                 url: 'http://localhost:8080' + '/rest/login',
                 data: details,
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
+
             }).then(res => {
                     if (res.status === 200) {
                         history.push('/Map')
                         localStorage.setItem('loggedIn', "true")
-                        localStorage.setItem('accessToken', res.data)
-
+                        localStorage.setItem('userDtos', JSON.stringify(res.data))
                     }
                 })
+
                 .catch(function (error) {
                     if (error.response) {
                         if (error.response.status === 400) {

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Collapse from '@material-ui/core/Collapse';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -17,7 +18,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
 import {makeStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
-import store from './../index'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -176,6 +176,12 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
               </ListItemIcon>
               <ListItemText primary="Settings"/>
             </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <PersonIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Logged in as"/>
+            </MenuItem>
             {localStorage.loggedIn === undefined ?
                 <Link to="./Login">
                   <MenuItem onClick={handleLogin}>
@@ -207,7 +213,7 @@ const Header = ({logo, logoAltText, toggleDrawer}) => {
                   <input
                       className={classes.searchInput}
                       type="text"
-                      placeholder="Search"
+                      placeholder="Sea rch"
                       autoFocus="true"
                   />
                 </form>

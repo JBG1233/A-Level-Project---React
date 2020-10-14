@@ -32,7 +32,7 @@ class Canada extends React.Component {
     loadCanadaQuestions() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/questions/canada',
+            url: 'http://35.179.84.127:8080' + '/rest/questions/canada',
         })
             .then(response => {
                 this.setState ({
@@ -83,7 +83,7 @@ class Canada extends React.Component {
         ]
         axios({
             method: "POST",
-            url: 'http://localhost:8080' + '/rest/validation',
+            url: 'http://35.179.84.127:8080' + '/rest/validation',
             data: details,
             headers: {
                 'Authorization': localStorage.getItem('accessToken')

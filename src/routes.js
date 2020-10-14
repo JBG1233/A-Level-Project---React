@@ -27,6 +27,7 @@ export default {
       name: 'Canada',
       type: 'link',
       component: Canada
+
     },    {
       path: '/Australia',
       name: 'Australia',

@@ -30,9 +30,9 @@ class Leaderboard extends React.Component {
     getLeaderboardStatistics() {
         axios({
             method: 'GET',
-            url: 'http://localhost:8080' + '/rest/leaderboard',
+            url: 'http://35.179.84.127:8080' + '/rest/leaderboard',
             headers: {
-                'Authorization': localStorage.getItem('accessToken')
+                'Authorization': (JSON.parse(localStorage.getItem('userDtos'))).accessToken
             },
         })
             .then(response => {
