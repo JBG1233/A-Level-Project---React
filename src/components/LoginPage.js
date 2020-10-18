@@ -1,21 +1,30 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import {Link, useHistory} from "react-router-dom";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
-import {makeStyles} from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import {connect} from "react-redux";
-import store from './../index'
+import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
-import { bindActionCreators } from 'redux'
-import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {connect} from "react-redux";
+import {
+    CloseAlert,
+    ErrorTrue,
+    ForgotPasswordTrue,
+    Login,
+    MapTrue,
+    RegisterTrue,
+    stayLoggedIn,
+    UpdateAlert
+} from "../redux/actions";
+import {compose} from "redux";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
     card: {
         overflow: "visible"
     },
@@ -52,133 +61,139 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "column"
     }
-}));
+});
 
-const LoginPage = () => {
+class LoginPage extends React.Component {
 
-    const classes = useStyles();
-
-    const history = useHistory()
-
-    function Alert(props) {
-        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null
+        }
     }
 
-    const [open, setOpen] = React.useState(false);
+    login(username, password) {
+        const details = {
+            'username': username,
+            'password': password,
+        }
+        axios({
+            method: 'POST',
+            url: this.props.apiHost + '/rest/login',
+            data: details,
 
-    const [severity, setSeverity] = React.useState(undefined);
+        }).then(res => {
+            if (res.status === 200) {
+                this.props.Login(res.data)
+                this.props.MapTrue()
+                this.props.UpdateAlert("success", "Login Successful")
+            }
+        }).catch(error => {
+            this.setState({
+                error: error
+            })
+        })
+    }
 
-    const [messageInfo, setMessageInfo, ] = React.useState(undefined);
-
-    const handleClose = (event, reason) => {
+    CloseAlert(event, reason) {
         if (reason === 'clickaway') {
             return;
         }
-        setOpen(false);
+        this.props.CloseAlert()
     };
 
-    function login (username, password) {
-            const details = {
-                'username': username,
-                'password': password,
-            }
-            axios({
-                method: 'POST',
-                url: 'http://localhost:8080' + '/rest/login',
-                data: details,
-
-            }).then(res => {
-                    if (res.status === 200) {
-                        history.push('/Map')
-                        localStorage.setItem('loggedIn', "true")
-                        localStorage.setItem('userDtos', JSON.stringify(res.data))
-                    }
-                })
-
-                .catch(function (error) {
-                    if (error.response) {
-                        if (error.response.status === 400) {
-                            setOpen(true);
-                            setMessageInfo('Wrong username or password!')
-                            setSeverity('error')
-                        } else if (error.response.status === 500) {
-                            setOpen(true);
-                            setMessageInfo('Unable to log you in!')
-                            setSeverity('error')
-                        }
-                    }
-                });
-        }
-
-    function setValues () {
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
-        login(username, password)
+    stayLoggedIn() {
+        this.props.stayLoggedIn()
     }
 
-    return (
-        <div className={classNames(classes.session, classes.background)}>
-            <div className={classes.content}>
-                <div className={classes.wrapper}>
-                    <Card>
-                        <CardContent>
-                            <form>
-                                <div
-                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}>
-                                    <img
-                                        src={'/static/images/logo-dark.png'}
-                                        className="block"
-                                    />
-                                    <Typography variant="caption">
-                                        Sign in with your app id to continue.
-                                    </Typography>
-                                </div>
-                                <TextField
-                                    id="username"
-                                    label="Username"
-                                    className={classes.textField}
-                                    fullWidth
-                                    margin="normal"/>
-                                <TextField
-                                    id="password"
-                                    label="Password"
-                                    className={classes.textField}
-                                    type="password"
-                                    fullWidth
-                                    margin="normal"/>
-                                        <Button
-                                            onClick={ () => setValues() }
-                                            variant="contained"
-                                            color="primary"
-                                            fullWidth
-                                        >
-                                            Login
-                                        </Button>
-                                <div className="pt-1 text-md-center">
-                                    <Link to="/Forgot">
-                                        <Button>Forgot password?</Button>
-                                    </Link>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Link to="/Register">
-                                        <Button>Create new account</Button>
-                                    </Link>
-                                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical:'top', horizontal:'center' }}>
-                                        <Alert onClose={handleClose} severity={severity}>
-                                            {messageInfo}
-                                        </Alert>
-                                    </Snackbar>
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
+    setValues() {
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        console.log(document)
+        this.login(username, password)
+    }
+
+
+    render() {
+        const {classes} = this.props;
+        if (this.state.error !== null) {
+            let message;
+            if (this.state.error.response.status === 400) {
+                message = "Incorrect username or password!"
+            } else if (this.state.error.response.status === 500) {
+                message =  "Unable to log you in"
+            }
+            this.props.UpdateAlert("error", message)
+            this.setState({
+                error: null
+            })
+        }
+        return (
+            <div className={classNames(classes.session, classes.background)}>
+                <div className={classes.content}>
+                    <div className={classes.wrapper}>
+                        <Card>
+                            <CardContent>
+                                <form>
+                                    <div
+                                        className={classNames(classes.logo, `text-xs-center pb-xs`)}>
+                                        <img src={'/static/images/logo-dark.png'} className="block"/>
+                                        <Typography variant="caption">Sign in with your username & password to continue.</Typography>
+                                    </div>
+                                    <TextField
+                                        id="username"
+                                        label="Username"
+                                        className={classes.textField}
+                                        fullWidth
+                                        margin="normal"/>
+                                    <TextField
+                                        id="password"
+                                        label="Password"
+                                        className={classes.textField}
+                                        type="password"
+                                        fullWidth
+                                        margin="normal"/>
+                                    <FormControlLabel
+                                        onChange={e => this.stayLoggedIn(e)}
+                                        control={<Checkbox value="checkedA"/>}
+                                        label="Stayed logged in"
+                                        className={classes.fullWidth}/>
+                                    <Button
+                                        onClick={() => this.setValues()}
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth>
+                                        Login
+                                    </Button>
+                                    <div className="pt-1 text-md-center">
+                                            <Button onClick = {() => this.props.ForgotPasswordTrue()}>Forgot password?</Button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <Button onClick = {() => this.props.RegisterTrue()}>Create new account</Button>
+                                        {this.props.alertOpen ?
+                                            <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                                                <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                                                    {this.props.message}
+                                                </Alert>
+                                            </Snackbar>
+                                            : null }
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
+const mapStateToProps = (state) => ({
+    severity: state.globalVariables.severity,
+    message: state.globalVariables.message,
+    alertOpen: state.globalVariables.alertOpen,
+    apiHost: state.serverDetails.apiHost
+})
 
+const mapDispatchToProps = {Login, ForgotPasswordTrue, RegisterTrue, UpdateAlert, CloseAlert, MapTrue, ErrorTrue, stayLoggedIn};
 
-
-export default LoginPage;
-
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(LoginPage);

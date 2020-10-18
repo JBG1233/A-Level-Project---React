@@ -1,17 +1,19 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Link } from "react-router-dom";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import withStyles from "@material-ui/core/styles/withStyles";
+import {CloseAlert, ForgotPasswordTrue, LoginTrue, UpdateAlert} from "../redux/actions";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import Alert from "@material-ui/lab/Alert";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
     card: {
         overflow: "visible"
     },
@@ -54,139 +56,142 @@ const useStyles = makeStyles(theme => ({
             marginTop: theme.spacing(2),
         },
     },
-}));
+});
 
-const RegisterPage = () => {
+class RegisterPage extends React.Component {
 
-    const classes = useStyles();
-
-    function Alert(props) {
-        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+        }
     }
 
-    const [open, setOpen] = React.useState(false);
-
-    const [severity, setSeverity] = React.useState(undefined);
-
-    const [messageInfo, setMessageInfo, ] = React.useState(undefined);
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
-
-    function register(username, password) {
+     register(username, password) {
         const details = {
             'username': username,
             'password': password,
         }
         axios({
             method: 'POST',
-            url: 'http://localhost:8080/rest/register',
+            url: this.props.apiHost + '/rest/register',
             data: details,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             },
         }).then(response => {
-            setOpen(true);
-            setMessageInfo('Registration Successful!')
-            setSeverity('success')
-
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    if (error.response.status === 409) {
-                        setOpen(true);
-                        setMessageInfo('Username is already taken, please use a different username!')
-                        setSeverity('error')
-
-                    }
-                }
+                this.props.UpdateAlert("success", "Registration Successful")
+        }).catch(error => {
+                this.setState ({
+                    error: error
+                })
             })
     }
 
-    function setValues () {
+    CloseAlert(event, reason) {
+        if (reason === 'clickaway') {
+            return;
+        }
+    };
+
+    setRegisterValues() {
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        register(username, password)
+        this.register(username, password)
     }
 
-    return (
-        <div className={classNames(classes.session, classes.background)}>
-            {alert}
-            <div className={classes.content}>
-                <div className={classes.wrapper}>
-                    <Card>
-                        <CardContent>
-                            <form>
-                                <div
-                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}>
-                                    <img
-                                        src={'/static/images/logo-dark.png'}
-                                        className="block"
-                                        alt=""
-                                    />
-                                    <Typography variant="caption">
-                                        Create an app id to continue
-                                    </Typography>
-                                </div>
-                                <TextField
-                                    id="username"
-                                    label="Username"
-                                    className={classes.textField}
-                                    fullWidth
-                                    margin="normal"
-                                />
-                                <TextField
-                                    id="password"
-                                    label="Password"
-                                    className={classes.textField}
-                                    type="password"
-                                    fullWidth
-                                    margin="normal"
-                                />
-                                <TextField
-                                    id="password"
-                                    label="Confirm Password"
-                                    className={classes.textField}
-                                    type="password"
-                                    fullWidth
-                                    margin="normal"
-                                />
-                                <Link to="/Register">
-                                    <Button
-                                        onClick={ () => setValues() }
-                                        variant="contained"
-                                        color="primary"
+    render() {
+
+        const {classes} = this.props;
+
+        if (this.state.error !== null) {
+            let message;
+            if (this.state.error.response.status === 409) {
+                message = "User already exists, please sign in!"
+            } else if (this.state.error.response.status === 500) {
+                message =  "Unable to register you!"
+            }
+            this.props.UpdateAlert("error", message)
+            this.setState({
+                error: null
+            })
+        }
+
+        return (
+            <div className={classNames(classes.session, classes.background)}>
+                {alert}
+                <div className={classes.content}>
+                    <div className={classes.wrapper}>
+                        <Card>
+                            <CardContent>
+                                <form>
+                                    <div
+                                        className={classNames(classes.logo, `text-xs-center pb-xs`)}>
+                                        <img
+                                            src={'/static/images/logo-dark.png'}
+                                            className="block"
+                                            alt=""/>
+                                        <Typography variant="caption">
+                                            Create an app id to continue
+                                        </Typography>
+                                    </div>
+                                    <TextField
+                                        id="username"
+                                        label="Username"
+                                        className={classes.textField}
                                         fullWidth
-                                        type="submit"
-                                    >
-                                        Create your account
-                                    </Button>
-                                </Link>
-                                <div className="pt-1 text-xs-center">
-                                    <Link to="/Forgot">
-                                        <Button>Forgot password?</Button>
-                                    </Link>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Link to="/Login">
-                                        <Button>Access your account</Button>
-                                    </Link>
-                                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical:'top', horizontal:'center' }}>
-                                        <Alert onClose={handleClose} severity={severity}>
-                                            {messageInfo}
-                                        </Alert>
-                                    </Snackbar>
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
+                                        margin="normal"/>
+                                    <TextField
+                                        id="password"
+                                        label="Password"
+                                        className={classes.textField}
+                                        type="password"
+                                        fullWidth
+                                        margin="normal"/>
+                                    <TextField
+                                        id="password"
+                                        label="Confirm Password"
+                                        className={classes.textField}
+                                        type="password"
+                                        fullWidth
+                                        margin="normal"/>
+                                        <Button
+                                            onClick={() => this.setRegisterValues()}
+                                            variant="contained"
+                                            color="primary"
+                                            fullWidth>
+                                            Create your account
+                                        </Button>
+                                    <div className="pt-1 text-xs-center">
+                                            <Button onClick={()=> this.props.ForgotPasswordTrue()}>Forgot password?</Button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <Button onClick={()=> this.props.LoginTrue()}>Login</Button>
+                                        {this.props.alertOpen ?
+                                            <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                                                <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                                                    {this.props.message}
+                                                </Alert>
+                                            </Snackbar>
+                                            : null }
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
-export default RegisterPage;
+const mapStateToProps = (state) => ({
+    severity: state.globalVariables.severity,
+    message: state.globalVariables.message,
+    alertOpen: state.globalVariables.alertOpen,
+    apiHost: state.serverDetails.apiHost
+
+})
+
+const mapDispatchToProps = {ForgotPasswordTrue, LoginTrue, UpdateAlert, CloseAlert};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(RegisterPage);

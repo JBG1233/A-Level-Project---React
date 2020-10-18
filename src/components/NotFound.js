@@ -53,20 +53,20 @@ const useStyles = theme => ({
   }
 });
 
-class BackendError extends React.Component {
-  render() {
-    const {classes} = this.props;
-    return (
-        <div className={classes.session}>
-          <div className={classes.content}>
-            <Typography className={classes.title}>500</Typography>
-            <Typography className={classes.subtitle}>
-              We have an internal server error!
-            </Typography>
-          </div>
-        </div>
-    );
-  }
-}
+const NotFound = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.session}>
+      <div className={classes.content}>
+        <Typography className={classes.title}>404</Typography>
+        <Typography className={classes.subtitle}>Page not found!</Typography>
+        <Typography variant="caption">
+          Sorry, but the page you were trying to view does not exist.{' '}
+          <div>Report this error?</div>
+        </Typography>
+      </div>
+    </div>
+  );
+};
 
-export default withStyles(useStyles)(BackendError);
+export default withStyles(useStyles)(NotFound);

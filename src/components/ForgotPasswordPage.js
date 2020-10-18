@@ -1,14 +1,16 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Link } from "react-router-dom";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {LoginTrue, RegisterTrue} from "../redux/actions";
+import {compose} from "redux";
+import {connect} from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
     card: {
         overflow: "visible"
     },
@@ -45,61 +47,61 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexDirection: "column"
     }
-}));
+});
 
-const ForgotPasswordPage = () => {
-    const classes = useStyles();
-    return (
-        <div className={classNames(classes.session, classes.background)}>
-            <div className={classes.content}>
-                <div className={classes.wrapper}>
-                    <Card>
-                        <CardContent>
-                            <form>
-                                <div
-                                    className={classNames(classes.logo, `text-xs-center pb-xs`)}
-                                >
-                                    <img
-                                        src={'/static/images/logo-dark.png'}
-                                        className="block"
+class ForgotPasswordPage extends React.Component {
+
+    render() {
+
+        const {classes} = this.props;
+
+        return (
+            <div className={classNames(classes.session, classes.background)}>
+                <div className={classes.content}>
+                    <div className={classes.wrapper}>
+                        <Card>
+                            <CardContent>
+                                <form>
+                                    <div
+                                        className={classNames(classes.logo, `text-xs-center pb-xs`)}>
+                                        <img src={'/static/images/logo-dark.png'} className="block"/>
+                                        <Typography variant="caption">
+                                            Enter your email and we'll send you instructions on how to
+                                            reset your password.
+                                        </Typography>
+                                    </div>
+                                    <TextField
+                                        id="email"
+                                        label="Email Address"
+                                        className={classes.textField}
+                                        fullWidth
+                                        margin="normal"
                                     />
-                                    <Typography variant="caption">
-                                        Enter your email and we'll send you instructions on how to
-                                        reset your password.
-                                    </Typography>
-                                </div>
-                                <TextField
-                                    id="email"
-                                    label="Email Address"
-                                    className={classes.textField}
-                                    fullWidth
-                                    margin="normal"
-                                />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    className="mt-1"
-                                    type="submit"
-                                >
-                                    Send password reset
-                                </Button>
-                                <div className="pt-1 text-xs-center">
-                                    <Link to="/Login">
-                                        <Button>Login</Button>
-                                    </Link>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Link to="/Register">
-                                        <Button>Create new account</Button>
-                                    </Link>
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        className="mt-1"
+                                        type="submit">
+                                        Send password reset
+                                    </Button>
+                                    <div className="pt-1 text-xs-center">
+                                        <Button onClick={() => this.props.LoginTrue()}>Login</Button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Button onClick={() => this.props.RegisterTrue()}>Create new account</Button>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+}
 
-export default ForgotPasswordPage;
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = {RegisterTrue, LoginTrue};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(ForgotPasswordPage);

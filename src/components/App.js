@@ -1,14 +1,17 @@
-import { Header, Sidebar, Workspace } from "../components";
-import React, {useEffect, useState} from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import { MobileBreakpoint } from "../styleVariables";
+import React from "react";
 import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
-import routes from "../routes";
+import withStyles from "@material-ui/core/styles/withStyles";
+import ChildComponents from "./ChildComponents";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import ForgotPasswordPage from "./ForgotPasswordPage";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {Dev, Prod} from "../redux/actions";
 
-const useMountEffect = fun => useEffect(fun, []);
-
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   panel: {
     position: "relative",
     overflow: "hidden",
@@ -36,98 +39,69 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(1) * 2,
     right: theme.spacing(1) * 3
   }
-}));
+});
 
-const App = ({ history }) => {
-  const classes = useStyles();
-  const [opened, setOpened] = useState(true);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [openSpeedDial, setOpenSpeedDial] = useState(false);
-
-  const mediaMatcher = matchMedia(`(max-width: ${MobileBreakpoint}px)`);
-
-  const resizeDispatch = () => {
-    if (typeof Event === "function") {
-      window.dispatchEvent(new Event("resize"));
-    } else {
-      const evt = window.document.createEvent("UIEvents");
-      evt.initUIEvent("resize", true, false, window, 0);
-      window.dispatchEvent(evt);
+class App extends React.Component {
+constructor(props) {
+  super(props);
+  this.state = {
+    env: 'dev'
+  }
+}
+  componentDidMount() {
+    if (this.props.env === 'dev') {
+      this.props.Dev()
+    } else if (this.props.env === 'prod') {
+      this.props.Prod()
     }
-  };
+  }
 
-  const handleDrawerToggle = () => {
-    setOpened(!opened);
-    resizeDispatch();
-  };
+  componentWillUnmount() {
+    if (this.props.loggedIn === true) {
+      if (this.props.stayLoggedIn === false) {
+        localStorage.clear()
+      }
+    }
+  }
 
-  const getRoutes = (
-    <Switch>
-      {routes.items.map((item, index) =>
-        item.type === "external" ? (
-          <Route
-            exact
-            path={item.path}
-            component={item.component}
-            name={item.name}
-            key={index}
-          />
-        ): (
-          <Route
-            exact
-            path={item.path}
-            component={item.component}
-            name={item.name}
-            key={index}
-          />
-        )
-      )}
-      <Redirect to="/Map" />
-    </Switch>
-  );
+  render() {
 
-  useMountEffect(() => {
-    if (mediaMatcher.matches) setOpened(false);
-    mediaMatcher.addListener(match => {
-      setTimeout(() => {
-        if (match.matches) setOpened(false);
-        else setOpened(true);
-      }, 300);
-    });
+    const {classes} = this.props;
 
-    const unlisten = history.listen(() => {
-      if (mediaMatcher.matches) setOpened(false);
-      document.querySelector("#root > div > main").scrollTop = 0;
-    });
+    return (
 
-    return () => {
-      unlisten();
-      mediaMatcher.removeListener(match => {
-        setTimeout(() => {
-          if (match.matches) setOpened(false);
-          else setOpened(true);
-        }, 300);
-      });
-    };
-  });
-  localStorage.setItem("qWrongLast7", JSON.stringify([0,0,0,0,0,0,0]))
-  localStorage.setItem("qRightLast7", JSON.stringify([0,0,0,0,0,0,0]))
-  localStorage.setItem("percentageLast7", JSON.stringify([0,0,0,0,0,0,0]))
-  return (
-    <>
-      <Header
-        logo={`${process.env.PUBLIC_URL}/static/images/logo.png`}
-        toggleDrawer={handleDrawerToggle}
-      />
-      <div className={classNames(classes.panel, "theme-dark")}>
-        <Sidebar
-          opened={opened}
-          toggleDrawer={handleDrawerToggle}
-        />
-        <Workspace opened={opened}>{getRoutes}</Workspace>
+      <div>
+
+        {this.props.component === 'LoginPage' ? <LoginPage/> : null }
+
+        {this.props.component === 'RegisterPage' ? <RegisterPage/> : null }
+
+        {this.props.component === 'ForgotPasswordPage' ? <ForgotPasswordPage/> : null }
+
+        {this.props.component !== 'LoginPage' && this.props.component !== 'RegisterPage' && this.props.component !== 'ForgotPasswordPage' ? <Header/> : null }
+
+          <div className={classNames(classes.panel, "theme-dark")}>
+
+            {this.props.component !== 'LoginPage' && this.props.component !== 'RegisterPage' && this.props.component !== 'ForgotPasswordPage' ? <Sidebar/> : null }
+
+            <ChildComponents/>
+
+        </div>
+
+
+
       </div>
-    </>
-  );
-};
+    );
+  }
+}
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    component: state.componentChange.component,
+    stayLoggedIn: state.loggedInState.stayLoggedIn
+  }
+}
+
+const mapDispatchToProps = {Dev, Prod}
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(App);

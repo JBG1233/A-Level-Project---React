@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Collapse from '@material-ui/core/Collapse';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import PersonIcon from '@material-ui/icons/Person';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,15 +12,17 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import PropTypes from 'prop-types';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
-import {makeStyles} from '@material-ui/core/styles';
-import {Link} from "react-router-dom";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {DrawerToggle, LoginTrue, Logout, MenuToggle} from "../redux/actions";
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   appBar: {
     boxShadow: '0 1px 8px rgba(0,0,0,.3)',
     position: 'relative',
@@ -79,155 +82,130 @@ const useStyles = makeStyles(theme => ({
     marginTop: '-24px',
     color: 'rgba(0,0,0,.87)'
   }
-}));
+});
 
-const Header = ({logo, logoAltText, toggleDrawer}) => {
+class Header extends React.Component {
 
-  const classes = useStyles();
+constructor(props) {
+  super(props);
+  this.state = {
+    menuIsOpen: null
+  }
+}
 
-  const [anchorEl, setAnchorEl] = useState(null);
+handleMenuOpen (e) {
+  this.setState ({
+    menuIsOpen: e.currentTarget
+  })
+}
 
-  const [searchExpanded, setSearchExpanded] = useState(false);
-
-  const handleSettingsToggle = event => setAnchorEl(event.currentTarget);
-
-  const handleCloseMenu = () => setAnchorEl(null);
-
-  const handleLogin = () => setAnchorEl(null);
-
-  function handleLogout() {
-    setAnchorEl(null);
-    localStorage.clear()
+handleMenuClose () {
+    this.setState ({
+      menuIsOpen: null
+    })
   }
 
-  const handleSearchExpandToggle = () => setSearchExpanded(!searchExpanded);
+render() {
 
-  const handleDrawerToggle = () => {
-    toggleDrawer();
-    if (searchExpanded) handleSearchExpandToggle();
-  };
+  const { classes } = this.props;
 
   return (
-    <AppBar position="static" className={classes.appBar}>
-        <Toolbar className={classes.toolBar}>
-          <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerToggle}
-          >
-            <MenuIcon/>
-          </IconButton>
-
-          <div className={classes.branding}>
-            <img src={logo} alt={logoAltText} className={classes.logo}/>
-          </div>
-
-          <Hidden xsDown>
-            <div className={classes.searchWrapper}>
-              <form className={classes.searchForm}>
-                <IconButton aria-label="Search" className={classes.searchIcon}>
-                  <SearchIcon/>
-                </IconButton>
-                <input
-                    className={classes.searchInput}
-                    type="text"
-                    placeholder="Search"
-                    autoFocus={true}
-                />
-              </form>
-            </div>
-          </Hidden>
-
-          <Hidden smUp>
-            <span className="flexSpacer"/>
-          </Hidden>
-
-          <Hidden smUp>
-            <IconButton
-                color="inherit"
-                onClick={handleSearchExpandToggle}
-                aria-expanded={searchExpanded}
-                aria-label="Show searchbar"
-            >
-              <SearchIcon/>
+      <div>
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar className={classes.toolBar}>
+            <IconButton color="inherit" aria-label="open drawer">
+              <MenuIcon onClick = {() => this.props.DrawerToggle()}/>
             </IconButton>
-          </Hidden>
-
-
-          <IconButton
-              aria-label="User Settings"
-              aria-owns={anchorEl ? 'user-menu' : null}
-              aria-haspopup="true"
-              color="inherit"
-              onClick={handleSettingsToggle}
-          >
-            <MoreVertIcon/>
-          </IconButton>
-
-          <Menu
-              id="user-menu"
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseMenu}
-          >
-            <MenuItem onClick={handleCloseMenu}>
-              <ListItemIcon>
-                <SettingsIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Settings"/>
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <PersonIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Logged in as"/>
-            </MenuItem>
-            {localStorage.loggedIn === undefined ?
-                <Link to="./Login">
-                  <MenuItem onClick={handleLogin}>
-                    <ListItemIcon>
-                      <ExitToAppIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Login"/>
-                  </MenuItem>
-                </Link> :
-                <Link to="./Map">
-                  <MenuItem onClick={handleLogout}>
-                    <ListItemIcon>
-                      <ExitToAppIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Logout"/>
-                  </MenuItem>
-                </Link>
-            }
-          </Menu>
-        </Toolbar>
-        <Hidden smUp>
-          <Collapse in={searchExpanded} timeout="auto" unmountOnExit>
-            <Toolbar className={classes.toolBar}>
+            <div className={classes.branding}>
+              <img src={'/static/images/logo.png'} className={classes.logo}/>
+            </div>
+            <Hidden xsDown>
               <div className={classes.searchWrapper}>
-                <form className={classNames(classes.searchForm, 'mr-0')}>
+                <form className={classes.searchForm}>
                   <IconButton aria-label="Search" className={classes.searchIcon}>
                     <SearchIcon/>
                   </IconButton>
                   <input
                       className={classes.searchInput}
                       type="text"
-                      placeholder="Sea rch"
-                      autoFocus="true"
-                  />
+                      placeholder="Search"
+                      autoFocus={true}/>
                 </form>
               </div>
-            </Toolbar>
-          </Collapse>
-        </Hidden>
-      </AppBar>
-  );
-};
+            </Hidden>
+            <Hidden smUp>
+              <span className="flexSpacer"/>
+            </Hidden>
+            <Hidden smUp>
+              <IconButton color="inherit" aria-label="Show searchbar">
+                <SearchIcon/>
+              </IconButton>
+            </Hidden>
+            <IconButton aria-owns={this.state.menuIsOpen ? 'user-menu' : null} onClick={(e) => this.handleMenuOpen(e)} aria-label="User Settings" aria-haspopup="true" color="inherit">
+              <MoreVertIcon/>
+            </IconButton>
+              <Menu id="user-menu" open={Boolean(this.state.menuIsOpen)} anchorEl={this.state.menuIsOpen}  onClose={() => this.handleMenuClose()}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <SettingsIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Settings"/>
+                </MenuItem>
+                      {this.props.loggedIn ?
+                          <div>
+                            <MenuItem onClick={() => this.props.Logout()}>
+                              <ListItemIcon>
+                                <LockOpenIcon/>
+                              </ListItemIcon>
+                              <ListItemText primary="Logout"/>
+                            </MenuItem>
+                          </div>
+                          :
+                          <div>
+                            <MenuItem onClick={() => this.props.LoginTrue()}>
+                              <ListItemIcon>
+                                <LockOutlinedIcon/>
+                              </ListItemIcon>
+                              <ListItemText primary="Login"/>
+                            </MenuItem>
+                          </div>}
 
-Header.prototypes = {
-  logo: PropTypes.string,
-  logoAltText: PropTypes.string
-};
+                <MenuItem onClick={(e) => this.handleMenuClose()}>
+                  <ListItemIcon>
+                    <CloseOutlinedIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary="Close Menu"/>
+                </MenuItem>
+              </Menu>
+          </Toolbar>
+          <Hidden smUp>
+            <Collapse timeout="auto" unmountOnExit>
+              <Toolbar className={classes.toolBar}>
+                <div className={classes.searchWrapper}>
+                  <form className={classNames(classes.searchForm, 'mr-0')}>
+                    <IconButton aria-label="Search" className={classes.searchIcon}>
+                      <SearchIcon/>
+                    </IconButton>
+                    <input
+                        className={classes.searchInput}
+                        type="text"
+                        placeholder="Sea rch"
+                        autoFocus="true"/>
+                  </form>
+                </div>
+              </Toolbar>
+            </Collapse>
+          </Hidden>
+        </AppBar>
+      </div>
+    );
+  };
+}
+const mapStateToProps = (state) => ({
+  menuOpen: state.globalVariables,
+  loggedIn: state.loggedInState.loggedIn,
+})
 
-export default Header;
+const mapDispatchToProps = {DrawerToggle, MenuToggle, LoginTrue, Logout}
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(Header);
