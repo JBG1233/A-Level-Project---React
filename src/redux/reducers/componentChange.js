@@ -8,13 +8,25 @@ const componentChangeReducer = (state = initialState, action) => {
             return {
                 component: "Leaderboard",
             }
+        case 'ContactUsTrue':
+            return {
+                component: "ContactUs",
+            }
         case 'ErrorTrue':
             return {
                 component: "ErrorPage",
             }
+        case 'HowitworksTrue':
+            return {
+                component: "Howitworks",
+            }
         case 'MapTrue':
             return {
                 component: "WorldMap",
+            }
+        case 'TimelineTrue':
+            return {
+                component: "Timeline",
             }
         case 'AboutTrue':
             return {

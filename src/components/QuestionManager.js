@@ -20,38 +20,38 @@ class QuestionManager extends React.Component {
         const details = [
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[0]).value,
-                "questionCode": this.props.questions[0].questionCode,
-                "questionNumber": this.props.questions[0].questionNumber
+                "groupId": this.props.questions[0].groupId,
+                "questionId": this.props.questions[0].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[1]).value,
-                "questionCode": this.props.questions[1].questionCode,
-                "questionNumber": this.props.questions[1].questionNumber
+                "groupId": this.props.questions[1].groupId,
+                "questionId": this.props.questions[1].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[2]).value,
-                "questionCode": this.props.questions[2].questionCode,
-                "questionNumber": this.props.questions[2].questionNumber
+                "groupId": this.props.questions[2].groupId,
+                "questionId": this.props.questions[2].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[3]).value,
-                "questionCode": this.props.questions[3].questionCode,
-                "questionNumber": this.props.questions[3].questionNumber
+                "groupId": this.props.questions[3].groupId,
+                "questionId": this.props.questions[3].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[4]).value,
-                "questionCode": this.props.questions[4].questionCode,
-                "questionNumber": this.props.questions[4].questionNumber
+                "groupId": this.props.questions[4].groupId,
+                "questionId": this.props.questions[4].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[5]).value,
-                "questionCode": this.props.questions[5].questionCode,
-                "questionNumber": this.props.questions[5].questionNumber
+                "groupId": this.props.questions[5].groupId,
+                "questionId": this.props.questions[5].questionId
             },
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[6]).value,
-                "questionCode": this.props.questions[6].questionCode,
-                "questionNumber": this.props.questions[6].questionNumber
+                "groupId": this.props.questions[6].groupId,
+                "questionId": this.props.questions[6].questionId
             },
         ]
 

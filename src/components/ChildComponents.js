@@ -12,6 +12,9 @@ import QuestionManager from "./QuestionManager";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import {CloseAlert} from "../redux/actions";
+import Timeline from "./Timeline";
+import HowItWorks from "./HowItWorks";
+import ContactUs from "./ContactUs";
 
 const useStyles = theme => ({
   content: {
@@ -74,11 +77,17 @@ class ChildComponents extends React.Component {
 
           {this.props.component === "WorldMap" ? <WorldMap/> : null}
 
+          {this.props.component === "Timeline" ? <Timeline/> : null}
+
           {this.props.component === "Leaderboard" ? <Wrapper> <Leaderboard/> </Wrapper> : null}
+
+          {this.props.component === "Howitworks" ? <HowItWorks/> : null}
 
           {this.props.component === "About" ? <About/> : null}
 
           {this.props.component === "QuestionManager" ? <QuestionManager/> : null}
+
+          {this.props.component === "ContactUs" ? <ContactUs/> : null}
 
           {this.props.alertOpen ?
               <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >

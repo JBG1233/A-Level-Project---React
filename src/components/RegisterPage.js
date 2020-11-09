@@ -95,9 +95,14 @@ class RegisterPage extends React.Component {
     };
 
     setRegisterValues() {
+        const confirmPassword = document.getElementById('confirmPassword').value
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        this.register(username, password)
+        if (confirmPassword === password) {
+            this.register(username, password)
+        } else {
+            this.props.UpdateAlert("error", "Password's don't match up!")
+        }
     }
 
     render() {
@@ -149,7 +154,7 @@ class RegisterPage extends React.Component {
                                         fullWidth
                                         margin="normal"/>
                                     <TextField
-                                        id="password"
+                                        id="confirmPassword"
                                         label="Confirm Password"
                                         className={classes.textField}
                                         type="password"

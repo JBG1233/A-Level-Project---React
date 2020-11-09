@@ -1,17 +1,21 @@
 const initialState = {
-    apiHost: 'http://localhost:8080',
+    env: 'dev',
+    apiHost: '',
 }
 
+function getApiHost () {
+    if (initialState.env === 'prod') {
+        return 'http://35.179.84.127:8080'
+    } else {
+        return 'http://localhost:8080'
+    }
+}
 
 const serverDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'dev':
+        case 'apiHost':
             return {
-                apiHost: 'http://localhost:8080',
-            }
-        case 'prod':
-            return {
-                apiHost: 'http://35.179.84.127:8080',
+                apiHost: getApiHost(),
             }
         default:
             return state

@@ -1,5 +1,5 @@
 const initialState = {
-    countryCode: '',
+    groupId: '',
     questions: [],
 }
 
@@ -8,7 +8,7 @@ const questionsReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'questionStateChange':
             return {
-                countryCode: action.countryCode,
+                groupId: action.groupId,
                 questions: action.questions,
             }
         default:

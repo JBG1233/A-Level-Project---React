@@ -7,12 +7,22 @@ import ExploreIcon from "@material-ui/icons/Explore";
 import PeopleIcon from "@material-ui/icons/People";
 import Leaderboard from "./Leaderboard";
 import InfoIcon from "@material-ui/icons/Info";
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import About from "./About";
-import {AboutTrue, LeaderboardTrue, MapTrue, UpdateAlert, UpdateLeaderboardStatistics} from "../redux/actions";
+import {
+  AboutTrue, ContactUsTrue, HowitworksTrue,
+  LeaderboardTrue,
+  MapTrue,
+  TimelineTrue,
+  UpdateAlert,
+  UpdateLeaderboardStatistics
+} from "../redux/actions";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import Ripples from 'react-ripples'
 import axios from "axios";
+import FaceIcon from '@material-ui/icons/Face';
+import BuildIcon from '@material-ui/icons/Build';
 
 const useStyles = theme => ({
   badge: {
@@ -86,12 +96,24 @@ constructor(props) {
         icon: ExploreIcon,
       },
       {
+        name: 'Timeline',
+        icon: FaceIcon,
+      },
+      {
         name: 'Leaderboard',
         icon: PeopleIcon,
       },
       {
+        name: 'How it works',
+        icon: BuildIcon,
+      },
+      {
         name: 'About',
         icon: InfoIcon,
+      },
+      {
+        name: 'Contact Us',
+        icon: PermContactCalendarIcon,
       },
     ]
 
@@ -103,9 +125,15 @@ changeComponent(index) {
   if (index === 0) {
     this.props.MapTrue()
   } else if (index === 1) {
-    this.loadLeaderboardStatistics()
+    this.props.TimelineTrue()
   } else if (index === 2) {
+    this.loadLeaderboardStatistics()
+  } else if (index === 3 ) {
+    this.props.HowitworksTrue()
+  } else if (index === 4 ) {
     this.props.AboutTrue()
+  } else if (index === 5 ) {
+    this.props.ContactUsTrue()
   }
 }
 
@@ -120,8 +148,13 @@ loadLeaderboardStatistics () {
         .then(response => {
           if (response.status === 200) {
             if (this.props.loggedIn !== false) {
-              this.props.UpdateLeaderboardStatistics(response.data)
-              this.props.LeaderboardTrue()
+              console.log(response.data)
+              if (response.data === "") {
+                this.props.UpdateAlert("warning", "Do some quizzes to populate your leaderboard!")
+              } else {
+                this.props.UpdateLeaderboardStatistics(response.data)
+                this.props.LeaderboardTrue()
+              }
             } else {
               this.props.UpdateAlert("warning", "Please login to access your scores")
             }
@@ -171,6 +204,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {AboutTrue, LeaderboardTrue, MapTrue, UpdateAlert, UpdateLeaderboardStatistics};
+const mapDispatchToProps = {
+  HowitworksTrue,
+  AboutTrue,
+  LeaderboardTrue,
+  MapTrue,
+  UpdateAlert,
+  UpdateLeaderboardStatistics,
+  TimelineTrue,
+  ContactUsTrue,
+};
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(SidebarItem);

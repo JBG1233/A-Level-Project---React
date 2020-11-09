@@ -9,7 +9,7 @@ import RegisterPage from "./RegisterPage";
 import ForgotPasswordPage from "./ForgotPasswordPage";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {Dev, Prod} from "../redux/actions";
+import {ApiHost} from "../redux/actions";
 
 const useStyles = theme => ({
   panel: {
@@ -44,17 +44,11 @@ const useStyles = theme => ({
 class App extends React.Component {
 constructor(props) {
   super(props);
-  this.state = {
-    env: 'dev'
-  }
 }
-  componentDidMount() {
-    if (this.props.env === 'dev') {
-      this.props.Dev()
-    } else if (this.props.env === 'prod') {
-      this.props.Prod()
-    }
-  }
+
+componentDidMount() {
+  this.props.ApiHost()
+}
 
   componentWillUnmount() {
     if (this.props.loggedIn === true) {
@@ -102,6 +96,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {Dev, Prod}
+const mapDispatchToProps = {ApiHost}
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(App);
