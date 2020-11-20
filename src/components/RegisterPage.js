@@ -12,6 +12,7 @@ import {CloseAlert, ForgotPasswordTrue, LoginTrue, UpdateAlert} from "../redux/a
 import {compose} from "redux";
 import {connect} from "react-redux";
 import Alert from "@material-ui/lab/Alert";
+import './App.css';
 
 const useStyles = theme => ({
     card: {
@@ -115,6 +116,8 @@ class RegisterPage extends React.Component {
                 message = "User already exists, please sign in!"
             } else if (this.state.error.response.status === 500) {
                 message =  "Unable to register you!"
+            } else if (this.state.error.response.status === 400) {
+                message = "Illegal characters are not allowed!"
             }
             this.props.UpdateAlert("error", message)
             this.setState({
@@ -132,10 +135,9 @@ class RegisterPage extends React.Component {
                                 <form>
                                     <div
                                         className={classNames(classes.logo, `text-xs-center pb-xs`)}>
-                                        <img
-                                            src={'/static/images/logo-dark.png'}
-                                            className="block"
-                                            alt=""/>
+                                        <div className="blackTextHeader">
+                                            World Quiz
+                                        </div>
                                         <Typography variant="caption">
                                             Create an app id to continue
                                         </Typography>

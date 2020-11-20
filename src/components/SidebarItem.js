@@ -7,10 +7,10 @@ import ExploreIcon from "@material-ui/icons/Explore";
 import PeopleIcon from "@material-ui/icons/People";
 import Leaderboard from "./Leaderboard";
 import InfoIcon from "@material-ui/icons/Info";
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import About from "./About";
 import {
-  AboutTrue, ContactUsTrue, HowitworksTrue,
+  AboutTrue,
+  HowitworksTrue,
   LeaderboardTrue,
   MapTrue,
   TimelineTrue,
@@ -111,10 +111,6 @@ constructor(props) {
         name: 'About',
         icon: InfoIcon,
       },
-      {
-        name: 'Contact Us',
-        icon: PermContactCalendarIcon,
-      },
     ]
 
   }
@@ -132,8 +128,6 @@ changeComponent(index) {
     this.props.HowitworksTrue()
   } else if (index === 4 ) {
     this.props.AboutTrue()
-  } else if (index === 5 ) {
-    this.props.ContactUsTrue()
   }
 }
 
@@ -212,7 +206,6 @@ const mapDispatchToProps = {
   UpdateAlert,
   UpdateLeaderboardStatistics,
   TimelineTrue,
-  ContactUsTrue,
 };
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(SidebarItem);

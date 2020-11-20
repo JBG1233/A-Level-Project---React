@@ -9,6 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {LoginTrue, RegisterTrue} from "../redux/actions";
 import {compose} from "redux";
 import {connect} from "react-redux";
+import './App.css';
 
 const useStyles = theme => ({
     card: {
@@ -64,7 +65,9 @@ class ForgotPasswordPage extends React.Component {
                                 <form>
                                     <div
                                         className={classNames(classes.logo, `text-xs-center pb-xs`)}>
-                                        <img src={'/static/images/logo-dark.png'} className="block"/>
+                                        <div className="blackTextHeader">
+                                            World Quiz
+                                        </div>
                                         <Typography variant="caption">
                                             Enter your email and we'll send you instructions on how to
                                             reset your password.

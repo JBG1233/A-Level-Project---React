@@ -23,6 +23,7 @@ import {
 import {compose} from "redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import './App.css';
 
 const useStyles = theme => ({
     card: {
@@ -137,7 +138,9 @@ class LoginPage extends React.Component {
                                 <form>
                                     <div
                                         className={classNames(classes.logo, `text-xs-center pb-xs`)}>
-                                        <img src={'/static/images/logo-dark.png'} className="block"/>
+                                        <div className="blackTextHeader">
+                                            World Quiz
+                                        </div>
                                         <Typography variant="caption">Sign in with your username & password to continue.</Typography>
                                     </div>
                                     <TextField

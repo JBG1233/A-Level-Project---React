@@ -14,7 +14,7 @@ constructor(props) {
 changeComponent(groupId) {
     axios({
         method: 'GET',
-        url: this.props.apiHost + '/rest/questions/' + groupId,
+        url: this.props.apiHost + '/rest/questions/main/' + groupId,
     })
         .then(response => {
             if (response.status === 200) {

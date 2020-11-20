@@ -4,8 +4,6 @@ export const Logout = () => ({type: 'loggedOut'})
 
 export const LeaderboardTrue = () => ({type: 'LeaderboardTrue'})
 
-export const ContactUsTrue = () => ({type: 'ContactUsTrue'})
-
 export const TimelineTrue = () => ({type: 'TimelineTrue'})
 
 export const MapTrue = () => ({type: 'MapTrue'})
@@ -39,3 +37,7 @@ export const UpdateLeaderboardStatistics = (stats) => ({type: 'UpdateLeaderboard
 export const stayLoggedIn = () => ({type: 'stayLoggedIn'})
 
 export const HowitworksTrue = () => ({type: 'HowitworksTrue'})
+
+export const SearchResultsTrue = () => ({type: 'SearchResultsTrue'})
+
+export const SearchResultsChange = (searchResults) => ({searchResults: searchResults, type: 'SearchResultsChange'})

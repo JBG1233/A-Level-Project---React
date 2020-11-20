@@ -8,10 +8,6 @@ const componentChangeReducer = (state = initialState, action) => {
             return {
                 component: "Leaderboard",
             }
-        case 'ContactUsTrue':
-            return {
-                component: "ContactUs",
-            }
         case 'ErrorTrue':
             return {
                 component: "ErrorPage",
@@ -47,6 +43,10 @@ const componentChangeReducer = (state = initialState, action) => {
         case 'QuestionManagerTrue':
             return {
                 component: "QuestionManager",
+            }
+        case 'SearchResultsTrue':
+            return {
+                component: 'SearchResults'
             }
         default:
             return state

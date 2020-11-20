@@ -8,6 +8,7 @@ import axios from "axios";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {HowitworksTrue, QuestionManagerTrue, UpdateQuestionState} from "../redux/actions";
+import './App.css';
 
 const useStyles = theme => ({
   timeline: {
@@ -360,7 +361,7 @@ class Timeline extends React.Component {
 
     axios({
       method: 'GET',
-      url: this.props.apiHost + '/rest/questions/' + newGroupId,
+      url: this.props.apiHost + '/rest/questions/main/' + newGroupId,
     })
         .then(response => {
           if (response.status === 200) {
@@ -381,7 +382,9 @@ class Timeline extends React.Component {
                     {"American History" && (
                         <div className={classNames(classes.card, 'text-lg-center')}>
                           <Button variant="contained" color="primary" className={classes.button} onClick={()=> this.props.HowitworksTrue()}>
-                            {"American History"}
+                            <div className="timelineTextHeader">
+                              American History
+                            </div>
                           </Button>
                         </div>
                     )}
@@ -404,7 +407,9 @@ class Timeline extends React.Component {
             {"European History" && (
                 <div className={classNames(classes.card, 'text-lg-center')}>
                   <Button variant="contained" color="primary" className={classes.button3} onClick={()=> this.props.HowitworksTrue()}>
-                    {"European History"}
+                    <div className="timelineTextHeader">
+                      European History
+                    </div>
                   </Button>
                 </div>
             )}
@@ -427,7 +432,9 @@ class Timeline extends React.Component {
             {"Asian History" && (
                 <div className={classNames(classes.card, 'text-lg-center')}>
                   <Button variant="contained" color="primary" className={classes.button2} onClick={()=> this.props.HowitworksTrue()}>
-                    {"Asian History"}
+                    <div className="timelineTextHeader">
+                      Asian History
+                    </div>
                   </Button>
                 </div>
             )}

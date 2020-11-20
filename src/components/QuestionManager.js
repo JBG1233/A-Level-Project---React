@@ -1,10 +1,11 @@
 import React from "react";
-import './Quiz.css';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import {connect} from "react-redux";
+import './App.css';
+import {UpdateAlert} from "../redux/actions";
 
 
 class QuestionManager extends React.Component {
@@ -13,10 +14,12 @@ class QuestionManager extends React.Component {
         this.state = {
             questionAnswers: [],
             score: null,
+            error: null,
         }
     }
 
     submitQuestions() {
+
         const details = [
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[0]).value,
@@ -72,7 +75,11 @@ class QuestionManager extends React.Component {
                 } else {
 
                 }
+            }).catch(error => {
+            this.setState({
+                error: error
             })
+        })
         this.setState({
             questionAnswers: [],
         })
@@ -94,6 +101,18 @@ class QuestionManager extends React.Component {
     }
 
     render () {
+        if (this.state.error !== null) {
+            let message;
+            if (this.state.error.response.status === 400) {
+                message = "Illegal characters are not allowed!"
+            } else if (this.state.error.response.status === 500) {
+                message =  "Failed to submit your answers!"
+            }
+            this.props.UpdateAlert("error", message)
+            this.setState({
+                error: null
+            })
+        }
         return (
             <div className="questions">
                 {this.props.questions !== undefined ? <div>
@@ -111,7 +130,9 @@ class QuestionManager extends React.Component {
                                 {this.props.loggedIn && this.state.score === null ?
                                     <div>
                                         <Button variant="contained" color="primary" onClick = {() => this.submitQuestions()}>
-                                            Submit Quiz
+                                            <div className="timelineTextHeader">
+                                                Submit Quiz
+                                            </div>
                                         </Button>
                                     </div>
                                         : null
@@ -145,6 +166,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {UpdateAlert}
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionManager);

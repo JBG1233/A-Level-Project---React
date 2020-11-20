@@ -14,7 +14,7 @@ import Alert from "@material-ui/lab/Alert";
 import {CloseAlert} from "../redux/actions";
 import Timeline from "./Timeline";
 import HowItWorks from "./HowItWorks";
-import ContactUs from "./ContactUs";
+import SearchResults from "./SearchResults";
 
 const useStyles = theme => ({
   content: {
@@ -87,7 +87,7 @@ class ChildComponents extends React.Component {
 
           {this.props.component === "QuestionManager" ? <QuestionManager/> : null}
 
-          {this.props.component === "ContactUs" ? <ContactUs/> : null}
+          {this.props.component === 'SearchResults' ? <SearchResults/> :null }
 
           {this.props.alertOpen ?
               <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >

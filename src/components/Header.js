@@ -3,7 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Collapse from '@material-ui/core/Collapse';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import PersonIcon from '@material-ui/icons/Person';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -19,8 +18,19 @@ import classNames from 'classnames';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {DrawerToggle, LoginTrue, Logout, MenuToggle} from "../redux/actions";
+import {
+  DrawerToggle,
+  LoginTrue,
+  Logout, MapTrue,
+  MenuToggle,
+  QuestionManagerTrue,
+  SearchResultsChange,
+  SearchResultsTrue,
+  UpdateQuestionState
+} from "../redux/actions";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import './App.css';
+import axios from "axios";
 
 const useStyles = theme => ({
   appBar: {
@@ -86,22 +96,37 @@ const useStyles = theme => ({
 
 class Header extends React.Component {
 
-constructor(props) {
-  super(props);
-  this.state = {
-    menuIsOpen: null
-  }
-}
-
-handleMenuOpen (e) {
-  this.setState ({
-    menuIsOpen: e.currentTarget
-  })
-}
-
-handleMenuClose () {
-    this.setState ({
+  constructor(props) {
+    super(props);
+    this.state = {
       menuIsOpen: null
+    }
+  }
+
+  handleMenuOpen (e) {
+    this.setState ({
+      menuIsOpen: e.currentTarget
+    })
+  }
+
+  handleMenuClose () {
+      this.setState ({
+        menuIsOpen: null
+      })
+    }
+
+  getSearchResults () {
+    let userInput = document.getElementById('search').value
+    axios({
+      method: 'GET',
+      url: this.props.apiHost + '/rest/questions/search/' + userInput,
+    })
+        .then(response => {
+          if (response.status === 200) {
+            this.props.SearchResultsChange(response.data)
+            this.props.SearchResultsTrue()
+          }
+        }).catch(error => {
     })
   }
 
@@ -111,21 +136,24 @@ render() {
 
   return (
       <div>
-        <AppBar position="static" className={classes.appBar}>
+        <AppBar position="static" classNnpame={classes.appBar}>
           <Toolbar className={classes.toolBar}>
             <IconButton color="inherit" aria-label="open drawer">
               <MenuIcon onClick = {() => this.props.DrawerToggle()}/>
             </IconButton>
             <div className={classes.branding}>
-              <img src={'/static/images/logo.png'} className={classes.logo}/>
+              <div className="whiteTextHeader" onClick={() => this.props.MapTrue()}>
+                World Quiz
+              </div>
             </div>
             <Hidden xsDown>
               <div className={classes.searchWrapper}>
                 <form className={classes.searchForm}>
                   <IconButton aria-label="Search" className={classes.searchIcon}>
-                    <SearchIcon/>
+                    <SearchIcon onClick = {() => this.getSearchResults()}/>
                   </IconButton>
                   <input
+                      id = "search"
                       className={classes.searchInput}
                       type="text"
                       placeholder="Search"
@@ -204,8 +232,9 @@ render() {
 const mapStateToProps = (state) => ({
   menuOpen: state.globalVariables,
   loggedIn: state.loggedInState.loggedIn,
+  apiHost: state.serverDetails.apiHost
 })
 
-const mapDispatchToProps = {DrawerToggle, MenuToggle, LoginTrue, Logout}
+const mapDispatchToProps = {MapTrue, DrawerToggle, MenuToggle, LoginTrue, Logout, QuestionManagerTrue, UpdateQuestionState, SearchResultsTrue, SearchResultsChange}
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(Header);
