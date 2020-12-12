@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import withStyles from "@material-ui/core/styles/withStyles";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   session: {
     position: 'relative',
     zIndex: 4000,
@@ -26,7 +26,7 @@ const useStyles = theme => ({
     fontWeight: 100,
     display: 'inline-table',
     position: 'relative',
-    background: theme.palette.primary.main,
+    background: '#95B4CC',
     color: '#fff',
     padding: `0 ${theme.spacing(1) * 3}px`,
     borderRadius: '60px',
@@ -42,7 +42,7 @@ const useStyles = theme => ({
       position: 'absolute',
       pointerEvents: 'none',
       borderColor: 'rgba(0, 0, 0, 0)',
-      borderTopColor: theme.palette.primary.main,
+      borderTopColor: '#95B4CC',
       borderWidth: '8px',
       marginLeft: '-8px'
     }
@@ -54,8 +54,11 @@ const useStyles = theme => ({
 });
 
 class BackendError extends React.Component {
+
   render() {
+
     const {classes} = this.props;
+
     return (
         <div className={classes.session}>
           <div className={classes.content}>

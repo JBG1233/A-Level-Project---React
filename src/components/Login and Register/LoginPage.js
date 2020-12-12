@@ -5,25 +5,20 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {connect} from "react-redux";
-import {
-    CloseAlert,
-    ErrorTrue,
-    ForgotPasswordTrue,
-    Login,
-    MapTrue,
-    RegisterTrue,
-    stayLoggedIn,
-    UpdateAlert
-} from "../redux/actions";
 import {compose} from "redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import './App.css';
+import '../Css/App.css';
+import {Login, stayLoggedIn} from "../../redux/actions/loggedInStateActions";
+import {CloseAlert, UpdateAlert} from "../../redux/actions/alertActions";
+import {Link} from "react-router-dom";
+import {ApiHost} from "../../redux/actions/serverDetailsActions";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import {withRouter} from "react-router";
 
 const useStyles = theme => ({
     card: {
@@ -37,7 +32,7 @@ const useStyles = theme => ({
         flexDirection: "column"
     },
     background: {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: '#95B4CC',
     },
     content: {
         padding: `40px ${theme.spacing(1)}px`,
@@ -73,6 +68,10 @@ class LoginPage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.props.ApiHost()
+    }
+
     login(username, password) {
         const details = {
             'username': username,
@@ -80,14 +79,14 @@ class LoginPage extends React.Component {
         }
         axios({
             method: 'POST',
-            url: this.props.apiHost + '/rest/login',
+            url: this.props.apiHost + '/rest/login/' + this.props.role,
             data: details,
 
         }).then(res => {
             if (res.status === 200) {
                 this.props.Login(res.data)
-                this.props.MapTrue()
                 this.props.UpdateAlert("success", "Login Successful")
+                this.props.history.push('/')
             }
         }).catch(error => {
             this.setState({
@@ -110,13 +109,15 @@ class LoginPage extends React.Component {
     setValues() {
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        console.log(document)
         this.login(username, password)
     }
 
-
     render() {
+
         const {classes} = this.props;
+
+        console.log(this.state.error)
+
         if (this.state.error !== null) {
             let message;
             if (this.state.error.response.status === 400) {
@@ -125,10 +126,9 @@ class LoginPage extends React.Component {
                 message =  "Unable to log you in"
             }
             this.props.UpdateAlert("error", message)
-            this.setState({
-                error: null
-            })
+            this.setState({error: null})
         }
+
         return (
             <div className={classNames(classes.session, classes.background)}>
                 <div className={classes.content}>
@@ -164,39 +164,46 @@ class LoginPage extends React.Component {
                                     <Button
                                         onClick={() => this.setValues()}
                                         variant="contained"
-                                        color="primary"
+                                        style={{background: 'rgba(0, 0, 0, 0.1)'}}
                                         fullWidth>
                                         Login
                                     </Button>
                                     <div className="pt-1 text-md-center">
-                                            <Button onClick = {() => this.props.ForgotPasswordTrue()}>Forgot password?</Button>
+                                        <Link to={'/forgot'} style={{textDecoration: 'none'}}>
+                                            <Button>Forgot password?</Button>
+                                        </Link>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <Button onClick = {() => this.props.RegisterTrue()}>Create new account</Button>
-                                        {this.props.alertOpen ?
-                                            <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
-                                                <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
-                                                    {this.props.message}
-                                                </Alert>
-                                            </Snackbar>
-                                            : null }
+                                        <Link to={'/preRegister'} style={{textDecoration: 'none'}}>
+                                            <Button>Create new account</Button>
+                                        </Link>
                                     </div>
                                 </form>
                             </CardContent>
                         </Card>
                     </div>
                 </div>
+                {this.props.alertOpen ?
+                    <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                        <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                            {this.props.message}
+                        </Alert>
+                    </Snackbar>
+                    : null }
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    severity: state.globalVariables.severity,
-    message: state.globalVariables.message,
-    alertOpen: state.globalVariables.alertOpen,
-    apiHost: state.serverDetails.apiHost
-})
+const mapStateToProps = (state) => {
+    return {
+        apiHost: state.serverDetails.apiHost,
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen,
+        role: state.sidebarItems.role
+    }
+}
 
-const mapDispatchToProps = {Login, ForgotPasswordTrue, RegisterTrue, UpdateAlert, CloseAlert, MapTrue, ErrorTrue, stayLoggedIn};
+const mapDispatchToProps = {ApiHost, Login, UpdateAlert, CloseAlert, stayLoggedIn};
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(LoginPage);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles), withRouter)(LoginPage);

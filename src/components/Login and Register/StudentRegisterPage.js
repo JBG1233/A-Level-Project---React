@@ -6,13 +6,14 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import classNames from "classnames";
 import axios from "axios";
-import Snackbar from '@material-ui/core/Snackbar';
 import withStyles from "@material-ui/core/styles/withStyles";
-import {CloseAlert, ForgotPasswordTrue, LoginTrue, UpdateAlert} from "../redux/actions";
 import {compose} from "redux";
 import {connect} from "react-redux";
+import '../Css/App.css';
+import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
+import {Link} from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import './App.css';
 
 const useStyles = theme => ({
     card: {
@@ -26,7 +27,7 @@ const useStyles = theme => ({
         flexDirection: "column"
     },
     background: {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: '#95B4CC'
     },
     content: {
         padding: `40px ${theme.spacing(1)}px`,
@@ -59,7 +60,7 @@ const useStyles = theme => ({
     },
 });
 
-class RegisterPage extends React.Component {
+class StudentRegisterPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -68,42 +69,49 @@ class RegisterPage extends React.Component {
         }
     }
 
-     register(username, password) {
+    register(firstName, lastName, username, password, classID) {
         const details = {
+            'firstName': firstName,
+            'lastName': lastName,
             'username': username,
             'password': password,
+            'classID': classID,
         }
         axios({
             method: 'POST',
-            url: this.props.apiHost + '/rest/register',
+            url: this.props.apiHost + '/rest/register/student',
             data: details,
             headers: {
-                'Content-Type': 'application/json; charset=utf-8'
+                'Content-Type': 'application/json; charset=utf-8',
             },
         }).then(response => {
-                this.props.UpdateAlert("success", "Registration Successful")
+            this.props.UpdateAlert("success", "Registration Successful")
         }).catch(error => {
-                this.setState ({
-                    error: error
-                })
+            this.setState ({
+                error: error
             })
+        })
+    }
+
+    setRegisterValues() {
+        const confirmPassword = document.getElementById('confirmPassword').value
+        const firstName = document.getElementById('firstName').value
+        const lastName = document.getElementById('lastName').value
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        const classID = document.getElementById('classID').value
+        if (confirmPassword === password) {
+            this.register(firstName, lastName, username, password, classID)
+        } else {
+            this.props.UpdateAlert("error", "Password's don't match up!")
+        }
     }
 
     CloseAlert(event, reason) {
         if (reason === 'clickaway') {
             return;
         }
-    };
-
-    setRegisterValues() {
-        const confirmPassword = document.getElementById('confirmPassword').value
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
-        if (confirmPassword === password) {
-            this.register(username, password)
-        } else {
-            this.props.UpdateAlert("error", "Password's don't match up!")
-        }
+        this.props.CloseAlert()
     }
 
     render() {
@@ -115,7 +123,7 @@ class RegisterPage extends React.Component {
             if (this.state.error.response.status === 409) {
                 message = "User already exists, please sign in!"
             } else if (this.state.error.response.status === 500) {
-                message =  "Unable to register you!"
+                message =  "Class id incorrect!"
             } else if (this.state.error.response.status === 400) {
                 message = "Illegal characters are not allowed!"
             }
@@ -143,6 +151,18 @@ class RegisterPage extends React.Component {
                                         </Typography>
                                     </div>
                                     <TextField
+                                        id="firstName"
+                                        label="First Name"
+                                        className={classes.textField}
+                                        fullWidth
+                                        margin="normal"/>
+                                    <TextField
+                                        id="lastName"
+                                        label="Last Name"
+                                        className={classes.textField}
+                                        fullWidth
+                                        margin="normal"/>
+                                    <TextField
                                         id="username"
                                         label="Username"
                                         className={classes.textField}
@@ -162,43 +182,55 @@ class RegisterPage extends React.Component {
                                         type="password"
                                         fullWidth
                                         margin="normal"/>
-                                        <Button
-                                            onClick={() => this.setRegisterValues()}
-                                            variant="contained"
-                                            color="primary"
-                                            fullWidth>
-                                            Create your account
-                                        </Button>
+                                    <TextField
+                                        id="classID"
+                                        label="Class ID"
+                                        className={classes.textField}
+                                        type="password"
+                                        fullWidth
+                                        margin="normal"/>
+                                    <Button
+                                        onClick={() => this.setRegisterValues()}
+                                        variant="contained"
+                                        style={{background: 'rgba(0, 0, 0, 0.1)'}}
+                                        fullWidth>
+                                        Create your account
+                                    </Button>
                                     <div className="pt-1 text-xs-center">
-                                            <Button onClick={()=> this.props.ForgotPasswordTrue()}>Forgot password?</Button>
+                                        <Link to={'/forgot'} style={{textDecoration: 'none'}}>
+                                            <Button>Forgot password?</Button>
+                                        </Link>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <Button onClick={()=> this.props.LoginTrue()}>Login</Button>
-                                        {this.props.alertOpen ?
-                                            <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
-                                                <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
-                                                    {this.props.message}
-                                                </Alert>
-                                            </Snackbar>
-                                            : null }
+                                        <Link to={'/login'} style={{textDecoration: 'none'}}>
+                                            <Button>Login</Button>
+                                        </Link>
                                     </div>
                                 </form>
                             </CardContent>
                         </Card>
                     </div>
                 </div>
+                {this.props.alertOpen ?
+                    <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                        <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                            {this.props.message}
+                        </Alert>
+                    </Snackbar>
+                    : null }
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    severity: state.globalVariables.severity,
-    message: state.globalVariables.message,
-    alertOpen: state.globalVariables.alertOpen,
-    apiHost: state.serverDetails.apiHost
+const mapStateToProps = (state) => {
+    return {
+        apiHost: state.serverDetails.apiHost,
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen
+    }
+}
 
-})
+const mapDispatchToProps = {UpdateAlert, CloseAlert};
 
-const mapDispatchToProps = {ForgotPasswordTrue, LoginTrue, UpdateAlert, CloseAlert};
-
-export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(RegisterPage);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(StudentRegisterPage);

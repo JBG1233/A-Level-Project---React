@@ -35,11 +35,9 @@
     text-align: center;
 }
 
-.howItWorksBackgroundImage {
-    background-image: url("/static/images/cogs.png");
-    background-repeat: no-repeat;
+.howItWorksMain {
     height: 100%;
-    background-position: left;
+    width: 100%;
     background-size: cover;
 }
 
@@ -72,37 +70,33 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-.howItWorksFirst {
-    background: rgba(0, 0, 0, 0.5);
-    width: 50%;
-    height: auto;
-    float: left;
-    font-size: 19px;
-    border: 1px solid deepskyblue;
-    font-family: 'Ubuntu', sans-serif;
-    color: white;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+.leaderboardPadding {
+    padding: 5px
 }
 
-.howItWorksSecond {
-    background: rgba(0, 0, 0, 0.5);
-    width: 50%;
+.howItWorks {
+    column-count: 2;
+    column-gap: 10px;
+    padding: 10px
+}
+
+.howItWorksFirst {
+    background: rgba(0, 0, 0, 0.1);
     height: auto;
-    float: right;
     font-size: 19px;
-    color: white;
-    border: 1px solid deepskyblue;
+    border: 1px solid #799FCB;
     font-family: 'Ubuntu', sans-serif;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+    padding: 10px;
 }
 
 .timelineTextHeader {
     font-size: 15px;
     font-family: 'Ubuntu', sans-serif;
+
+}
+
+.viewQuiz {
+    cursor: pointer;
 }
 
 .whiteTextHeader {
@@ -148,7 +142,7 @@
 
 .searchResult {
     height: 200px;
-    background: rgba(163, 199, 249, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
     vertical-align: top;
     cursor: pointer;
     position: relative;

@@ -2,7 +2,7 @@ const initialState = {
     loggedIn: false,
     stayLoggedIn: false,
     userDtos: [],
-    leaderboardScore: []
+    leaderboardScore: [],
 }
 
 

@@ -3,20 +3,23 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
 import withStyles from "@material-ui/core/styles/withStyles";
-import {infoColor, warningColor} from "../styleVariables";
+import {infoColor, warningColor} from "../../styleVariables";
 import axios from "axios";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {HowitworksTrue, QuestionManagerTrue, UpdateQuestionState} from "../redux/actions";
-import './App.css';
+import '../Css/App.css';
+import {UpdateQuestionState} from "../../redux/actions/questionsStateActions";
+import Link from "@material-ui/core/Link";
+import {withRouter} from "react-router";
 
 const useStyles = theme => ({
   timeline: {
     '&::before': {
       position: 'absolute',
-      top: '6px',
+      textDecoration: 'none',
+      top: '38px',
       width: '4px',
-      height: '100%',
+      height: '95%',
       content: '""',
       backgroundColor: 'LightBlue',
       left: '4px',
@@ -36,9 +39,9 @@ const useStyles = theme => ({
   timeline2: {
     '&::before': {
       position: 'absolute',
-      top: '6px',
+      top: '38px',
       width: '4px',
-      height: '100%',
+      height: '95%',
       content: '""',
       backgroundColor: 'LightBlue',
       left: '4px',
@@ -58,9 +61,9 @@ const useStyles = theme => ({
   timeline3: {
     '&::before': {
       position: 'absolute',
-      top: '6px',
+      top: '38px',
       width: '4px',
-      height: '100%',
+      height: '95%',
       content: '""',
       backgroundColor: 'LightBlue',
       left: '4px',
@@ -381,7 +384,7 @@ class Timeline extends React.Component {
           <div  style={{display: 'inline-block', minWidth: '30%'}} className={classes.timeline}>
                     {"American History" && (
                         <div className={classNames(classes.card, 'text-lg-center')}>
-                          <Button variant="contained" color="primary" className={classes.button} onClick={()=> this.props.HowitworksTrue()}>
+                          <Button onClick={() => this.props.history.push('/userHowItWorks')} variant="contained" style={{background: 'rgba(0, 0, 0, 0.1)'}} className={classes.button}>
                             <div className="timelineTextHeader">
                               American History
                             </div>
@@ -406,7 +409,7 @@ class Timeline extends React.Component {
           <div  style={{display: 'inline-block', minWidth: '25%'}} className={classes.timeline3}>
             {"European History" && (
                 <div className={classNames(classes.card, 'text-lg-center')}>
-                  <Button variant="contained" color="primary" className={classes.button3} onClick={()=> this.props.HowitworksTrue()}>
+                  <Button onClick={() => this.props.history.push('/userHowItWorks')} variant="contained" style={{background: 'rgba(0, 0, 0, 0.1)'}} className={classes.button3}>
                     <div className="timelineTextHeader">
                       European History
                     </div>
@@ -431,7 +434,7 @@ class Timeline extends React.Component {
           <div style={{display: 'inline-block', minWidth: '33%', float: 'right'}} className={classes.timeline2}>
             {"Asian History" && (
                 <div className={classNames(classes.card, 'text-lg-center')}>
-                  <Button variant="contained" color="primary" className={classes.button2} onClick={()=> this.props.HowitworksTrue()}>
+                  <Button onClick={() => this.props.history.push('/userHowItWorks')} variant="contained" style={{background: 'rgba(0, 0, 0, 0.1)'}} className={classes.button2}>
                     <div className="timelineTextHeader">
                       Asian History
                     </div>
@@ -457,10 +460,10 @@ class Timeline extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    apiHost: state.serverDetails.apiHost
+    apiHost: state.serverDetails.apiHost,
   }
 }
 
-const mapDispatchToProps = {QuestionManagerTrue, UpdateQuestionState, HowitworksTrue}
+const mapDispatchToProps = {UpdateQuestionState}
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles))(Timeline);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles), withRouter)(Timeline);

@@ -1,22 +1,25 @@
 import { combineReducers } from 'redux'
 import loggedInStateReducer from "./loggedInState";
-import componentChangeReducer from "./componentChange";
-import globalVariablesReducer from "./gloabalVariables";
+
 import serverDetailsReducer from "./serverDetails";
 import questionsReducer from "./questionsState";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"
+import sidebarReducer from "./sidebar";
+import alertReducer from "./alert";
+import togglesReducer from "./toggles";
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['loggedInState']
+    whitelist: ['loggedInState', 'sidebarItems']
 }
 
 const allReducers = combineReducers({
+    sidebarItems: sidebarReducer,
     loggedInState: loggedInStateReducer,
-    componentChange: componentChangeReducer,
-    globalVariables: globalVariablesReducer,
+    alert: alertReducer,
+    toggles: togglesReducer,
     serverDetails: serverDetailsReducer,
     questionsState: questionsReducer
 })

@@ -2,8 +2,8 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
-import SidebarItem from './SidebarItem';
-import { drawerWidth } from '../styleVariables';
+import SidebarItem from './SubSidebar';
+import { drawerWidth } from '../../styleVariables';
 import withStyles from "@material-ui/core/styles/withStyles";
 import {compose} from "redux";
 import {connect} from "react-redux";
@@ -62,7 +62,7 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    opened: state.globalVariables.opened
+    opened: state.toggles.opened,
   }
 }
 export default compose(connect(mapStateToProps), withStyles(useStyles))(Sidebar);

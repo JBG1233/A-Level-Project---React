@@ -4,8 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import {connect} from "react-redux";
-import './App.css';
-import {UpdateAlert} from "../redux/actions";
+import '../Css/App.css';
+import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 
 class QuestionManager extends React.Component {
@@ -17,7 +19,12 @@ class QuestionManager extends React.Component {
             error: null,
         }
     }
-
+    CloseAlert(event, reason) {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.props.CloseAlert()
+    };
     submitQuestions() {
 
         const details = [
@@ -129,7 +136,7 @@ class QuestionManager extends React.Component {
 
                                 {this.props.loggedIn && this.state.score === null ?
                                     <div>
-                                        <Button variant="contained" color="primary" onClick = {() => this.submitQuestions()}>
+                                        <Button variant="contained" color="primary" Click = {() => this.submitQuestions()}>
                                             <div className="timelineTextHeader">
                                                 Submit Quiz
                                             </div>
@@ -149,6 +156,13 @@ class QuestionManager extends React.Component {
                     </div>
                     : null
                 }
+                {this.props.alertOpen ?
+                    <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                        <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                            {this.props.message}
+                        </Alert>
+                    </Snackbar>
+                    : null }
             </div>
 
 
@@ -162,10 +176,13 @@ const mapStateToProps = (state) => {
         loggedIn: state.loggedInState.loggedIn,
         userDtos: state.loggedInState.userDtos,
         countryCode: state.questionsState.countryCode,
-        questions: state.questionsState.questions
+        questions: state.questionsState.questions,
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen
     }
 }
 
-const mapDispatchToProps = {UpdateAlert}
+const mapDispatchToProps = {UpdateAlert, CloseAlert}
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionManager);

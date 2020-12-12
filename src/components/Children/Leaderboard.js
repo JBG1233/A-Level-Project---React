@@ -5,12 +5,12 @@ import Grid from "@material-ui/core/Grid";
 import CreateIcon from '@material-ui/icons/Create';
 import CheckIcon from '@material-ui/icons/Check';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import StatCard from "./StatCard";
+import StatCard from "../Extra/StatCard";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
 import {connect} from "react-redux";
-import {CloseAlert} from "../redux/actions";
+import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
@@ -18,7 +18,6 @@ class Leaderboard extends React.Component {
     constructor(props) {
         super(props);
     }
-
     CloseAlert(event, reason) {
         if (reason === 'clickaway') {
             return;
@@ -205,6 +204,7 @@ class Leaderboard extends React.Component {
         ];
 
         return (
+            <div className="leaderboardPadding">
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={6} md={3}>
                         <StatCard
@@ -268,14 +268,16 @@ class Leaderboard extends React.Component {
                             </Card>
                         </Grid>
                         ))}
-                    {this.props.alertOpen ?
-                        <Snackbar open={this.props.alertOpen} autoHideDuration={6000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
-                            <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
-                                {this.props.message}
-                            </Alert>
-                        </Snackbar>
-                        : null }
                 </Grid>
+                {this.props.alertOpen ?
+                    <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                        <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                            {this.props.message}
+                        </Alert>
+                    </Snackbar>
+                    : null }
+
+            </div>
 
         );
     }
@@ -288,12 +290,12 @@ const mapStateToProps = (state) => {
         apiHost: state.serverDetails.apiHost,
         userDtos: state.loggedInState.userDtos,
         stats: state.loggedInState.leaderboardScore,
-        severity: state.globalVariables.severity,
-        message: state.globalVariables.message,
-        alertOpen: state.globalVariables.alertOpen,
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen,
     }
 }
 
-const mapDispatchToProps = {CloseAlert}
+const mapDispatchToProps = {UpdateAlert, CloseAlert}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);

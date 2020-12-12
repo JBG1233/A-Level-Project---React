@@ -1,11 +1,13 @@
 import React from 'react';
 import AppBar from "@material-ui/core/AppBar";
-import './App.css';
+import '../Css/App.css';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import {connect} from "react-redux";
-import {UpdateAlert} from "../redux/actions";
+import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class About extends React.Component {
     constructor(props) {
@@ -45,6 +47,13 @@ class About extends React.Component {
         }
     }
 
+    CloseAlert(event, reason) {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.props.CloseAlert()
+    };
+
     render() {
         if (this.state.error !== null) {
             let message;
@@ -56,14 +65,12 @@ class About extends React.Component {
                 message =  "Illegal characters in your name are not allowed!"
             }
             this.props.UpdateAlert("error", message)
-            this.setState({
-                error: null
-            })
+            this.setState({error: null})
         }
         return (
             <div className="aboutBackgroundImage">
                 <div className="textHeader">
-                    <AppBar position="static">
+                    <AppBar style={{backgroundColor: '#95B4CC'}} position="static">
                         About Me!
                     </AppBar>
                 </div>
@@ -83,7 +90,7 @@ class About extends React.Component {
                     </div>
                 </div>
                 <div className="contactTextHeader">
-                    <AppBar position="static">
+                    <AppBar style={{backgroundColor: '#95B4CC'}} position="static">
                         Contact Me!
                     </AppBar>
                 </div>
@@ -118,6 +125,13 @@ class About extends React.Component {
                         </div>
                     </Button>
                 </div>
+                {this.props.alertOpen ?
+                    <Snackbar open={this.props.alertOpen} autoHideDuration={2000} anchorOrigin={{vertical: 'top', horizontal: 'center'}} onClose={() => this.CloseAlert()} >
+                        <Alert elevation={6} variant="filled" autoHideDuration={2000} onClose={() => this.CloseAlert()} severity={this.props.severity}>
+                            {this.props.message}
+                        </Alert>
+                    </Snackbar>
+                    : null }
             </div>
 
 
@@ -129,10 +143,13 @@ const mapStateToProps = (state) => {
     return {
         apiHost: state.serverDetails.apiHost,
         loggedIn: state.loggedInState.loggedIn,
-        username: state.loggedInState.userDtos.username
+        username: state.loggedInState.userDtos.username,
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen
     }
 }
 
-const mapDispatchToProps = {UpdateAlert}
+const mapDispatchToProps = {UpdateAlert, CloseAlert}
 
 export default connect(mapStateToProps, mapDispatchToProps)(About);

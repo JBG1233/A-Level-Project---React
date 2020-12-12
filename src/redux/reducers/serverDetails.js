@@ -1,6 +1,6 @@
 const initialState = {
     env: 'dev',
-    apiHost: '',
+    apiHost: 'http://localhost:8080'
 }
 
 function getApiHost () {
