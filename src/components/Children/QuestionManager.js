@@ -4,10 +4,13 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import {connect} from "react-redux";
-import '../Css/App.css';
+import '../Css/Questions.css';
 import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import {UpdateQuestionState} from "../../redux/actions/questionsStateActions";
+import {withRouter} from "react-router";
+import {compose} from "redux";
 
 
 class QuestionManager extends React.Component {
@@ -17,16 +20,34 @@ class QuestionManager extends React.Component {
             questionAnswers: [],
             score: null,
             error: null,
+            receivedQuestions: false,
         }
     }
+
+    componentDidMount() {
+        this.getQuestions()
+    }
+
     CloseAlert(event, reason) {
         if (reason === 'clickaway') {
             return;
         }
         this.props.CloseAlert()
     };
-    submitQuestions() {
 
+    getQuestions () {
+        let path = this.props.history.location.pathname
+        axios({
+            method: 'GET',
+            url: this.props.apiHost + '/rest/questions/main/' + path.substring(path.lastIndexOf('/') + 1),
+        })
+            .then(response => {
+                this.props.UpdateQuestionState(response.data)
+                this.setState({receivedQuestions: true})
+            })
+    }
+
+    submitQuestions() {
         const details = [
             {
                 "userQuestionAnswer": document.getElementById('abcdefg'[0]).value,
@@ -134,9 +155,9 @@ class QuestionManager extends React.Component {
                                     Please login to submit your score!
                                 </div> : null}
 
-                                {this.props.loggedIn && this.state.score === null ?
+                                {this.state.receivedQuestions && this.props.loggedIn && this.state.score === null ?
                                     <div>
-                                        <Button variant="contained" color="primary" Click = {() => this.submitQuestions()}>
+                                        <Button variant="contained" color="primary" onClick = {() => this.submitQuestions()}>
                                             <div className="timelineTextHeader">
                                                 Submit Quiz
                                             </div>
@@ -179,10 +200,10 @@ const mapStateToProps = (state) => {
         questions: state.questionsState.questions,
         severity: state.alert.severity,
         message: state.alert.message,
-        alertOpen: state.alert.alertOpen
+        alertOpen: state.alert.alertOpen,
     }
 }
 
-const mapDispatchToProps = {UpdateAlert, CloseAlert}
+const mapDispatchToProps = {UpdateAlert, CloseAlert, UpdateQuestionState}
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionManager);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(QuestionManager);

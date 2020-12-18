@@ -13,6 +13,7 @@ import {Link} from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import {CloseAlert} from "../../redux/actions/alertActions";
+import Button from "@material-ui/core/Button";
 
 const useStyles = theme => ({
     card: {
@@ -118,6 +119,15 @@ class PreRegisterPage extends React.Component {
                                             className={classes.fullWidth}
                                         />
                                     </Link>
+                                    <div className="pt-1 text-xs-center">
+                                        <Link to={'/forgot'} style={{textDecoration: 'none'}}>
+                                            <Button>Forgot password?</Button>
+                                        </Link>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Link to={'/preLogin'} style={{textDecoration: 'none'}}>
+                                            <Button>Login</Button>
+                                        </Link>
+                                    </div>
                                 </form>
                             </CardContent>
                         </Card>
@@ -135,11 +145,13 @@ class PreRegisterPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    severity: state.alert.severity,
-    message: state.alert.message,
-    alertOpen: state.alert.alertOpen
-})
+const mapStateToProps = (state) => {
+    return {
+        severity: state.alert.severity,
+        message: state.alert.message,
+        alertOpen: state.alert.alertOpen
+    }
+}
 
 const mapDispatchToProps = {CloseAlert};
 

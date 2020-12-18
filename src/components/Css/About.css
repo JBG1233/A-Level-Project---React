@@ -1,0 +1,83 @@
+.howItWorksMain {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+.aboutBackgroundImage {
+    background-image: url("/static/images/about.png");
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: left;
+    background-size: cover;
+    text-align: center;
+}
+
+.profilePic {
+    float: left;
+    padding: 0 7px 0 7px;
+}
+
+.profilePic img {
+    width: auto;
+    height: 256px;
+}
+
+.profilePic div {
+    width: 985px;
+    height: 256px;
+    font-size: 22px;
+    color: white;
+    border: 1px solid deepskyblue;
+    font-family: 'Ubuntu', sans-serif;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.howItWorks {
+    column-count: 2;
+    column-gap: 10px;
+    padding: 10px;
+}
+
+.howItWorks div {
+    background: rgba(0, 0, 0, 0.1);
+    height: auto;
+    font-size: 19px;
+    border: 1px solid #799FCB;
+    font-family: 'Ubuntu', sans-serif;
+    padding: 10px;
+}
+
+
+.contactMe {
+    padding: 7px 7px 0 7px; /* top right bottom left */
+    display: inline-block;
+}
+
+.contactMe div {
+    background: rgba(163, 199, 249, 0.5);
+}
+
+.contactMe2 {
+    padding: 7px 7px 0 7px;
+}
+
+.contactMe2 div {
+    background: rgba(163, 199, 249, 0.5);
+}
+
+.contactMeButton {
+    padding: 7px 7px 0 7px;
+}
+
+.classIdButton {
+    color: white;
+    cursor: pointer;
+    background: #95B4CC;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 45px;
+    margin: 25px 150px 25px 150px;
+    padding: 10px 0 10px 0;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}

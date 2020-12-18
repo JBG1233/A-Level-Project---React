@@ -79,7 +79,7 @@ class StudentRegisterPage extends React.Component {
         }
         axios({
             method: 'POST',
-            url: this.props.apiHost + '/rest/register/student',
+            url: this.props.apiHost + '/rest/student/register',
             data: details,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -201,7 +201,7 @@ class StudentRegisterPage extends React.Component {
                                             <Button>Forgot password?</Button>
                                         </Link>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <Link to={'/login'} style={{textDecoration: 'none'}}>
+                                        <Link to={'/preLogin'} style={{textDecoration: 'none'}}>
                                             <Button>Login</Button>
                                         </Link>
                                     </div>

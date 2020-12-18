@@ -17,9 +17,10 @@ import Sidebar from "../Base UI/Sidebar";
 import Header from "../Base UI/Header";
 import {ApiHost} from "../../redux/actions/serverDetailsActions";
 import QuestionManager from "../Children/QuestionManager";
-import {studentItems, teacherItems} from "../../redux/actions/sidebarActions";
+import {studentItems, teacherItems} from "../../redux/actions/roleActions";
 import StudentGroups from "../School/StudentGroups";
 import TeachingGroups from "../School/TeachingGroups";
+import CreateQuiz from "../Children/CreateQuiz";
 
 const useStyles = theme => ({
   panel: {
@@ -114,6 +115,7 @@ class App extends React.Component {
             <main className={classNames(classes.content, classes[`content-left`], {[classes.contentShift]: this.props.opened, [classes[`contentShift-left`]]: this.props.opened})}>
 
               <Switch>
+                <Route path="/createQuiz"><CreateQuiz/></Route>
                 <Route path="/timeline"><Timeline/></Route>
                 <Route path="/studentGroups"><StudentGroups/></Route>
                 <Route path="/teachingGroups"><TeachingGroups/></Route>
@@ -123,7 +125,7 @@ class App extends React.Component {
                 <Route path="/userHowItWorks"><UserHowItWorks/></Route>
                 <Route path="/about"><About/></Route>
                 <Route path="/results"><SearchResults/></Route>
-                <Route path="/results/:quizId"><QuestionManager/></Route>
+                <Route path="/quiz/:groupId"><QuestionManager/></Route>
                 <Route exact path="/"><WorldMap/></Route>
               </Switch>
 

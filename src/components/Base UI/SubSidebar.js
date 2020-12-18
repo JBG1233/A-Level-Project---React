@@ -202,8 +202,8 @@ loadLeaderboardStatistics () {
     })
         .then(response => {
           if (response.status === 200) {
-              if (response.data === "") {
-                this.props.UpdateAlert("warning", "Do some quizzes to populate your leaderboard!")
+              if (response.data.answered === 0) {
+                this.props.UpdateAlert("warning", "Do a quiz to populate your leaderboard!")
               } else {
                 this.props.UpdateLeaderboardStatistics(response.data)
                 this.props.history.push('/leaderboard')
@@ -288,14 +288,13 @@ loadLeaderboardStatistics () {
 
 const mapStateToProps = (state) => {
   return {
-    items: state.sidebarItems.items,
     loggedIn: state.loggedInState.loggedIn,
     userDtos: state.loggedInState.userDtos,
     apiHost: state.serverDetails.apiHost,
     severity: state.alert.severity,
     message: state.alert.message,
     alertOpen: state.alert.alertOpen,
-    role: state.sidebarItems.role,
+    role: state.loggedInState.userDtos.role,
   }
 }
 

@@ -12,8 +12,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import {CloseAlert} from "../../redux/actions/alertActions";
-import {studentItems, teacherItems, userItems} from "../../redux/actions/sidebarActions";
+import {studentItems, teacherItems, userItems} from "../../redux/actions/roleActions";
 import {withRouter} from "react-router";
+import {Link} from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const useStyles = theme => ({
     card: {
@@ -125,6 +127,15 @@ class PreLoginPage extends React.Component {
                                         label="None of the above"
                                         className={classes.fullWidth}
                                     />
+                                    <div className="pt-1 text-md-center">
+                                        <Link to={'/forgot'} style={{textDecoration: 'none'}}>
+                                            <Button>Forgot password?</Button>
+                                        </Link>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <Link to={'/preRegister'} style={{textDecoration: 'none'}}>
+                                            <Button>Create new account</Button>
+                                        </Link>
+                                    </div>
                                 </form>
                             </CardContent>
                         </Card>

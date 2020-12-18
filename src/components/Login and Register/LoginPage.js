@@ -64,7 +64,8 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: null
+            error: false,
+            message: null
         }
     }
 
@@ -79,7 +80,7 @@ class LoginPage extends React.Component {
         }
         axios({
             method: 'POST',
-            url: this.props.apiHost + '/rest/login/' + this.props.role,
+            url: this.props.apiHost + '/rest/' + this.props.role + '/login',
             data: details,
 
         }).then(res => {
@@ -89,9 +90,17 @@ class LoginPage extends React.Component {
                 this.props.history.push('/')
             }
         }).catch(error => {
-            this.setState({
-                error: error
+            if (error.response.status === 400) {
+                this.setState({
+                    error: true,
+                    message: "Incorrect username or password!"
             })
+            } else if (error.response.status === 500) {
+                this.setState({
+                    error: true,
+                    message: "Unable to log you in"
+                })
+            }
         })
     }
 
@@ -116,17 +125,9 @@ class LoginPage extends React.Component {
 
         const {classes} = this.props;
 
-        console.log(this.state.error)
-
-        if (this.state.error !== null) {
-            let message;
-            if (this.state.error.response.status === 400) {
-                message = "Incorrect username or password!"
-            } else if (this.state.error.response.status === 500) {
-                message =  "Unable to log you in"
-            }
-            this.props.UpdateAlert("error", message)
-            this.setState({error: null})
+        if (this.state.error) {
+            this.props.UpdateAlert("error", this.state.message)
+            this.setState({error: false})
         }
 
         return (
@@ -200,7 +201,7 @@ const mapStateToProps = (state) => {
         severity: state.alert.severity,
         message: state.alert.message,
         alertOpen: state.alert.alertOpen,
-        role: state.sidebarItems.role
+        role: state.role.role
     }
 }
 

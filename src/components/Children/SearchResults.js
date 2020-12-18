@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import axios from "axios";
-import {UpdateQuestionState} from "../../redux/actions/questionsStateActions";
+import {withRouter} from "react-router";
+import {compose} from "redux";
+import '../Css/Questions.css';
 
 class SearchResults extends React.Component {
 
@@ -19,18 +20,7 @@ class SearchResults extends React.Component {
     }
 
     getQuestions(selectedSearchResult) {
-        console.log(selectedSearchResult)
-        axios({
-            method: 'GET',
-            url: this.props.apiHost + '/rest/questions/main/' + selectedSearchResult,
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    this.props.UpdateQuestionState(response.data, selectedSearchResult)
-                    this.props.history.push(`results/${selectedSearchResult}`)
-                }
-            }).catch(error => {
-        })
+        this.props.history.replace(`/quiz/${selectedSearchResult.groupId}`)
     }
 
 
@@ -53,9 +43,10 @@ class SearchResults extends React.Component {
 const mapStateToProps = (state) => {
     return {
         searchResults: state.questionsState.searchResults,
+        apiHost: state.serverDetails.apiHost
     }
 }
 
-const mapDispatchToProps = {UpdateQuestionState};
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter) (SearchResults);

@@ -1,5 +1,5 @@
 import React from "react";
-import '../Css/App.css';
+import '../Css/About.css';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -15,25 +15,25 @@ class UserHowItWorks extends React.Component{
                     </AppBar>
                 </div>
                 <div className="howItWorks">
-                    <div className="howItWorksFirst">
-                        Remember to create an account or login before completing the instructions
-                        below as you will be unable to submit your answers and unable to access
-                        your leaderboard stats. For the Map, decide what country you would like
-                        to take a quiz for, press the marker hovering over the country. You should be
-                        taken to a page with 7 questions, answer as many as you can and submit your answer.
-                        After submitting your answers you will be able to see your updated leaderboard stats
-                        at the leaderboard page, eventually you will be able to compare your results with the
-                        top 5 in the world.
+                    <div>
+                        Make sure to sign in before attempting to view your leaderboard or play a quiz as you will be
+                        denied. Once you have signed in you are able to attempt a quiz by selecting the appropriate
+                        country, or historic time frame. Then you will be able to answer a different 7 questions about
+                        the subject matter everytime you select the quiz. Once you have answered all - if you can! -
+                        of the 7 questions submit your questions and you will be give a score out of 7. You an then
+                        view your leaderboard by heading over to the leaderboard page, you will be given a few different
+                        stats about the quizzes that you have taken. Eventually you will be able to see your location
+                        on the global leaderboard or the local leaderboard! (Your friends)
                     </div>
-                    <div className="howItWorksFirst">
-                        Remember to create an account or login before completing the instructions
-                        below as you will be unable to submit your answers and unable to access
-                        your leaderboard stats. For the Map, decide what country you would like
-                        to take a quiz for, press the marker hovering over the country. You should be
-                        taken to a page with 7 questions, answer as many as you can and submit your answer.
-                        After submitting your answers you will be able to see your updated leaderboard stats
-                        at the leaderboard page, eventually you will be able to compare your results with the
-                        top 5 in the world.
+                    <div>
+                        For non-school users or students you will not be able to create a quiz. However, you will be
+                        able to play the quizzes that the teachers create by selecting "view quizzes" after selecting
+                        a country. At the moment, there is no settings page, in the future there will be, and when there
+                        is you will be able to add friends within the platform. This will enable you to have a friend
+                        leaderboard. If you are unsuccessful with your answers and don't know why, it is likely that the
+                        validation I have used is slightly wrong, send me a message via the about page with the question
+                        in hand. If you do decide to send me a message via the about page, just know that any inappropriate
+                        messages are automatically deleted before ending up in the database, so don't try!
                     </div>
                 </div>
             </div>

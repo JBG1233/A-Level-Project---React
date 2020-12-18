@@ -13,10 +13,10 @@ constructor(props) {
     super(props);
     }
 
-    getResults (country) {
+    getResults (id) {
         axios({
             method: 'GET',
-            url: this.props.apiHost + '/rest/questions/search/' + country,
+            url: this.props.apiHost + '/rest/questions/view/' + id,
         })
             .then(response => {
                 if (response.status === 200) {
@@ -29,6 +29,7 @@ constructor(props) {
 
     createQuiz() {
         if (this.props.role === "teacher") {
+            this.props.history.push("/createQuiz")
         } else {
             this.props.UpdateAlert("error", "You don't have the correct permissions to create a quiz!")
         }
@@ -42,7 +43,7 @@ constructor(props) {
 
                     <Marker position={[51, -1]}>
                         <Popup>
-                            <span className="viewQuiz" onClick={() => this.getResults('UK')}>
+                            <span className="viewQuiz" onClick={() => this.getResults('GBPGK')}>
                                 View quizzes!
                             </span>
                             <br/>
@@ -55,7 +56,7 @@ constructor(props) {
 
                     <Marker position={[55, -110]}>
                         <Popup>
-                            <span className="viewQuiz" onClick={() => this.getResults('Canada')}>
+                            <span className="viewQuiz" onClick={() => this.getResults('CADGK')}>
                                 View quizzes!
                             </span>
                             <br/>
@@ -68,7 +69,7 @@ constructor(props) {
 
                     <Marker position={[-30, 135]}>
                         <Popup>
-                            <span className="viewQuiz" onClick={() => this.getResults('Australia')}>
+                            <span className="viewQuiz" onClick={() => this.getResults('AUSGK')}>
                                 View quizzes!
                             </span>
                             <br/>
@@ -81,7 +82,7 @@ constructor(props) {
 
                     <Marker position={[-15, -50]}>
                         <Popup>
-                            <span className="viewQuiz" onClick={() => this.getResults('Brazil')}>
+                            <span className="viewQuiz" onClick={() => this.getResults('BRLGK')}>
                                 View quizzes!
                             </span>
                             <br/>
@@ -94,7 +95,7 @@ constructor(props) {
 
                     <Marker position={[30, 100]}>
                         <Popup>
-                            <span className="viewQuiz" onClick={() => this.getResults('China')}>
+                            <span className="viewQuiz" onClick={() => this.getResults('CNYGK')}>
                                 View quizzes!
                             </span>
                             <br/>
@@ -115,7 +116,7 @@ constructor(props) {
 const mapStateToProps = (state) => {
     return {
         apiHost: state.serverDetails.apiHost,
-        role: state.sidebarItems.role,
+        role: state.loggedInState.userDtos.role,
         severity: state.alert.severity,
         userDtos: state.loggedInState.userDtos
     }

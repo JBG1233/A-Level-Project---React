@@ -1,6 +1,6 @@
 import React from 'react';
 import AppBar from "@material-ui/core/AppBar";
-import '../Css/App.css';
+import '../Css/About.css';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";

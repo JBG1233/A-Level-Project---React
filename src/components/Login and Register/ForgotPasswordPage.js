@@ -96,7 +96,7 @@ class ForgotPasswordPage extends React.Component {
                                         Send password reset
                                     </Button>
                                     <div className="pt-1 text-xs-center">
-                                        <Link to={'/login'} style={{textDecoration: 'none'}}>
+                                        <Link to={'/preLogin'} style={{textDecoration: 'none'}}>
                                             <Button>Login</Button>
                                         </Link>
                                         &nbsp;&nbsp;&nbsp;&nbsp;

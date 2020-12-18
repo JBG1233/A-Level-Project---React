@@ -22,10 +22,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Menu from "@material-ui/core/Menu";
 import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import '../Css/Questions.css';
 
 const useStyles = theme => ({
   appBar: {
@@ -205,11 +207,11 @@ render() {
                 <ListItemText primary="Close Menu"/>
               </MenuItem>
             </Menu>
-            {/*<IconButton aria-label="User Settings" aria-haspopup="true" color="inherit">
+            <IconButton aria-label="User Settings" aria-haspopup="true" color="inherit">
               <div className="space">
                 <SettingsIcon/>
               </div>
-            </IconButton>*/}
+            </IconButton>
           </Toolbar>
         </AppBar>
         {this.props.alertOpen ?

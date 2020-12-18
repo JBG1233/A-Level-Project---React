@@ -1,27 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
-.questions {
-    margin-left: 25px;
-    margin-right: 25px;
-    column-count: 2;
-    column-span: all;
-    column-gap: 25px;
-}
-
-.questionFields {
-    padding-top: 20px;
-}
-
-.score {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 25px;
-    color: red;
-}
-
-.scores {
-    padding-top: 25px;
-}
-
 .textHeader {
     padding: 7px;
     font-size: 45px;
@@ -35,68 +13,19 @@
     text-align: center;
 }
 
-.howItWorksMain {
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-}
-
-.aboutBackgroundImage {
-    background-image: url("/static/images/about.png");
-    background-repeat: no-repeat;
-    height: 100%;
-    background-position: left;
-    background-size: cover;
-    text-align: center;
-}
-
-.profilePic {
-    float: left;
-    padding: 0 7px 0 7px;
-}
-
-.profilePic img {
-    width: auto;
-    height: 256px;
-}
-
-.profilePic div {
-    width: 985px;
-    height: 256px;
-    font-size: 22px;
-    color: white;
-    border: 1px solid deepskyblue;
-    font-family: 'Ubuntu', sans-serif;
-    background: rgba(0, 0, 0, 0.5);
-}
-
 .leaderboardPadding {
     padding: 5px
-}
-
-.howItWorks {
-    column-count: 2;
-    column-gap: 10px;
-    padding: 10px
-}
-
-.howItWorksFirst {
-    background: rgba(0, 0, 0, 0.1);
-    height: auto;
-    font-size: 19px;
-    border: 1px solid #799FCB;
-    font-family: 'Ubuntu', sans-serif;
-    padding: 10px;
 }
 
 .timelineTextHeader {
     font-size: 15px;
     font-family: 'Ubuntu', sans-serif;
-
 }
 
 .viewQuiz {
     cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
 }
 
 .whiteTextHeader {
@@ -112,64 +41,6 @@
     font-size: 35px;
     font-weight:bold;
     font-family: 'Ubuntu', sans-serif;
-}
-
-.contactMe {
-    padding: 7px 7px 0 7px; /* top right bottom left */
-    display: inline-block;
-}
-
-.contactMe div {
-    background: rgba(163, 199, 249, 0.5);
-}
-
-.contactMe2 {
-    padding: 7px 7px 0 7px;
-}
-
-.contactMe2 div {
-    background: rgba(163, 199, 249, 0.5);
-}
-
-.contactMeButton {
-    padding: 7px 7px 0 7px;
-}
-
-.searchPadding {
-    padding: 10px;
-    height: 100%;
-}
-
-.searchResult {
-    height: 200px;
-    background-color: rgba(0, 0, 0, 0.1);
-    vertical-align: top;
-    cursor: pointer;
-    position: relative;
-}
-
-.searchResult img {
-    padding: 7px;
-    height: 93%;
-    width: 20%;
-}
-
-.searchResult header {
-    font-family: 'Ubuntu', sans-serif;
-    font-weight: bold;
-    font-size: 30px;
-    vertical-align: top;
-    display: inline-block;
-    position: absolute;
-}
-
-.searchResult p {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 18px;
-    margin-top: 3%;
-    display: inline-block;
-    vertical-align: middle;
-    position: absolute;
 }
 
 .br {
