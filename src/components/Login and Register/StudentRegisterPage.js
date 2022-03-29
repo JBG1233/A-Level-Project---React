@@ -41,7 +41,7 @@ const useStyles = theme => ({
     },
     wrapper: {
         flex: "none",
-        maxWidth: "400px",
+        maxWidth: "550px",
         width: "100%",
         margin: "0 auto"
     },
@@ -69,13 +69,13 @@ class StudentRegisterPage extends React.Component {
         }
     }
 
-    register(firstName, lastName, username, password, classID) {
+    register(firstName, lastName, username, password, schoolId) {
         const details = {
             'firstName': firstName,
             'lastName': lastName,
             'username': username,
             'password': password,
-            'classID': classID,
+            'schoolID': schoolId,
         }
         axios({
             method: 'POST',
@@ -93,15 +93,16 @@ class StudentRegisterPage extends React.Component {
         })
     }
 
+
     setRegisterValues() {
         const confirmPassword = document.getElementById('confirmPassword').value
         const firstName = document.getElementById('firstName').value
         const lastName = document.getElementById('lastName').value
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        const classID = document.getElementById('classID').value
+        const schoolId = document.getElementById('schoolId').value
         if (confirmPassword === password) {
-            this.register(firstName, lastName, username, password, classID)
+            this.register(firstName, lastName, username, password, schoolId)
         } else {
             this.props.UpdateAlert("error", "Password's don't match up!")
         }
@@ -112,10 +113,9 @@ class StudentRegisterPage extends React.Component {
             return;
         }
         this.props.CloseAlert()
-    }
+    };
 
     render() {
-
         const {classes} = this.props;
 
         if (this.state.error !== null) {
@@ -123,7 +123,7 @@ class StudentRegisterPage extends React.Component {
             if (this.state.error.response.status === 409) {
                 message = "User already exists, please sign in!"
             } else if (this.state.error.response.status === 500) {
-                message =  "Class id incorrect!"
+                message =  "School Id incorrect!"
             } else if (this.state.error.response.status === 400) {
                 message = "Illegal characters are not allowed!"
             }
@@ -150,45 +150,47 @@ class StudentRegisterPage extends React.Component {
                                             Create an app id to continue
                                         </Typography>
                                     </div>
-                                    <TextField
-                                        id="firstName"
-                                        label="First Name"
-                                        className={classes.textField}
-                                        fullWidth
-                                        margin="normal"/>
-                                    <TextField
-                                        id="lastName"
-                                        label="Last Name"
-                                        className={classes.textField}
-                                        fullWidth
-                                        margin="normal"/>
-                                    <TextField
-                                        id="username"
-                                        label="Username"
-                                        className={classes.textField}
-                                        fullWidth
-                                        margin="normal"/>
-                                    <TextField
-                                        id="password"
-                                        label="Password"
-                                        className={classes.textField}
-                                        type="password"
-                                        fullWidth
-                                        margin="normal"/>
-                                    <TextField
-                                        id="confirmPassword"
-                                        label="Confirm Password"
-                                        className={classes.textField}
-                                        type="password"
-                                        fullWidth
-                                        margin="normal"/>
-                                    <TextField
-                                        id="classID"
-                                        label="Class ID"
-                                        className={classes.textField}
-                                        type="password"
-                                        fullWidth
-                                        margin="normal"/>
+                                    <div className="register">
+                                        <TextField
+                                            id="firstName"
+                                            label="First Name"
+                                            className={classes.textField}
+                                            fullWidth
+                                            margin="normal"/>
+                                        <TextField
+                                            id="lastName"
+                                            label="Last Name"
+                                            className={classes.textField}
+                                            fullWidth
+                                            margin="normal"/>
+                                        <TextField
+                                            id="username"
+                                            label="Username"
+                                            className={classes.textField}
+                                            fullWidth
+                                            margin="normal"/>
+                                        <TextField
+                                            id="password"
+                                            label="Password"
+                                            className={classes.textField}
+                                            type="password"
+                                            fullWidth
+                                            margin="normal"/>
+                                        <TextField
+                                            id="confirmPassword"
+                                            label="Confirm Password"
+                                            className={classes.textField}
+                                            type="password"
+                                            fullWidth
+                                            margin="normal"/>
+                                        <TextField
+                                            id="schoolId"
+                                            label="School ID"
+                                            className={classes.textField}
+                                            fullWidth
+                                            margin="normal"/>
+                                    </div>
+                                    <br/>
                                     <Button
                                         onClick={() => this.setRegisterValues()}
                                         variant="contained"

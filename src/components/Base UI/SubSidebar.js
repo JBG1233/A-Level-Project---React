@@ -14,11 +14,9 @@ import {withRouter} from "react-router";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import ExploreIcon from "@material-ui/icons/Explore";
-import FaceIcon from "@material-ui/icons/Face";
-import PeopleIcon from "@material-ui/icons/People";
-import BuildIcon from "@material-ui/icons/Build";
 import InfoIcon from "@material-ui/icons/Info";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
+import CreateIcon from '@material-ui/icons/Create';
+import TimelineIcon from '@material-ui/icons/Timeline';
 
 const useStyles = theme => ({
   badge: {
@@ -88,24 +86,14 @@ constructor(props) {
   this.state = {
     items: [
       {
-        name: 'Map',
+        name: 'Home',
         icon: ExploreIcon,
         path: ''
       },
       {
-        name: 'Timeline',
-        icon: FaceIcon,
-        path: 'timeline'
-      },
-      {
-        name: 'Leaderboard',
-        icon: PeopleIcon,
-        path: 'leaderboard'
-      },
-      {
-        name: 'How it works',
-        icon: BuildIcon,
-        path: 'userHowItWorks'
+        name: 'Your Scores',
+        icon: TimelineIcon,
+        path: 'results'
       },
       {
         name: 'About',
@@ -121,65 +109,22 @@ componentDidMount() {
 }
 
   checkForItems () {
-    if (this.props.role === "student") {
+    if (this.props.schoolID != null) {
       this.setState ({items:   [
           {
-            name: 'Map',
+            name: 'Home',
             icon: ExploreIcon,
             path: ''
           },
           {
-            name: 'Timeline',
-            icon: FaceIcon,
-            path: 'timeline'
+            name: 'Your Scores',
+            icon: TimelineIcon,
+            path: 'results'
           },
           {
-            name: 'Leaderboard',
-            icon: PeopleIcon,
-            path: 'leaderboard'
-          },
-          {
-            name: 'Your Classes',
-            icon: MenuBookIcon,
-            path: 'teachingGroups'
-          },
-          {
-            name: 'How it works',
-            icon: BuildIcon,
-            path: 'studentHowItWorks'
-          },
-          {
-            name: 'About',
-            icon: InfoIcon,
-            path: 'about'
-          }
-        ]})
-    } else if (this.props.role === "teacher") {
-      this.setState ({items:   [
-          {
-            name: 'Map',
-            icon: ExploreIcon,
-            path: ''
-          },
-          {
-            name: 'Timeline',
-            icon: FaceIcon,
-            path: 'timeline'
-          },
-          {
-            name: 'Leaderboard',
-            icon: PeopleIcon,
-            path: 'leaderboard'
-          },
-          {
-            name: 'Your Students',
-            icon: MenuBookIcon,
-            path: 'studentGroups'
-          },
-          {
-            name: 'How it works',
-            icon: BuildIcon,
-            path: 'teacherHowItWorks'
+            name: 'Create',
+            icon: CreateIcon,
+            path: 'create'
           },
           {
             name: 'About',
@@ -193,23 +138,25 @@ componentDidMount() {
 loadLeaderboardStatistics () {
   if (this.props.loggedIn === false) {
     this.props.UpdateAlert("warning", "Please login to access your scores")
-  } axios({
+  } else {
+    axios({
       method: 'GET',
       url: this.props.apiHost + '/rest/leaderboard',
       headers: {
-        "Authorization": this.props.userDtos.accessToken
+        "Authorization": this.props.userDtos.userId
       }
     })
         .then(response => {
           if (response.status === 200) {
-              if (response.data.answered === 0) {
-                this.props.UpdateAlert("warning", "Do a quiz to populate your leaderboard!")
-              } else {
-                this.props.UpdateLeaderboardStatistics(response.data)
-                this.props.history.push('/leaderboard')
-              }
+            if (response.data.answered === 0) {
+              this.props.UpdateAlert("warning", "Do a quiz to populate your leaderboard!")
+            } else {
+              this.props.UpdateLeaderboardStatistics(response.data)
+              this.props.history.push('/results')
+            }
           }
         })
+  }
   }
 
   CloseAlert(event, reason) {
@@ -220,7 +167,7 @@ loadLeaderboardStatistics () {
   };
 
   showItems (item, index, classes) {
-    if (item.name === "Leaderboard") {
+    if (item.name === "Your Scores") {
       return (
           <div style = {{width: '241px'}}>
             <Ripples>
@@ -294,7 +241,7 @@ const mapStateToProps = (state) => {
     severity: state.alert.severity,
     message: state.alert.message,
     alertOpen: state.alert.alertOpen,
-    role: state.loggedInState.userDtos.role,
+    schoolID: state.loggedInState.userDtos.schoolID,
   }
 }
 

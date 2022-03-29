@@ -10,9 +10,14 @@ class SearchResults extends React.Component {
         return (
             <div onClick={()=> this.getQuestions(searchResult)}>
                 <div className="searchResult">
-                    <img src={searchResult.quizImage} alt=""/>
-                    <header>{searchResult.quizName}</header>
-                    <p>{searchResult.quizDescription}</p>
+                    <img className="searchImage" src={searchResult.quizImage} alt=""/>
+                    <div>
+                        <header>{searchResult.quizName}</header>
+                        <p>{searchResult.quizDescription}</p>
+                        <br/>
+                        <header>Author:</header>
+                        <p>{searchResult.authorName}</p>
+                    </div>
                 </div>
             <br/>
             </div>
@@ -27,13 +32,13 @@ class SearchResults extends React.Component {
     render() {
         return (
             <div>
-                {this.props.searchResults !== undefined ? <div className="searchPadding">
+                {this.props.searchResults[0] !== undefined ? <div className="searchPadding">
                     {
                         this.props.searchResults.map((searchResult) => {
                             return this.showSearchResults(searchResult)
                         })
                     }
-                </div> : <div className="blackTextHeader"> No Quizzes Found!</div>
+                </div> : <div className="noQuizzes"> No Quizzes Found!</div>
                 }
             </div>
         )

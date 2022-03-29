@@ -95,7 +95,7 @@ class PreRegisterPage extends React.Component {
                                             World Quiz
                                         </div>
                                         <Typography variant="caption">
-                                                Select on of the three options to continue
+                                                Select on of the two options to continue
                                         </Typography>
                                     </div>
                                     <Link to={'/studentRegister'} style={{textDecoration: 'none'}}>
@@ -105,17 +105,10 @@ class PreRegisterPage extends React.Component {
                                             className={classes.fullWidth}
                                         />
                                     </Link>
-                                    <Link to={'/teacherRegister'} style={{textDecoration: 'none'}}>
-                                        <FormControlLabel
-                                            control={<Checkbox value="teacher"/>}
-                                            label="Teacher"
-                                            className={classes.fullWidth}
-                                        />
-                                    </Link>
                                     <Link to={'/userRegister'} style={{textDecoration: 'none'}}>
                                         <FormControlLabel
                                             control={<Checkbox value="user"/>}
-                                            label="None of the above"
+                                            label="Standard User"
                                             className={classes.fullWidth}
                                         />
                                     </Link>

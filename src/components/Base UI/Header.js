@@ -67,7 +67,7 @@ const useStyles = theme => ({
     borderRadius: '5px',
     marginRight: theme.spacing(1) * 2,
     display: 'block',
-    maxWidth: '800px'
+    maxWidth: '700px'
   },
   searchInput: {
     fontSize: '1rem',
@@ -96,7 +96,8 @@ class Header extends React.Component {
     super(props);
     this.keyPressed = this.keyPressed.bind(this);
     this.state = {
-      menuIsOpen: null
+      menuIsOpen: null,
+      message: ''
     }
   }
 
@@ -126,7 +127,7 @@ class Header extends React.Component {
         .then(response => {
           if (response.status === 200) {
             this.props.SearchResultsChange(response.data)
-            this.props.history.push('/results')
+            this.props.history.push('/search')
           }
         }).catch(error => {
     })
@@ -145,7 +146,10 @@ class Header extends React.Component {
     this.props.CloseAlert()
   };
 
-render() {
+
+
+
+  render() {
 
   const { classes } = this.props;
 
@@ -159,7 +163,7 @@ render() {
             <div className={classes.branding}>
               <Link to={'/'}>
                 <div className="whiteTextHeader">
-                  World Quiz
+                  Revision Quiz
                 </div>
               </Link>
             </div>
@@ -173,6 +177,13 @@ render() {
                 </div>
               </div>
             </Hidden>
+            <div className="message">
+              {this.props.loggedIn ?
+                'You are logged in as ' + this.props.name
+              :
+                'You are not logged in!'
+              }
+            </div>
             <IconButton aria-owns={this.state.menuIsOpen ? 'user-menu' : null} onClick={(e) => this.handleMenuOpen(e)} aria-label="User Settings" aria-haspopup="true" color="inherit">
               <div className="space">
                 <PersonIcon/>
@@ -233,6 +244,7 @@ const mapStateToProps = (state) => {
     severity: state.alert.severity,
     message: state.alert.message,
     alertOpen: state.alert.alertOpen,
+    name: state.loggedInState.userDtos.username
   }
 }
 

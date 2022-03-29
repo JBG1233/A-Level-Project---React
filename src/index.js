@@ -9,13 +9,12 @@ import {Route, Switch} from "react-router";
 import LoginPage from "./components/Login and Register/LoginPage";
 import ForgotPasswordPage from "./components/Login and Register/ForgotPasswordPage";
 import PreRegisterPage from "./components/Login and Register/PreRegisterPage";
-import TeacherRegisterPage from "./components/Login and Register/TeacherRegisterPage";
-import StudentRegisterPage from "./components/Login and Register/StudentRegisterPage";
 import UserRegisterPage from "./components/Login and Register/UserRegisterPage";
 import PreLoginPage from "./components/Login and Register/PreLoginPage";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NotFound from "./components/Extra/NotFound";
 import BackendError from "./components/Extra/BackendError";
+import StudentRegisterPage from "./components/Login and Register/StudentRegisterPage";
 
 ReactDOM.render(
     <Provider store={store}>
@@ -29,7 +28,6 @@ ReactDOM.render(
                     <Route exact path="/forgot"><ForgotPasswordPage/></Route>
                     <Route exact path="/preRegister"><PreRegisterPage/></Route>
                     <Route exact path="/userRegister"><UserRegisterPage/></Route>
-                    <Route exact path="/teacherRegister"><TeacherRegisterPage/></Route>
                     <Route exact path="/studentRegister"><StudentRegisterPage/></Route>
                     <Route path="/"><MuiThemeProvider><App/></MuiThemeProvider></Route>
                 </Switch>

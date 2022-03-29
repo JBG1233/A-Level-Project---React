@@ -68,34 +68,31 @@ class About extends React.Component {
             this.setState({error: null})
         }
         return (
-            <div className="aboutBackgroundImage">
+            <div>
                 <div className="textHeader">
                     <AppBar style={{backgroundColor: '#95B4CC'}} position="static">
                         About Me!
                     </AppBar>
                 </div>
-                <div className="profilePic">
-                    <img src={'/static/images/profile-pic.png'} alt="pfp here"/>
+                <div className="aboutDescription">
+                    Hello, I hope you have enjoyed the time you have spent on my quiz.
+                    This is a project of mine that I have been working on for a couple months,
+                    as a part of my A Level Computer Science coursework. I study Maths,
+                    Economics, Business and Computer Science at a school north of London called
+                    the RGS, Royal Grammar School. I plan to take software engineering at a higher
+                    level so that I can do what I did here on a day to day basis. I plan on developing
+                    this quiz until i am satisfied that it is as professional that it can be, with little
+                    to no bugs. I encourage you to leave me a message by filling the form down below if
+                    you have any questions, suggestions or ideas that may improve the quiz.
                 </div>
-                <div className="profilePic">
-                    <div>Hello, I hope you have enjoyed the time you have spent on my quiz.
-                        This is a project of mine that I have been working on for a couple months,
-                        as a part of my A Level Computer Science coursework. I study Maths,
-                        Economics, Business and Computer Science at a school north of London called
-                        the RGS, Royal Grammar School. I plan to take software engineering at a higher
-                        level so that I can do what I did here on a day to day basis. I plan on developing
-                        this quiz until i am satisfied that it is as professional that it can be, with little
-                        to no bugs. I encourage you to leave me a message by filling the form down below if
-                        you have any questions, suggestions or ideas that may improve the quiz.
-                    </div>
-                </div>
-                <div className="contactTextHeader">
+                <div className="textHeader">
                     <AppBar style={{backgroundColor: '#95B4CC'}} position="static">
                         Contact Me!
                     </AppBar>
                 </div>
                 <div className="contactMe">
                     <TextField
+                        style = {{width: '100%'}}
                         id="firstName"
                         label="First Name"
                         variant="outlined">
@@ -103,14 +100,15 @@ class About extends React.Component {
                 </div>
                 <div className="contactMe">
                     <TextField
+                        style = {{width: '100%'}}
                         id="lastName"
                         label="Last Name"
                         variant="outlined">
                     </TextField>
                 </div>
-                <div className="contactMe2">
+                <div className="contactMe">
                     <TextField
-                        style = {{width: '34%'}}
+                        style = {{width: '100%'}}
                         id="message"
                         rows={4}
                         multiline
@@ -119,10 +117,8 @@ class About extends React.Component {
                     </TextField>
                 </div>
                 <div className="contactMeButton">
-                    <Button variant="contained" color="primary" onClick={() => this.submitContactForm()}>
-                        <div className="timelineTextHeader">
-                            Submit Message
-                        </div>
+                    <Button style={{backgroundColor: '#95B4CC', color: 'white', fontSize: '20px', fontFamily: 'Ubuntu'}}  onClick={() => this.submitContactForm()}>
+                        Submit Message
                     </Button>
                 </div>
                 {this.props.alertOpen ?

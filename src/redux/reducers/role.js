@@ -8,10 +8,6 @@ const roleReducer = (state = initialState, action) => {
             return {
                 role: 'student',
             }
-        case 'teacher':
-            return {
-                role: 'teacher',
-            }
         case 'user':
             return {
                 role: 'user',

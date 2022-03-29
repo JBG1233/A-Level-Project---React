@@ -12,6 +12,42 @@
     padding-top: 20px;
 }
 
+.createFields {
+    background-image: linear-gradient(#95B4CC, #95B4CC);
+    background-size: 2px 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 10px;
+    overflow: hidden;
+
+}
+
+.createQuizFields {
+    width: 49.5%;
+    float: left;
+}
+
+.createQuizFields2 div  {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.createQuestionFields {
+    width: 49.5%;
+    float: right;
+    column-count: 2;
+}
+
+.createQuestionFieldsHeader {
+    width: 49.5%;
+    float: right;
+}
+
+.createQuestionFields div {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
 .score {
     font-family: 'Ubuntu', sans-serif;
     font-size: 25px;
@@ -28,33 +64,33 @@
 }
 
 .searchResult {
-    height: 200px;
     background-color: rgba(0, 0, 0, 0.1);
-    vertical-align: top;
     cursor: pointer;
-    position: relative;
+    display: flex;
 }
 
 .searchResult img {
-    padding: 7px;
-    height: 93%;
-    width: 20%;
+    height: 180px;
+    width: auto;
 }
 
 .searchResult header {
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 30px;
-    vertical-align: top;
-    display: inline-block;
-    position: absolute;
 }
 
 .searchResult p {
     font-family: 'Ubuntu', sans-serif;
     font-size: 18px;
-    margin-top: 3%;
-    display: inline-block;
-    vertical-align: middle;
-    position: absolute;
+    margin: 0;
+}
+
+.searchResultNoQuestions {
+}
+
+.scoreHistory {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size:25px;
 }

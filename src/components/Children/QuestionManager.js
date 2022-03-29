@@ -91,7 +91,7 @@ class QuestionManager extends React.Component {
             url: this.props.apiHost + '/rest/validation',
             data: details,
             headers: {
-                'Authorization': this.props.userDtos.accessToken
+                'Authorization': this.props.userDtos.userId
             },
         })
             .then(response => {
@@ -196,7 +196,6 @@ const mapStateToProps = (state) => {
         apiHost: state.serverDetails.apiHost,
         loggedIn: state.loggedInState.loggedIn,
         userDtos: state.loggedInState.userDtos,
-        countryCode: state.questionsState.countryCode,
         questions: state.questionsState.questions,
         severity: state.alert.severity,
         message: state.alert.message,

@@ -13,11 +13,13 @@ import {connect} from "react-redux";
 import {UpdateAlert, CloseAlert} from "../../redux/actions/alertActions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import {QuizToReviseDtos} from "../../redux/actions/questionsStateActions";
 
-class Leaderboard extends React.Component {
+class Results extends React.Component {
     constructor(props) {
         super(props);
     }
+
     CloseAlert(event, reason) {
         if (reason === 'clickaway') {
             return;
@@ -276,7 +278,6 @@ class Leaderboard extends React.Component {
                         </Alert>
                     </Snackbar>
                     : null }
-
             </div>
 
         );
@@ -293,9 +294,10 @@ const mapStateToProps = (state) => {
         severity: state.alert.severity,
         message: state.alert.message,
         alertOpen: state.alert.alertOpen,
+
     }
 }
 
-const mapDispatchToProps = {UpdateAlert, CloseAlert}
+const mapDispatchToProps = {UpdateAlert, CloseAlert, QuizToReviseDtos}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Results);

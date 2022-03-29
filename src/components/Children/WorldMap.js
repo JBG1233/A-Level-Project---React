@@ -21,15 +21,15 @@ constructor(props) {
             .then(response => {
                 if (response.status === 200) {
                     this.props.SearchResultsChange(response.data)
-                    this.props.history.push('/results')
+                    this.props.history.push('/search')
                 }
             }).catch(error => {
         })
     }
 
     createQuiz() {
-        if (this.props.role === "teacher") {
-            this.props.history.push("/createQuiz")
+        if (this.props.schoolID != null) {
+            this.props.history.push("/create")
         } else {
             this.props.UpdateAlert("error", "You don't have the correct permissions to create a quiz!")
         }
@@ -116,7 +116,7 @@ constructor(props) {
 const mapStateToProps = (state) => {
     return {
         apiHost: state.serverDetails.apiHost,
-        role: state.loggedInState.userDtos.role,
+        schoolID: state.loggedInState.userDtos.schoolID,
         severity: state.alert.severity,
         userDtos: state.loggedInState.userDtos
     }

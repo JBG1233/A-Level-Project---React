@@ -12,7 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import {CloseAlert} from "../../redux/actions/alertActions";
-import {studentItems, teacherItems, userItems} from "../../redux/actions/roleActions";
+import {studentItems, userItems} from "../../redux/actions/roleActions";
 import {withRouter} from "react-router";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -78,10 +78,8 @@ class PreLoginPage extends React.Component {
         this.props.CloseAlert()
     };
 
-    studentTeacher(role) {
-        if (role === 'teacher') {
-            this.props.teacherItems()
-        } else if (role === 'student') {
+    userRole(role) {
+        if (role === 'student') {
             this.props.studentItems()
         } else {
             this.props.userItems()
@@ -106,25 +104,19 @@ class PreLoginPage extends React.Component {
                                             World Quiz
                                         </div>
                                         <Typography variant="caption">
-                                            Select on of the three options to continue
+                                            Select on of the two options to continue
                                         </Typography>
                                     </div>
                                     <FormControlLabel
-                                        onClick={() => this.studentTeacher('student')}
+                                        onClick={() => this.userRole('student')}
                                         control={<Checkbox value="student"/>}
                                         label="Student"
                                         className={classes.fullWidth}
                                     />
                                     <FormControlLabel
-                                        onClick={() => this.studentTeacher('teacher')}
-                                        control={<Checkbox value="teacher"/>}
-                                        label="Teacher"
-                                        className={classes.fullWidth}
-                                    />
-                                    <FormControlLabel
-                                        onClick={() => this.studentTeacher('user')}
+                                        onClick={() => this.userRole('user')}
                                         control={<Checkbox value="user"/>}
-                                        label="None of the above"
+                                        label="Standard User"
                                         className={classes.fullWidth}
                                     />
                                     <div className="pt-1 text-md-center">
@@ -160,6 +152,6 @@ const mapStateToProps = (state) => ({
     alertOpen: state.alert.alertOpen
 })
 
-const mapDispatchToProps = {CloseAlert, teacherItems, studentItems, userItems};
+const mapDispatchToProps = {CloseAlert, studentItems, userItems};
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles), withRouter)(PreLoginPage);

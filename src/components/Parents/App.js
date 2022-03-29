@@ -2,25 +2,18 @@ import React from 'react';
 import classNames from 'classnames';
 import { drawerWidth } from '../../styleVariables';
 import WorldMap from "../Children/WorldMap";
-import Leaderboard from "../Children/Leaderboard";
 import About from "../Children/About";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import Timeline from "../Children/Timeline";
-import TeacherHowItWorks from "../School/TeacherHowItWorks";
 import SearchResults from "../Children/SearchResults";
 import {Route, Switch, withRouter} from "react-router";
-import StudentHowItWorks from "../School/StudentHowItWorks";
-import UserHowItWorks from "../School/UserHowItWorks";
 import Sidebar from "../Base UI/Sidebar";
 import Header from "../Base UI/Header";
 import {ApiHost} from "../../redux/actions/serverDetailsActions";
 import QuestionManager from "../Children/QuestionManager";
-import {studentItems, teacherItems} from "../../redux/actions/roleActions";
-import StudentGroups from "../School/StudentGroups";
-import TeachingGroups from "../School/TeachingGroups";
 import CreateQuiz from "../Children/CreateQuiz";
+import Results from "../Children/Results";
 
 const useStyles = theme => ({
   panel: {
@@ -115,16 +108,10 @@ class App extends React.Component {
             <main className={classNames(classes.content, classes[`content-left`], {[classes.contentShift]: this.props.opened, [classes[`contentShift-left`]]: this.props.opened})}>
 
               <Switch>
-                <Route path="/createQuiz"><CreateQuiz/></Route>
-                <Route path="/timeline"><Timeline/></Route>
-                <Route path="/studentGroups"><StudentGroups/></Route>
-                <Route path="/teachingGroups"><TeachingGroups/></Route>
-                <Route path="/leaderboard"><Leaderboard/></Route>
-                <Route path="/teacherHowItWorks"><TeacherHowItWorks/></Route>
-                <Route path="/studentHowItWorks"><StudentHowItWorks/></Route>
-                <Route path="/userHowItWorks"><UserHowItWorks/></Route>
+                <Route path="/create"><CreateQuiz/></Route>
+                <Route path="/results"><Results/></Route>
                 <Route path="/about"><About/></Route>
-                <Route path="/results"><SearchResults/></Route>
+                <Route path="/search"><SearchResults/></Route>
                 <Route path="/quiz/:groupId"><QuestionManager/></Route>
                 <Route exact path="/"><WorldMap/></Route>
               </Switch>
@@ -146,6 +133,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {ApiHost, teacherItems, studentItems};
+const mapDispatchToProps = {ApiHost};
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(useStyles), withRouter)(App);

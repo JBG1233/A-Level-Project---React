@@ -171,7 +171,7 @@ class UserRegisterPage extends React.Component {
                                         <Button
                                             onClick={() => this.setRegisterValues()}
                                             variant="contained"
-                                            style={{background: 'rgba(0, 0, 0, 0.1)'}}
+                                            style={{marginTop:'15px', background: 'rgba(0, 0, 0, 0.1)'}}
                                             fullWidth>
                                             Create your account
                                         </Button>
